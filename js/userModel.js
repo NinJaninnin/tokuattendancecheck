@@ -53,6 +53,7 @@ class UserModel {
       this.user = {
         uid: uid,
         nickname: nickname,
+        email: authData.email || '',
         main_character: initialGiftCard,
         points: 1000, // 초기 1000p 출석 지급
         total_sp: starterSp,
@@ -64,6 +65,9 @@ class UserModel {
       };
     } else {
       this.user = existing;
+      if (authData.email && !this.user.email) {
+        this.user.email = authData.email;
+      }
       if (!this.user.last_sync_timestamp) {
         this.user.last_sync_timestamp = Date.now();
       }

@@ -129,7 +129,10 @@ class AppController {
 
     // 헤더 정보
     document.getElementById('header-nickname').textContent = user.nickname || '모험가';
-    document.getElementById('header-uid').textContent = `UID: ${user.uid.slice(0, 15)}...`;
+    const uidDisplay = user.uid.startsWith('google_')
+      ? `구글 연동: ${user.email || user.nickname}`
+      : `게스트 UID: ${user.uid.slice(0, 14)}...`;
+    document.getElementById('header-uid').textContent = uidDisplay;
     document.getElementById('val-points').textContent = Number(user.points || 0).toLocaleString();
     document.getElementById('val-sp').textContent = Number(user.total_sp || 0).toLocaleString();
 
@@ -711,12 +714,51 @@ class AppController {
       };
     });
 
-    // 개발용 간편 로그인
-    document.getElementById('btn-dev-login').onclick = () => {
-      const nick = document.getElementById('input-dev-nickname').value;
-      window.soundCtrl.playClick();
-      window.authController.loginWithMock(nick);
-    };
+    // 오프라인 플레이 버튼
+    const offlineBtn = document.getElementById('btn-offline-login');
+    if (offlineBtn) {
+      offlineBtn.onclick = () => {
+        window.soundCtrl.playClick();
+        window.authController.loginOffline();
+      };
+    }
+
+    // 구글 계정 로그인 버튼
+    const googleBtn = document.getElementById('btn-google-login');
+    if (googleBtn) {
+      googleBtn.onclick = () => {
+        window.soundCtrl.playClick();
+        window.authController.triggerGoogleLogin();
+      };
+    }
+
+    // 구글 이메일 직접 연동 제출 버튼
+    const submitGoogleBtn = document.getElementById('btn-submit-google-email');
+    if (submitGoogleBtn) {
+      submitGoogleBtn.onclick = () => {
+        const email = document.getElementById('input-google-email').value;
+        if (window.authController.loginWithGoogleEmail(email)) {
+          window.soundCtrl.playClick();
+          this.closeModal('modal-google-auth');
+        }
+      };
+    }
+
+    // 구글 Client ID 저장 버튼
+    const saveClientBtn = document.getElementById('btn-save-client-id');
+    if (saveClientBtn) {
+      saveClientBtn.onclick = () => {
+        const cId = document.getElementById('input-google-client-id-auth').value;
+        if (cId && cId.trim()) {
+          window.api.setGoogleClientId(cId.trim());
+          window.soundCtrl.playClick();
+          alert('Google Client ID가 저장되었습니다. 구글 로그인을 다시 시도합니다.');
+          this.closeModal('modal-google-auth');
+          window.authController.initGoogleIdentity();
+          window.authController.triggerGoogleLogin();
+        }
+      };
+    }
 
     // 로그아웃
     document.getElementById('btn-logout').onclick = () => {

@@ -27,10 +27,14 @@ class GachaSystem {
     // 해당 등급 중 데이터가 온전히 작성된(is_complete == true) 카드 풀만 추출
     let pool = window.gameData.getGachaPool(selectedRank);
 
-    // 만약 해당 등급에 아직 완성된 카드가 없다면 다른 완성된 카드들 중에서 안전하게 추첨
+    // 만약 해당 등급에 아직 완성된 카드가 없다면(예: N 등급 등) R 등급 또는 완성된 카드 풀에서 안전하게 추첨
     if (pool.length === 0) {
-      console.warn(`[Gacha] ${selectedRank} 등급에 데이터가 완성된 카드가 없어 전체 완성 카드 풀에서 추첨합니다.`);
-      pool = window.gameData.getAllCompleteCards();
+      if (selectedRank === 'N') {
+        pool = window.gameData.getGachaPool('R');
+      }
+      if (pool.length === 0) {
+        pool = window.gameData.getAllCompleteCards();
+      }
     }
 
     if (pool.length === 0) {
@@ -77,7 +81,7 @@ class GachaSystem {
 
     const cards = [];
     let totalSp = 0;
-    const rankOrder = { UR: 5, SSR: 4, SR: 3, R: 2, N: 1 };
+    const rankOrder = { SUHR: 6, HR: 5, UR: 4, SR: 3, R: 2, N: 1 };
     let highestRank = 'N';
 
     // 시뮬레이션용 임시 복사본

@@ -54,8 +54,22 @@ class ApiService {
           return data;
         }
       }
+    } catch (e) {}
+
+    // 3. GitHub Pages 및 정적 배포용 data/sheet_cache.json 직접 로드
+    try {
+      const resp = await fetch('data/sheet_cache.json');
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.cardlist && data.cardlist.length > 0) {
+          data.success = true;
+          data.sheetConnected = true;
+          console.log(`[API] Loaded ${data.cardlist.length} cards from data/sheet_cache.json (GitHub Pages mode)`);
+          return data;
+        }
+      }
     } catch (e) {
-      console.log('[API] Running fully offline/client-side');
+      console.warn('[API] Failed to fetch static sheet_cache.json:', e);
     }
 
     return null;
@@ -188,7 +202,7 @@ class ApiService {
     return { success: false, message: '서버 응답 오류' };
   }
 
-  // [치트 방지] 서버 측 가챠 실행
+  // 가챠 실행 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async drawGacha(uid, isMulti) {
     try {
       const resp = await fetch('/api/gacha/draw', {
@@ -196,13 +210,56 @@ class ApiService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uid, isMulti })
       });
-      return await resp.json();
-    } catch (e) {
-      return { success: false, message: e.message };
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.success !== undefined) {
+          return data;
+        }
+      }
+    } catch (e) {}
+
+    // GitHub Pages / 오프라인 폴백 처리
+    const user = window.userModel.getUser();
+    if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+    const cost = isMulti ? 1000 : 100;
+    if ((user.points || 0) < cost) {
+      return {
+        success: false,
+        reason: 'NOT_ENOUGH_POINTS',
+        currentPoints: user.points,
+        message: `포인트가 부족합니다. (필요: ${cost}P, 보유: ${user.points}P)`
+      };
     }
+
+    const drawRes = isMulti
+      ? window.gachaSystem.executeMultiDraw(user)
+      : window.gachaSystem.executeSingleDraw(user);
+
+    if (!drawRes || !drawRes.success) {
+      return drawRes || { success: false, message: '가챠 추첨 실패' };
+    }
+
+    user.points -= cost;
+    if (!user.owned_cards) user.owned_cards = {};
+    drawRes.cards.forEach(c => {
+      user.owned_cards[c.card_id] = (user.owned_cards[c.card_id] || 0) + 1;
+    });
+    user.total_sp = window.gameData.calculateTotalSP(user.owned_cards);
+    user.updated_at = new Date().toISOString();
+
+    await this.saveUser(user);
+
+    return {
+      success: true,
+      cards: drawRes.cards,
+      user: user,
+      totalSpGained: drawRes.totalSpGained,
+      highestRank: drawRes.highestRank
+    };
   }
 
-  // [치트 방지] 서버 측 일일 출석체크 실행
+  // 일일 출석체크 실행 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async checkAttendance(uid) {
     try {
       const resp = await fetch('/api/attendance/check', {
@@ -210,13 +267,42 @@ class ApiService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uid })
       });
-      return await resp.json();
-    } catch (e) {
-      return { success: false, message: e.message };
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.success !== undefined) {
+          return data;
+        }
+      }
+    } catch (e) {}
+
+    // GitHub Pages / 오프라인 폴백 처리
+    const user = window.userModel.getUser();
+    if (!user) return { success: false, message: '로그인이 필요합니다.' };
+
+    const today = window.userModel.getTodayDateString();
+    if (user.last_attendance_date === today) {
+      return {
+        success: false,
+        alreadyChecked: true,
+        today: today,
+        message: '오늘 이미 출석체크를 완료하셨습니다.'
+      };
     }
+
+    user.points = (user.points || 0) + 1000;
+    user.last_attendance_date = today;
+    user.updated_at = new Date().toISOString();
+    await this.saveUser(user);
+
+    return {
+      success: true,
+      reward: 1000,
+      today: today,
+      user: user
+    };
   }
 
-  // [치트 방지] 서버 측 접속 시간 검증 및 포인트 정산
+  // 접속 시간 검증 및 포인트 정산 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async syncTime(uid) {
     try {
       const resp = await fetch('/api/time/sync', {
@@ -224,10 +310,41 @@ class ApiService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ uid })
       });
-      return await resp.json();
-    } catch (e) {
-      return { success: false, message: e.message };
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.success !== undefined) {
+          return data;
+        }
+      }
+    } catch (e) {}
+
+    // GitHub Pages / 오프라인 폴백 처리
+    const user = window.userModel.getUser();
+    if (!user) return { success: false };
+
+    const now = Date.now();
+    const lastSync = user.last_sync_timestamp || now;
+    const elapsed = now - lastSync;
+    let pointsEarned = 0;
+
+    if (elapsed >= 60000) {
+      pointsEarned = Math.floor(elapsed / 60000);
+      user.points = (user.points || 0) + pointsEarned;
+      user.last_sync_timestamp = lastSync + (pointsEarned * 60000);
+      user.updated_at = new Date().toISOString();
+      await this.saveUser(user);
     }
+
+    const nextRemaining = 60000 - ((now - (user.last_sync_timestamp || now)) % 60000);
+    const remainingSec = Math.max(1, Math.ceil(nextRemaining / 1000));
+
+    return {
+      success: true,
+      pointsEarned,
+      currentPoints: user.points,
+      remainingSec,
+      user
+    };
   }
 
   // 시트 데이터(텍스트/TSV/CSV) 직접 붙여넣기 저장
