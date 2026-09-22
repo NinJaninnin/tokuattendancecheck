@@ -1,0 +1,12 @@
+{
+  "name": "toku-checkattendance",
+  "version": "1.0.0",
+  "description": "Daily Attendance Check, Gacha & SP Ranking Web Game with Google Sign-In and Google Sheets sync",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["gacha", "attendance", "google-sheets", "ranking"],
+  "author": "",
+  "license": "MIT"
+}

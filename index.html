@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>매일 출석체크 & 가챠 시스템</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <!-- Google Identity Services (GIS) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <!-- Dynamic Background Layers -->
+  <div id="game-bg-layer"></div>
+  <div id="game-bg-overlay"></div>
+
+  <!-- Main App Shell -->
+  <div id="app">
+    <!-- Top Header -->
+    <header class="header-bar">
+      <div class="user-profile-summary">
+        <div class="user-avatar-mini" id="header-avatar" title="대표 캐릭터">
+          <img id="header-avatar-img" src="img_card/BandiView_card_0000.webp" alt="Avatar">
+        </div>
+        <div class="user-meta-info">
+          <div class="user-nickname-row">
+            <span class="user-nickname" id="header-nickname">모험가</span>
+            <span class="badge-rank-title" id="header-rank-badge">RANK 1</span>
+          </div>
+          <span class="user-uid-sub" id="header-uid">UID: -</span>
+        </div>
+      </div>
+
+      <!-- Resource Points & Live Timer -->
+      <div class="resources-group">
+        <!-- Live Connection Point Timer -->
+        <div class="connection-timer-chip" title="접속 시간 1분당 1P 지급">
+          <div class="timer-spinner"></div>
+          <span id="timer-countdown">+1P 대기: 60초</span>
+        </div>
+
+        <!-- Current Points -->
+        <div class="res-chip points" title="가챠 재화">
+          <span class="res-icon">💎</span>
+          <div class="res-content">
+            <span class="res-label">POINTS</span>
+            <span class="res-val" id="val-points">1,000</span>
+          </div>
+        </div>
+
+        <!-- Total SP -->
+        <div class="res-chip sp" title="랭킹 기준 스코어 포인트">
+          <span class="res-icon">🏆</span>
+          <div class="res-content">
+            <span class="res-label">TOTAL SP</span>
+            <span class="res-val" id="val-sp">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <button class="icon-btn" id="btn-sound-toggle" title="효과음 켜기/끄기">🔊</button>
+        <button class="icon-btn" id="btn-settings" title="구글 시트 연동 설정">⚙️</button>
+        <button class="icon-btn" id="btn-logout" title="로그아웃">🚪</button>
+      </div>
+    </header>
+
+    <!-- Main Stage Grid -->
+    <main class="main-stage-grid">
+      <!-- Center Character Stage -->
+      <section class="character-stage-panel">
+        <!-- Background Switcher -->
+        <div class="bg-switcher-controls">
+          <button class="bg-switch-btn active" data-bg="0">배경 1</button>
+          <button class="bg-switch-btn" data-bg="1">배경 2</button>
+          <button class="bg-switch-btn" data-bg="2">배경 3</button>
+        </div>
+
+        <!-- Interactive Character Speech Bubble -->
+        <div class="character-speech-bubble" id="char-speech-bubble">
+          출석체크 완료! 오늘의 행운을 시험해 볼까요?
+        </div>
+
+        <!-- Main Character Display -->
+        <div class="character-display-wrap" id="main-character-touch-zone" title="캐릭터 터치">
+          <div class="card-stage-container rank-SR" id="main-card-frame">
+            <span class="card-rarity-badge-corner" id="main-card-rarity">SR</span>
+            <img class="card-art-img" id="main-card-img" src="img_card/BandiView_card_0000.webp" alt="Main Character">
+            <div class="holo-glare"></div>
+
+            <div class="card-info-bottom-banner">
+              <div>
+                <div class="card-name-title" id="main-card-name">히어로 #0000</div>
+                <div class="card-count-badge" id="main-card-count">보유: 1장</div>
+              </div>
+              <div class="card-sp-tag" id="main-card-sp">SP +200</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="action-controls-row">
+          <button class="game-btn secondary" id="btn-open-nickname">
+            ✏️ 닉네임 설정
+          </button>
+          <button class="game-btn secondary" id="btn-open-main-char">
+            ⭐ 메인캐릭터 세팅
+          </button>
+          <button class="game-btn primary" id="btn-open-binder">
+            📖 카드 도감
+          </button>
+          <button class="game-btn primary" id="btn-check-attendance">
+            📅 출석체크 (+1000P)
+          </button>
+          <button class="game-btn gacha-single" id="btn-gacha-single">
+            🎲 가챠 1회 <span style="font-size:0.8rem; opacity:0.9;">(100P)</span>
+          </button>
+          <button class="game-btn gacha-multi" id="btn-gacha-multi">
+            ✨ 가챠 10회 <span style="font-size:0.8rem; opacity:0.9;">(1000P)</span>
+            <span class="bonus-pill">11연!</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Sidebar: 1-10 Ranking Board -->
+      <aside class="ranking-sidebar-panel">
+        <div class="ranking-header">
+          <div class="ranking-title-group">
+            <span style="font-size: 1.2rem;">🏅</span>
+            <span class="ranking-title">SP 랭킹 TOP 10</span>
+          </div>
+          <div class="ranking-refresh-badge" id="ranking-timer-badge">
+            갱신: 59분
+          </div>
+        </div>
+
+        <!-- 1~10 Ranking List -->
+        <div class="ranking-list" id="ranking-list-container">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- My Current Rank Bar -->
+        <div class="my-rank-bottom-card">
+          <div class="ranking-item my-rank-item" id="my-ranking-item">
+            <div class="rank-pos" id="my-rank-pos">-</div>
+            <div class="rank-avatar">
+              <img id="my-rank-avatar" src="img_card/BandiView_card_0000.webp" alt="My Card">
+            </div>
+            <div class="rank-user-info">
+              <span class="rank-username" id="my-rank-name">나 (모험가)</span>
+              <span class="rank-sp-val" id="my-rank-sp">0 SP</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- =====================================================================
+       FULLSCREEN GACHA SUMMONING MODAL
+       ===================================================================== -->
+  <div id="gacha-summon-modal">
+    <!-- 1. Intro Animation Phase -->
+    <div class="summon-phase-intro" id="summon-intro-phase">
+      <div class="magic-summon-circle"></div>
+      <div class="summon-core-crystal" id="summon-crystal-btn" title="크리스탈을 터치하세요!"></div>
+      <div class="summon-tap-instruction">크리스탈을 터치하여 소환하세요!</div>
+    </div>
+
+    <!-- 2. Results Grid Phase -->
+    <div class="summon-phase-results" id="summon-results-phase">
+      <div class="results-header-bar">
+        <div>
+          <div class="results-title">소환 결과</div>
+          <div class="results-sp-summary" id="results-sp-text">+0 SP 획득!</div>
+        </div>
+        <button class="game-btn primary" id="btn-close-gacha">확인</button>
+      </div>
+
+      <div class="gacha-cards-grid" id="gacha-results-grid">
+        <!-- Results cards dynamically injected -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       LOGIN MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-login">
+    <div class="game-modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚔️ 모험가 로그인</h3>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 28px 20px;">
+        <p style="color: var(--text-sub); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.5;">
+          구글 계정으로 로그인하여 매일 출석체크 포인트와 가챠 카드를 안전하게 저장하세요!
+        </p>
+
+        <!-- Official Google Sign-In Button Container -->
+        <div id="google-btn-container" style="display: flex; justify-content: center; margin-bottom: 20px;"></div>
+
+        <div style="position: relative; margin: 20px 0; text-align: center;">
+          <hr style="border: none; border-top: 1px solid var(--border-color);">
+          <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-panel); padding: 0 10px; font-size: 0.8rem; color: var(--text-sub);">
+            또는
+          </span>
+        </div>
+
+        <!-- Fast Dev/Guest Login -->
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">테스트용 닉네임 (즉시 플레이)</label>
+          <input type="text" class="form-input" id="input-dev-nickname" placeholder="닉네임 입력 (예: 영웅마스터)" value="영웅모험가">
+        </div>
+
+        <button class="game-btn primary" id="btn-dev-login" style="width: 100%; justify-content: center;">
+          ⚡ 간편 테스트 로그인으로 즉시 시작
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       NICKNAME SETTING MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-nickname">
+    <div class="game-modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ 닉네임 설정</h3>
+        <button class="modal-close-btn" data-close="modal-nickname">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">새로운 닉네임</label>
+          <input type="text" class="form-input" id="input-new-nickname" maxlength="16" placeholder="최대 16자">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="game-btn secondary" data-close="modal-nickname">취소</button>
+        <button class="game-btn primary" id="btn-save-nickname">저장하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MAIN CHARACTER SELECTOR MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-main-char">
+    <div class="game-modal-box large">
+      <div class="modal-header">
+        <h3 class="modal-title">⭐ 대표 메인 캐릭터 선택</h3>
+        <button class="modal-close-btn" data-close="modal-main-char">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 12px;">
+          메인 화면과 랭킹에 표시될 캐릭터를 보유 카드 중에서 선택하세요.
+        </p>
+        <div class="binder-grid" id="main-char-select-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       CARD BINDER / INVENTORY MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-binder">
+    <div class="game-modal-box large">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="binder-modal-title">📖 카드 도감</h3>
+          <span style="font-size: 0.8rem; color: var(--accent-gold);" id="binder-collection-rate">수집률 계산 중...</span>
+        </div>
+        <button class="modal-close-btn" data-close="modal-binder">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="binder-tabs" id="binder-tabs">
+          <button class="tab-btn active" data-filter="ALL">전체</button>
+          <button class="tab-btn" data-filter="UR">UR</button>
+          <button class="tab-btn" data-filter="SSR">SSR</button>
+          <button class="tab-btn" data-filter="SR">SR</button>
+          <button class="tab-btn" data-filter="R">R</button>
+          <button class="tab-btn" data-filter="N">N</button>
+          <button class="tab-btn" data-filter="OWNED">보유 카드만</button>
+        </div>
+        <div class="binder-grid" id="binder-cards-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ATTENDANCE CELEBRATION MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-attendance">
+    <div class="game-modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">📅 매일 출석체크</h3>
+        <button class="modal-close-btn" data-close="modal-attendance">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="attendance-stamp-card">
+          <div class="stamp-graphic" id="attendance-stamp">
+            <span>출석</span>
+            <span style="font-size: 1.2rem;">완료</span>
+          </div>
+          <h2 style="font-size: 1.4rem; color: #fff; margin-bottom: 8px;" id="attendance-result-title">
+            출석 보상 획득!
+          </h2>
+          <p style="color: var(--accent-gold); font-size: 1.2rem; font-weight: 800;" id="attendance-reward-text">
+            +1,000 POINTS
+          </p>
+          <p style="color: var(--text-sub); font-size: 0.85rem; margin-top: 10px;" id="attendance-sub-text">
+            매일 접속하고 1,000p 보상을 받으세요!
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="game-btn primary" data-close="modal-attendance" style="width: 100%; justify-content: center;">
+          확인
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       SETTINGS / GOOGLE SHEET SYNC MODAL
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-settings">
+    <div class="game-modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ 구글 시트 및 연동 설정</h3>
+        <button class="modal-close-btn" data-close="modal-settings">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Live Connection Status Alert -->
+        <div id="sheet-sync-status-box" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 14px; border-radius: 10px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 800; color: #f87171; font-size: 0.95rem;" id="sheet-sync-status-title">
+              ⚠️ 구글 시트 미연결 (권한 필요)
+            </div>
+            <button class="game-btn secondary" id="btn-trigger-sheet-sync" style="padding: 6px 12px; font-size: 0.8rem;">
+              🔄 지금 연동 재시도
+            </button>
+          </div>
+          <p style="color: #cbd5e1; font-size: 0.82rem; margin-top: 8px; line-height: 1.5;" id="sheet-sync-status-desc">
+            현재 구글 시트가 <strong>[제한됨(비공개)]</strong> 상태여서 임시 카드명(영웅 #XXXX)으로 표시되고 있습니다.<br>
+            아래 2가지 방법 중 하나를 이용하시면 <strong>실제 카드 이름</strong>이 즉시 적용됩니다!
+          </p>
+        </div>
+
+        <!-- Method 1: Public link guide -->
+        <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 16px;">
+          <div style="font-weight: 700; color: var(--accent-gold); font-size: 0.9rem; margin-bottom: 6px;">
+            💡 방법 1. 구글 시트 공유 권한 변경 (5초 완료, 권장)
+          </div>
+          <ol style="margin-left: 20px; font-size: 0.82rem; color: #cbd5e1; line-height: 1.6;">
+            <li>
+              <a href="https://docs.google.com/spreadsheets/d/1asIP47jypSXf280OkIf5stQZ2TvUQWKZsjDs2vwt_I4/edit?usp=sharing" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 700;">
+                구글 스프레드시트 열기 ↗
+              </a>
+            </li>
+            <li>시트 우측 상단 <strong>[공유]</strong> 버튼 클릭</li>
+            <li>일반 액세스를 <strong>[링크가 있는 모든 사용자]</strong> (역할: 뷰어) 로 변경 후 [완료]</li>
+            <li>위의 <strong>[🔄 지금 연동 재시도]</strong> 버튼 클릭!</li>
+          </ol>
+        </div>
+
+        <!-- Method 2: Direct Paste -->
+        <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 16px;">
+          <div style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem; margin-bottom: 6px;">
+            📋 방법 2. 시트 데이터 직접 복사-붙여넣기 (즉시 적용)
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 8px;">
+            구글 시트의 <code>cardlist</code> 탭 전체(card_id, name, rank)를 복사(Ctrl+C)하여 아래에 붙여넣으세요:
+          </p>
+          <textarea class="form-input" id="textarea-paste-cardlist" rows="4" placeholder="card_id	name	rank&#10;card_0000	배틀재팬	SR&#10;card_0001	덴지레드	N..." style="font-family: monospace; font-size: 0.78rem;"></textarea>
+          <button class="game-btn primary" id="btn-apply-pasted-data" style="margin-top: 8px; width: 100%; justify-content: center; font-size: 0.85rem; padding: 8px;">
+            📥 붙여넣은 카드 데이터 즉시 적용
+          </button>
+        </div>
+
+        <!-- Method 3: Apps Script URL -->
+        <div class="form-group">
+          <label class="form-label">Google Apps Script 웹 앱 URL (선택 사항)</label>
+          <input type="text" class="form-input" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="game-btn secondary" data-close="modal-settings">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/gameData.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/userModel.js"></script>
+  <script src="js/gacha.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

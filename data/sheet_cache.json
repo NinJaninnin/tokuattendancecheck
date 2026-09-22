@@ -1,0 +1,2033 @@
+{
+  "connected": true,
+  "source": "toku_attendancecheck.xlsx",
+  "synced_at": "1790039023.239352",
+  "cardrank": [
+    {
+      "rank": "N",
+      "sp_point": 1,
+      "name": "노멀",
+      "color": "#64748b"
+    },
+    {
+      "rank": "R",
+      "sp_point": 2,
+      "name": "레어",
+      "color": "#10b981"
+    },
+    {
+      "rank": "SR",
+      "sp_point": 4,
+      "name": "슈퍼 레어",
+      "color": "#3b82f6"
+    },
+    {
+      "rank": "UR",
+      "sp_point": 16,
+      "name": "울트라 레어",
+      "color": "#a855f7"
+    },
+    {
+      "rank": "HR",
+      "sp_point": 100,
+      "name": "히어로 레어",
+      "color": "#ff7700"
+    },
+    {
+      "rank": "SUHR",
+      "sp_point": 1000,
+      "name": "슈퍼 울트라 히어로 레어",
+      "color": "#ff0055"
+    }
+  ],
+  "gacha": [
+    {
+      "rank": "N",
+      "rate": 0.71
+    },
+    {
+      "rank": "R",
+      "rate": 0.22
+    },
+    {
+      "rank": "SR",
+      "rate": 0.04
+    },
+    {
+      "rank": "UR",
+      "rate": 0.02
+    },
+    {
+      "rank": "HR",
+      "rate": 0.009000000000000001
+    },
+    {
+      "rank": "SUHR",
+      "rate": 0.001
+    }
+  ],
+  "cardlist": [
+    {
+      "card_id": "card_0000",
+      "name": "고지라(1954)",
+      "rank": "HR",
+      "sp_point": 100,
+      "name_jp": "Godzilla(1954)",
+      "name_en": "ゴジラ(1954)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0001",
+      "name": "킹콩(1962)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "King Kong(1962)",
+      "name_en": "キングコング(1962)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0002",
+      "name": "오오타코(1962)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Giant Octopus(1962)",
+      "name_en": "大おおダコ(1962)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0003",
+      "name": "모스라(1964)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Mothra(1964)",
+      "name_en": "モスラ(1964)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0004",
+      "name": "킹 기도라(1964)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "King Ghidorah(1964)",
+      "name_en": "キングギドラ(1964)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0005",
+      "name": "라돈(1964)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Rodan(1964)",
+      "name_en": "ラドン(1964)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0006",
+      "name": "에비라(1966)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Ebirah(1966)",
+      "name_en": "エビラ(1966)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0007",
+      "name": "오오콘돌(1966)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Giant Condor(1966)",
+      "name_en": "大コンドル(1966)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0008",
+      "name": "미니라(1967)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Minilla(1967)",
+      "name_en": "ミニラ(1967)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0009",
+      "name": "카마키라스(1967)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Kamacuras(1967)",
+      "name_en": "カマキラス(1967)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0010",
+      "name": "쿠몽가(1967)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Kumonga(1967)",
+      "name_en": "クモンガ(1967)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0011",
+      "name": "안기라스(1968)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Anguirus(1968)",
+      "name_en": "アンギラス(1968)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0012",
+      "name": "고로자우루스(1968)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Gorosaurus(1968)",
+      "name_en": "ゴロザウルス(1968)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0013",
+      "name": "바라곤(1968)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Baragon(1968)",
+      "name_en": "バラゴン(1968)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0014",
+      "name": "만다(1968)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Manda(1968)",
+      "name_en": "マンダ(1968)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0015",
+      "name": "헤도라(1971)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Hedorah(1971)",
+      "name_en": "ヘドラ(1971)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0016",
+      "name": "가이강(1972)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Gigan(1972)",
+      "name_en": "ガイガン(1972)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0017",
+      "name": "메가로(1973)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Megalon(1973)",
+      "name_en": "メガロ(1973)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0018",
+      "name": "제트 쟈가(1973)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Jet Jaguar(1973)",
+      "name_en": "ジェット・ジャガー(1973)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0019",
+      "name": "메카고지라(1974)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "MechaGodzilla(1974)",
+      "name_en": "メカゴジラ(1974)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0020",
+      "name": "킹 시사(1974)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "King Caesar(1974)",
+      "name_en": "キングシーサー(1974)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0021",
+      "name": "치타노자우루스(1975)",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Titanosaurus(1975)",
+      "name_en": "チタノザウルス(1975)",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0022",
+      "name": "울트라맨",
+      "rank": "HR",
+      "sp_point": 100,
+      "name_jp": "Ultraman",
+      "name_en": "ウルトラマン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0023",
+      "name": "하야타 신",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Shin Hayata",
+      "name_en": "早田 進",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0024",
+      "name": "우주괴수 배무라",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Monster Bemular",
+      "name_en": "宇宙怪獣 ベムラー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0025",
+      "name": "발탄 성인",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Alien Baltan",
+      "name_en": "バルタン 星人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0026",
+      "name": "가짜 울트라맨",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Imitation Ultraman",
+      "name_en": "にせウルトラマン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0027",
+      "name": "모래지옥괴수 사이고",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Saigo",
+      "name_en": "サイゴ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0028",
+      "name": "광열괴수 키라",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Keylla",
+      "name_en": "キーラ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0029",
+      "name": "우주공룡 젯톤",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Space Dinosaur Zetton",
+      "name_en": "宇宙恐竜 ゼットン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0030",
+      "name": "울트라맨 세븐",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ultra Seven",
+      "name_en": "ウルトラセブン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0031",
+      "name": "모로보시 단",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Dan Moroboshi",
+      "name_en": "モロボシ・ダン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0032",
+      "name": "유리 안느",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Anne Yuri",
+      "name_en": "友里アンヌ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0033",
+      "name": "후지 아키코",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Akiko Fuji",
+      "name_en": "フジ・アキコ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0034",
+      "name": "울트라맨 잭",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ultraman Jack",
+      "name_en": "ウルトラマンジャック",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0035",
+      "name": "고 히데키",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Hideki Go",
+      "name_en": "郷 秀樹",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0036",
+      "name": "사카타 아키",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Aki Sakata",
+      "name_en": "坂田 アキ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0037",
+      "name": "2대 우주공룡 젯톤",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Space Dinosaur Zetton 2",
+      "name_en": "宇宙恐竜 ゼットン2",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0038",
+      "name": "촉각우주인 배트 성인",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Antenna Alien Alien Bat",
+      "name_en": "触覚宇宙人 バット星人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0039",
+      "name": "촉각우주인 배트 성인 2",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Antenna Alien Alien Bat 2",
+      "name_en": "触覚宇宙人 バット星人 2",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0040",
+      "name": "울트라맨 에이스",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ultraman Ace",
+      "name_en": "ウルトラマン エース",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0041",
+      "name": "호쿠토 세이지",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Seiji Hokuto",
+      "name_en": "北斗 星司",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0042",
+      "name": "미나미 유우코",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Yuko Minami",
+      "name_en": "南 夕子",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0043",
+      "name": "울트라맨 타로(초인 제트맨)",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ultraman Taro",
+      "name_en": "ウルトラマンタロウ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0044",
+      "name": "히가시 코타로",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Kotaro Higashi",
+      "name_en": "ひがし 光太郎",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0045",
+      "name": "모리야마 이즈미",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Izumi Moriyama",
+      "name_en": "森山 いずみ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0046",
+      "name": "신호초수 시그날리온",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Signalion",
+      "name_en": "シグナリオン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0047",
+      "name": "물병초수 아쿠에리우스",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Aquarius",
+      "name_en": "アクエリウス",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0048",
+      "name": "우주전기해파리 유니버라게스",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Univerlages",
+      "name_en": "ユニバーラゲス",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0049",
+      "name": "우주대괴수 아스트로몬스",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Giant Space Monster Astromons",
+      "name_en": "宇宙大怪獣 アストロモンス",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0050",
+      "name": "경호원괴수 블랙킹",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Bodyguard Monster Black King",
+      "name_en": "用心棒怪獣 ブラックキング",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0051",
+      "name": "폭군괴수 타일런트",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Despot Monster Tyrant",
+      "name_en": "暴君怪獣 タイラント",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0052",
+      "name": "우주어부 벌키 성인",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Alien Valky",
+      "name_en": "バルキー星人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0053",
+      "name": "울트라맨 레오",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ultraman Leo",
+      "name_en": "ウルトラマンレオ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0054",
+      "name": "오오토리 겐",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Gen Otori",
+      "name_en": "おおとりゲン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0055",
+      "name": "야마구치 모모코",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Momoko Yamaguchi",
+      "name_en": "山口百子",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0056",
+      "name": "사벨폭군 마그마 성인",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Saber Tyrant Alien Magma",
+      "name_en": "サーベル暴君 マグマ星人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0057",
+      "name": "블랙 커맨더",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Black Directive",
+      "name_en": "ブラック指令",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0058",
+      "name": "원반생물 블랙엔드",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Black End",
+      "name_en": "ブラックエンド",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0059",
+      "name": "더★울트라맨",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "The★Ultraman",
+      "name_en": "ザ★ウルトラマン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0060",
+      "name": "히카리 초이치로",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Choichiro Hikari",
+      "name_en": "ヒカリ超一郎",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0061",
+      "name": "호시카와 무츠미",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Mutsumi Hoshikawa",
+      "name_en": "星川ムツミ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0062",
+      "name": "냉동괴수 시그라",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Seagra",
+      "name_en": "シーグラ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0063",
+      "name": "구름괴수 레드스모기",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Red Smogy",
+      "name_en": "レッドスモーギ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0064",
+      "name": "처형괴수 마쿠다타",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Mac Datar",
+      "name_en": "マクダター",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0065",
+      "name": "가면라이더 1호",
+      "rank": "HR",
+      "sp_point": 100,
+      "name_jp": "MASKED RIDER 1",
+      "name_en": "仮面ライダー 1号",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0066",
+      "name": "혼고 타케시",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Takeshi Hongo",
+      "name_en": "ほんごう猛",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0067",
+      "name": "가면라이더 2호",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "MASKED RIDER 2",
+      "name_en": "仮面ライダー 2号",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0068",
+      "name": "이치몬지 하야토",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Hayato Ichimonji",
+      "name_en": "いちもんじ隼人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0069",
+      "name": "미도리카와 루리코",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Ruriko Midorikawa",
+      "name_en": "緑川ルリ子",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0070",
+      "name": "쇼커 수령",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Shocker Leader",
+      "name_en": "ショッカー首領",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0071",
+      "name": "졸 대령",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Colonel Zoll",
+      "name_en": "ゾル大佐",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0072",
+      "name": "사신박사",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Dr. Shinigami",
+      "name_en": "死神博士",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0073",
+      "name": "지옥대사",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Ambassador of Hell",
+      "name_en": "地獄大使",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0074",
+      "name": "쇼커 전투원",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Shocker Combatmen",
+      "name_en": "ショッカー戦闘員",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0075",
+      "name": "쇼커 전투원팀",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Shocker Combatmen team",
+      "name_en": "ショッカー戦闘員チーム",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0076",
+      "name": "여자 쇼커 전투원팀",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Female Shocker Combatants team",
+      "name_en": "女性ショッカー戦闘員",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0077",
+      "name": "여자 쇼커 전투원",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Female Shocker Combatants",
+      "name_en": "女性ショッカー戦闘員チーム",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0078",
+      "name": "우주형사 갸반",
+      "rank": "HR",
+      "sp_point": 100,
+      "name_jp": "Space Sheriff Gavan",
+      "name_en": "宇宙刑事ギャバン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0079",
+      "name": "우주형사 이치죠지 레츠",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Sheriff Gavan",
+      "name_en": "一条寺 烈",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0080",
+      "name": "은하연방경찰 미미",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Sheriff Mimie",
+      "name_en": "ミミー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0081",
+      "name": "돈 호러",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Don Horror",
+      "name_en": "ドン・ホラー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0082",
+      "name": "호러걸",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Horror Girl",
+      "name_en": "ホラーガール",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0083",
+      "name": "더블걸",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Double Girl",
+      "name_en": "ダブルガール",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0084",
+      "name": "크래셔",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Crusher",
+      "name_en": "クラッシャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0085",
+      "name": "우주형사 샤리반",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Space Sheriff Sharivan",
+      "name_en": "宇宙刑事シャリバン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0086",
+      "name": "우주형사 이가 덴",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Sheriff Sharivan",
+      "name_en": "伊賀 電",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0087",
+      "name": "우주형사 릴리",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Sheriff Lily",
+      "name_en": "宇宙刑事 リリィ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0088",
+      "name": "마왕 사이코",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Demon King Psycho",
+      "name_en": "宇宙犯罪組織マドーの魔王サイコ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0089",
+      "name": "닥터 폴터",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Doctor Polter",
+      "name_en": "ドクターポルター",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0090",
+      "name": "파이트로",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Fightrow",
+      "name_en": "ファイトロー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0091",
+      "name": "우주형사 샤이다",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Space Sheriff Sharivan",
+      "name_en": "宇宙刑事シャイダー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0092",
+      "name": "사와무라 다이",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Dai Sawamura",
+      "name_en": "沢村大",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0093",
+      "name": "우주형사 애니",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Space Sheriff Annie",
+      "name_en": "宇宙刑事アニー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0094",
+      "name": "대제왕 쿠빌라이",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Great Emperor Kubilai",
+      "name_en": "不思議界フーマの大帝王クビライ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0095",
+      "name": "헤슬러 지휘관",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Commander Hessler",
+      "name_en": "ヘスラー指揮官",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0096",
+      "name": "쿠노이치 5인조",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Girls Army",
+      "name_en": "ギャル軍団のくノ一・五人衆",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0097",
+      "name": "전투원 미라클러",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Soldier Miraclers",
+      "name_en": "戦闘員ミラクラー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0098",
+      "name": "거수특수 쟈스피온",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "MegaBeast Investigator Juspion",
+      "name_en": "巨獣特捜ジャスピオン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0099",
+      "name": "자스피온",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Juspion",
+      "name_en": "ジャスピオン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0100",
+      "name": "안드로이드 앙리",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Gynoid  Anri",
+      "name_en": "アンリ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0101",
+      "name": "제왕 사탄고스",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Satan Gorth",
+      "name_en": "サタンゴース軍団の帝王サタンゴース",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0102",
+      "name": "은하마녀 기르마자",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Witch Gilza",
+      "name_en": "銀河魔女ギルマーザ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0103",
+      "name": "매드 갤런",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Mad Gallant",
+      "name_en": "マッドギャラン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0104",
+      "name": "싸이보그 스필반",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Zikusensi Spielban",
+      "name_en": "時空戦士スピルバン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0105",
+      "name": "스필반",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Spielban",
+      "name_en": "スピルバン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0106",
+      "name": "다이아나",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Diana",
+      "name_en": "ダイアナ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0107",
+      "name": "헬렌",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Helen",
+      "name_en": "ヘレン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0108",
+      "name": "판도라 여왕",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Queen Pandora",
+      "name_en": "女王パンドラ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0109",
+      "name": "데스제로 장군",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "General Deathzerow",
+      "name_en": "デスゼロウ将軍",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0110",
+      "name": "릭키",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Spy Army Leader Licky",
+      "name_en": "リッキー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0111",
+      "name": "섀도 & 가샤",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Shadow and Gasha",
+      "name_en": "シャドー&ガシャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0112",
+      "name": "기계병 킹크론",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Kinclons",
+      "name_en": "キンクロン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0113",
+      "name": "초인기 메탈더",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Choujinki Metalder",
+      "name_en": "超人機メタルダー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0114",
+      "name": "츠루기 류세이",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Ryusei Tsurugi",
+      "name_en": "剣 流星",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0115",
+      "name": "오오기 마이",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Mai Ougi",
+      "name_en": "仰木 舞",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0116",
+      "name": "제왕 갓 네로스",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "God Neros",
+      "name_en": "帝王ゴッドネロス",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0117",
+      "name": "미인비서 K, S",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Beautiful Secretary K&S",
+      "name_en": "美人秘書K、S",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0118",
+      "name": "경투사 영",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Light Fighter",
+      "name_en": "軽闘士 影",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0119",
+      "name": "세계닌자 지라이야",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "World Ninja Jiraiya",
+      "name_en": "世界忍者ジライヤ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0120",
+      "name": "야마지 토우하",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Toha Yamaji",
+      "name_en": "山地 闘破",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0121",
+      "name": "공주닌 에미하",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Princess Ninja Emiha",
+      "name_en": "姫忍 恵美破",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0122",
+      "name": "야마지 케이",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Yamaji Kei",
+      "name_en": "山地 ケイ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0123",
+      "name": "야마지 마나부",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Manabu Yamaji",
+      "name_en": "山地 学",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0124",
+      "name": "야규 레이",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Rei Yagyu",
+      "name_en": "柳生 レイ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0125",
+      "name": "아스카 류",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Ryu Asuka",
+      "name_en": "飛鳥 竜",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0126",
+      "name": "오니닌자 도쿠사이",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Manabu Yamaji",
+      "name_en": "鬼忍 毒斎",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0127",
+      "name": "나비닌자 베니키바",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Butterfly Ninja Benikiba",
+      "name_en": "蝶忍 紅牙",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0128",
+      "name": "요닌자 쿠모고젠",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Witch Ninja Madam Spider",
+      "name_en": "妖忍 クモ御前",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0129",
+      "name": "새닌자 카라스 텐구",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Bird Ninjas Karasutengu",
+      "name_en": "鳥忍 カラス天狗",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0130",
+      "name": "기동형사 지반",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "The Mobile Cop Jiban",
+      "name_en": "機動刑事ジバン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0131",
+      "name": "타무라 나오토",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Naoto Tamura",
+      "name_en": "田村 直人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0132",
+      "name": "닥터 기바",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Doctor Giba",
+      "name_en": "ドクター・ギバ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0133",
+      "name": "마샤&카샤",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Marsha and Karsha",
+      "name_en": "マーシャ&カーシャ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0134",
+      "name": "매드 가르보",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Madogarbo",
+      "name_en": "マッド・ガルボ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0135",
+      "name": "마스크",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Masques",
+      "name_en": "マスク",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0136",
+      "name": "아카레인저",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Akarenger",
+      "name_en": "アカレンジャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0137",
+      "name": "카이조 츠요시",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Tsuyoshi Kaijo",
+      "name_en": "海城 剛",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0138",
+      "name": "아오레인저",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Aorenger",
+      "name_en": "アオレンジャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0139",
+      "name": "신메이 아키라",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Akira Shinmei",
+      "name_en": "新命 明",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0140",
+      "name": "키레인저",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Kirenger",
+      "name_en": "キレンジャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0141",
+      "name": "오이와 다이타",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Daita Oiwa",
+      "name_en": "大岩 大太",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0142",
+      "name": "쿠마노 다이고로",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Daigoro Kumano",
+      "name_en": "くまの 大五郎",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0143",
+      "name": "모모레인저",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Momorenger",
+      "name_en": "モモレンジャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0144",
+      "name": "페기 마츠야마",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Peggy Matsuyama",
+      "name_en": "ペギー 松山",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0145",
+      "name": "미도레인저",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Midorenger",
+      "name_en": "ミドレンジャー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0146",
+      "name": "아스카 켄지",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Kenji Asuka",
+      "name_en": "あすか 健二",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0147",
+      "name": "흑십자 총통",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Black Cross Führer",
+      "name_en": "黒十字総統",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0148",
+      "name": "흑십자 왕",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Black Cross King",
+      "name_en": "黒十字王",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0149",
+      "name": "골든가면 대장군",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Commander Golden Mask",
+      "name_en": "ゴールデン仮面大将軍",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0150",
+      "name": "강철검룡",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Steel Sword Dragon",
+      "name_en": "鋼鉄剣竜",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0151",
+      "name": "화산가면 마그만장군",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Volcano Mask General Magman",
+      "name_en": "火の山仮面マグマン将軍",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0152",
+      "name": "철인가면 테무진 장군",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Iron Man Mask General Temujin",
+      "name_en": "鉄人仮面 テムジン将軍",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0153",
+      "name": "일륜가면",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Sun Halo Mask",
+      "name_en": "日輪仮面",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0154",
+      "name": "졸더",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Zolders",
+      "name_en": "ゾルダー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0155",
+      "name": "마그",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Mag",
+      "name_en": "マグ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0156",
+      "name": "레드 후뢰시",
+      "rank": "HR",
+      "sp_point": 100,
+      "name_jp": "Red Flash",
+      "name_en": "レッドフラッシュ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0157",
+      "name": "진",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Jin",
+      "name_en": "ジン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0158",
+      "name": "그린 후뢰시",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Green Flash",
+      "name_en": "グリーンフラッシュ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0159",
+      "name": "다이(라이)",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Dai",
+      "name_en": "ダイ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0160",
+      "name": "블루 후뢰시",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Blue Flash",
+      "name_en": "ブルーフラッシュ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0161",
+      "name": "붕",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Bun",
+      "name_en": "ブン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0162",
+      "name": "옐로 후뢰시",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Yellow Flash",
+      "name_en": "イエローフラッシュ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0163",
+      "name": "사라",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Sara",
+      "name_en": "サラ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0164",
+      "name": "핑크 후뢰시",
+      "rank": "UR",
+      "sp_point": 16,
+      "name_jp": "Pink Flash",
+      "name_en": "ピンクフラッシュ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0165",
+      "name": "루",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Lou",
+      "name_en": "ルー",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0166",
+      "name": "플래시성인",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Alien Flash",
+      "name_en": "フラッシュ星人",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0167",
+      "name": "영웅타이탄",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Hero Titan",
+      "name_en": "英雄・タイタン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0168",
+      "name": "레이 바라키",
+      "rank": "SR",
+      "sp_point": 4,
+      "name_jp": "Leh Baraki",
+      "name_en": "レー・バラキ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0169",
+      "name": "차미래",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Sumire Okano",
+      "name_en": "スミレ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0170",
+      "name": "미랑",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Milan",
+      "name_en": "ミラン",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0171",
+      "name": "와카쿠사 류",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Ryu Wakasa",
+      "name_en": "若草リュウ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0172",
+      "name": "시벨",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Shibehl",
+      "name_en": "シベール",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0173",
+      "name": "강진영 박사",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Dr. Tokimura",
+      "name_en": "時村博士",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0174",
+      "name": "강박사 부인",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Setsuko Tokimura",
+      "name_en": "時村 節子",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0175",
+      "name": "강세진",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Midori Tokimura",
+      "name_en": "時村 みどり",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0176",
+      "name": "강세영",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Kaori Tokimura",
+      "name_en": "時村 かおり",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0177",
+      "name": "채유리",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Sayuri",
+      "name_en": "サユリ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0178",
+      "name": "채유리?",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Sayuri?",
+      "name_en": "サユリ?",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0179",
+      "name": "유성의 수진",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Bad Girl Yuki",
+      "name_en": "スケバンユキ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0180",
+      "name": "수진",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Yuki",
+      "name_en": "ユキ",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0181",
+      "name": "산장 아주머니",
+      "rank": "R",
+      "sp_point": 2,
+      "name_jp": "Kayoko",
+      "name_en": "加代子",
+      "is_complete": true
+    },
+    {
+      "card_id": "card_0182",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0183",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0184",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0185",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0186",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0187",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0188",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0189",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0190",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0191",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0192",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0193",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0194",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0195",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0196",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0197",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0198",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0199",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0200",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0201",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0202",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0203",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0204",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0205",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0206",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0207",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0208",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0209",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0210",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0211",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0212",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0213",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0214",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0215",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0216",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    },
+    {
+      "card_id": "card_0217",
+      "name": "",
+      "rank": "",
+      "sp_point": 30,
+      "name_jp": "",
+      "name_en": "",
+      "is_complete": false
+    }
+  ]
+}
