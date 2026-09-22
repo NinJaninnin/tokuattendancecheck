@@ -178,10 +178,28 @@ class AppController {
     mainCardImg.src = imgPath;
     headerAvatarImg.src = imgPath;
 
-    document.getElementById('main-card-name').textContent = card.name;
+    const locName = window.gameData.getCardLocalizedName(card, this.currentLang || 'ko');
+    document.getElementById('main-card-name').textContent = locName;
     document.getElementById('main-card-rarity').textContent = card.rank;
     document.getElementById('main-card-sp').textContent = `SP +${card.sp_point}`;
     document.getElementById('main-card-count').textContent = `보유: ${count}장`;
+
+    // 서브 명칭 표기 (다른 언어 표기 병기)
+    const subEl = document.getElementById('main-card-name-sub');
+    if (subEl) {
+      const otherNames = [];
+      if (this.currentLang === 'ko') {
+        if (card.name_jp) otherNames.push(`🇯🇵 ${card.name_jp}`);
+        if (card.name_en) otherNames.push(`🇺🇸 ${card.name_en}`);
+      } else if (this.currentLang === 'ja') {
+        if (card.name) otherNames.push(`🇰🇷 ${card.name}`);
+        if (card.name_en) otherNames.push(`🇺🇸 ${card.name_en}`);
+      } else {
+        if (card.name) otherNames.push(`🇰🇷 ${card.name}`);
+        if (card.name_jp) otherNames.push(`🇯🇵 ${card.name_jp}`);
+      }
+      subEl.textContent = otherNames.join('  |  ');
+    }
 
     // 프레임 등급 클래스 적용
     const frame = document.getElementById('main-card-frame');
@@ -412,11 +430,13 @@ class AppController {
         ? `<div class="gacha-card-badge-new">NEW!</div>`
         : `<div class="gacha-card-badge-dup">DUPLICATE</div>`;
 
+      const locName = window.gameData.getCardLocalizedName(card, this.currentLang || 'ko');
       cardEl.innerHTML = `
-        <img src="${window.gameData.getCardImagePath(card.card_id)}" alt="${card.name}">
+        <img src="${window.gameData.getCardImagePath(card.card_id)}" alt="${locName}">
         ${badgeNew}
         <div class="gacha-card-badge-rank">${card.rank}</div>
         <div class="gacha-card-badge-sp">+${card.sp_point} SP</div>
+        <div style="position: absolute; bottom: 3px; left: 3px; right: 3px; font-size: 0.7rem; font-weight: 700; color: #fff; text-shadow: 0 1px 3px #000; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 2px; background: rgba(0,0,0,0.65); border-radius: 4px;">${locName}</div>
       `;
       grid.appendChild(cardEl);
     });
@@ -496,17 +516,19 @@ class AppController {
     filtered.forEach(card => {
       const count = owned[card.card_id] || 0;
       const isOwned = count > 0;
+      const locName = window.gameData.getCardLocalizedName(card, this.currentLang || 'ko');
       const slot = document.createElement('div');
       slot.className = `binder-card-slot rank-${card.rank} ${isOwned ? '' : 'unowned'}`;
       slot.innerHTML = `
-        <img src="${window.gameData.getCardImagePath(card.card_id)}" alt="${card.name}">
+        <img src="${window.gameData.getCardImagePath(card.card_id)}" alt="${locName}">
         ${isOwned ? `<div class="binder-count-badge">x${count}</div>` : ''}
+        <div style="position: absolute; bottom: 2px; left: 2px; right: 2px; font-size: 0.62rem; color: #fff; text-shadow: 0 1px 3px #000; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 1px 2px; background: rgba(0,0,0,0.65); border-radius: 4px;">${locName}</div>
       `;
 
       if (isOwned) {
-        slot.title = `${card.name} (${card.rank}) - 클릭 시 메인 캐릭터로 지정`;
+        slot.title = `${locName} (${card.rank}) - 클릭 시 메인 캐릭터로 지정`;
         slot.onclick = () => {
-          if (confirm(`[${card.name}] 캐릭터를 메인 캐릭터로 설정하시겠습니까?`)) {
+          if (confirm(`[${locName}] 캐릭터를 메인 캐릭터로 설정하시겠습니까?`)) {
             window.userModel.setMainCharacter(card.card_id);
             window.soundCtrl.playClick();
             this.closeModal('modal-binder');
@@ -530,11 +552,14 @@ class AppController {
       if (count <= 0) return;
 
       const card = window.gameData.getCard(cardId);
+      const locName = window.gameData.getCardLocalizedName(card, this.currentLang || 'ko');
       const slot = document.createElement('div');
       slot.className = `binder-card-slot rank-${card.rank}`;
+      slot.title = `${locName} (${card.rank})`;
       slot.innerHTML = `
-        <img src="${window.gameData.getCardImagePath(cardId)}" alt="${card.name}">
+        <img src="${window.gameData.getCardImagePath(cardId)}" alt="${locName}">
         <div class="binder-count-badge">x${count}</div>
+        <div style="position: absolute; bottom: 2px; left: 2px; right: 2px; font-size: 0.62rem; color: #fff; text-shadow: 0 1px 3px #000; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 1px 2px; background: rgba(0,0,0,0.65); border-radius: 4px;">${locName}</div>
       `;
 
       slot.onclick = () => {
