@@ -1,19 +1,3 @@
-/**
- * Default 10 Authentic Tokusatsu Rankers (상시 기본 탑재)
- */
-const DEFAULT_TOKU_RANKERS = [
-  { uid: 'user_godzilla_king', nickname: '괴수마스터', main_character: 'card_0000', total_sp: 18450 },
-  { uid: 'user_rider_ichigo', nickname: '라이더1호', main_character: 'card_0065', total_sp: 14200 },
-  { uid: 'user_ultra_light', nickname: '빛의거인', main_character: 'card_0022', total_sp: 11800 },
-  { uid: 'user_space_gavan', nickname: '우주형사갸반', main_character: 'card_0078', total_sp: 9400 },
-  { uid: 'user_red_flash', nickname: '레드후뢰시', main_character: 'card_0156', total_sp: 8150 },
-  { uid: 'user_v3_hopper', nickname: '폭풍의V3', main_character: 'card_0066', total_sp: 7300 },
-  { uid: 'user_seven_slugger', nickname: '아이스랏가', main_character: 'card_0023', total_sp: 6200 },
-  { uid: 'user_sharivan', nickname: '태양의샤리반', main_character: 'card_0080', total_sp: 5100 },
-  { uid: 'user_gamera', nickname: '수호신가메라', main_character: 'card_0018', total_sp: 4350 },
-  { uid: 'user_super_ranger', nickname: '특촬매니아', main_character: 'card_0170', total_sp: 3800 },
-  { uid: 'google_auth_uid_12345', nickname: '특촬용사', main_character: 'card_0000', total_sp: 500 }
-];
 
 /**
  * API Service for Google Apps Script & Local Server Sync
@@ -429,19 +413,34 @@ class ApiService {
     return { success: false, message: '서버 응답 오류' };
   }
 
-  // 유저 목록 병합 및 순위 계산 (다중 소스, localStorage, 현재 유저 동기화)
+  // 유저 목록 병합 및 순위 계산 (다중 소스, localStorage, 현재 유저 동기화 - 더미데이터 완전 배제)
   formatAndMergeRankings(sourceUsers = []) {
     const userMap = new Map();
 
-    // 0. 공식 10대 특촬 랭커를 1순위 베이스로 항상 기본 장착 (어떤 환경에서도 혼자만 나오는 현상 100% 원천 차단)
-    DEFAULT_TOKU_RANKERS.forEach(u => {
-      userMap.set(u.uid, { ...u });
-    });
+    const isDummyUid = (uid) => {
+      if (!uid) return true;
+      const id = String(uid).trim();
+      return id === 'google_auth_uid_12345' ||
+             id.startsWith('ai_') ||
+             id.startsWith('dummy_') ||
+             id.startsWith('test_') ||
+             id.startsWith('mock_') ||
+             id.startsWith('user_godzilla') ||
+             id.startsWith('user_rider') ||
+             id.startsWith('user_ultra') ||
+             id.startsWith('user_space') ||
+             id.startsWith('user_red') ||
+             id.startsWith('user_v3') ||
+             id.startsWith('user_seven') ||
+             id.startsWith('user_sharivan') ||
+             id.startsWith('user_gamera') ||
+             id.startsWith('user_super');
+    };
 
-    // 1. 소스 랭커 데이터 추가/갱신 (users.json, sheet_cache, GAS 등)
+    // 1. 소스 랭커 데이터 추가/갱신 (users.json, sheet_cache, GAS 등 - 더미 UID 원천 필터링)
     if (Array.isArray(sourceUsers) && sourceUsers.length > 0) {
       sourceUsers.forEach(u => {
-        if (u && u.uid) {
+        if (u && u.uid && !isDummyUid(u.uid)) {
           userMap.set(u.uid, {
             uid: u.uid,
             nickname: u.nickname || '특촬용사',
@@ -452,14 +451,14 @@ class ApiService {
       });
     }
 
-    // 2. localStorage에 저장된 다른 유저들 추가
+    // 2. localStorage에 저장된 실제 유저들 추가
     try {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith('toku_user_')) {
           try {
             const u = JSON.parse(localStorage.getItem(key));
-            if (u && u.uid) {
+            if (u && u.uid && !isDummyUid(u.uid)) {
               userMap.set(u.uid, {
                 uid: u.uid,
                 nickname: u.nickname || '모험가',
@@ -472,9 +471,9 @@ class ApiService {
       }
     } catch (e) {}
 
-    // 3. 현재 접속 중인 유저의 최신 정보 반영
+    // 3. 현재 접속 중인 실제 유저 정보 반영
     const curUser = window.userModel ? window.userModel.getUser() : null;
-    if (curUser && curUser.uid) {
+    if (curUser && curUser.uid && !isDummyUid(curUser.uid)) {
       userMap.set(curUser.uid, {
         uid: curUser.uid,
         nickname: curUser.nickname || '모험가',
@@ -503,7 +502,7 @@ class ApiService {
   }
 
   getMockRankings() {
-    return this.formatAndMergeRankings(DEFAULT_TOKU_RANKERS);
+    return this.formatAndMergeRankings([]);
   }
 }
 

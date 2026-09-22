@@ -204,8 +204,8 @@ def parse_xlsx(file_path):
             cards_idx = headers.index('owned_cards') if 'owned_cards' in headers else -1
 
             for r in user_rows[1:]:
-                uid = r[uid_idx] if len(r) > uid_idx else ''
-                if not uid or not uid.strip():
+                uid = str(r[uid_idx]).strip() if len(r) > uid_idx and r[uid_idx] else ''
+                if not uid or uid == 'google_auth_uid_12345' or uid.startswith('test_') or uid.startswith('dummy_') or uid.startswith('ai_') or uid.startswith('mock_') or uid.startswith('user_godzilla') or uid.startswith('user_rider'):
                     continue
                 nickname = r[nick_idx] if len(r) > nick_idx and r[nick_idx] else '특촬용사'
                 if any(ord(ch) == 0xfffd for ch in nickname) or not nickname.strip():

@@ -451,13 +451,33 @@ const server = http.createServer((req, res) => {
   }
 
   if (pathname === '/api/rankings') {
-    let users = readUsers().filter(u => u && u.uid && !u.uid.startsWith('ai_'));
+    const isDummyUid = (uid) => {
+      if (!uid) return true;
+      const id = String(uid).trim();
+      return id === 'google_auth_uid_12345' ||
+             id.startsWith('ai_') ||
+             id.startsWith('dummy_') ||
+             id.startsWith('test_') ||
+             id.startsWith('mock_') ||
+             id.startsWith('user_godzilla') ||
+             id.startsWith('user_rider') ||
+             id.startsWith('user_ultra') ||
+             id.startsWith('user_space') ||
+             id.startsWith('user_red') ||
+             id.startsWith('user_v3') ||
+             id.startsWith('user_seven') ||
+             id.startsWith('user_sharivan') ||
+             id.startsWith('user_gamera') ||
+             id.startsWith('user_super');
+    };
+
+    let users = readUsers().filter(u => u && u.uid && !isDummyUid(u.uid));
 
     // 엑셀에서 동기화된 유저가 있다면 병합
     const cache = readSheetCache();
     if (cache && Array.isArray(cache.users) && cache.users.length > 0) {
       cache.users.forEach(cu => {
-        if (cu && cu.uid && !users.some(u => u.uid === cu.uid)) {
+        if (cu && cu.uid && !isDummyUid(cu.uid) && !users.some(u => u.uid === cu.uid)) {
           users.push(cu);
         }
       });

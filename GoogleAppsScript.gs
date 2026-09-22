@@ -218,8 +218,8 @@ function getRankings() {
   let users = [];
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    const uid = String(row[uidIdx] || '');
-    if (!uid) continue;
+    const uid = String(row[uidIdx] || '').trim();
+    if (!uid || uid === 'google_auth_uid_12345' || uid.indexOf('test_') === 0 || uid.indexOf('dummy_') === 0 || uid.indexOf('ai_') === 0 || uid.indexOf('user_godzilla') === 0 || uid.indexOf('user_rider') === 0) continue;
     
     users.push({
       uid: uid,
