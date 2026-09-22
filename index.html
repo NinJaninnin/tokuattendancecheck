@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>매일 출석체크 & 가챠 시스템</title>
-  <link rel="stylesheet" href="css/style.css?v=20260922_8">
+  <link rel="stylesheet" href="css/style.css?v=20260922_9">
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Google Identity Services (GIS) -->
@@ -82,18 +82,19 @@
     <main class="main-stage-grid">
       <!-- Center Character Stage -->
       <section class="character-stage-panel">
-        <!-- Background Switcher -->
-        <div class="bg-switcher-controls">
-          <button class="bg-switch-btn active" data-bg="0">배경 1</button>
-          <button class="bg-switch-btn" data-bg="1">배경 2</button>
-          <button class="bg-switch-btn" data-bg="2">배경 3</button>
-        </div>
+        <!-- Stage Top Controls Strip (배경 및 언어 선택) -->
+        <div class="stage-top-controls">
+          <div class="bg-switcher-controls">
+            <button class="bg-switch-btn active" data-bg="0">배경 1</button>
+            <button class="bg-switch-btn" data-bg="1">배경 2</button>
+            <button class="bg-switch-btn" data-bg="2">배경 3</button>
+          </div>
 
-        <!-- Language Switcher Tabs (name: 한국어 / name_jp: 日本語 / name_en: English) -->
-        <div class="lang-switcher-controls" id="lang-switcher">
-          <button class="lang-switch-btn active" data-lang="ko" title="한국어 (name)">🇰🇷 한국어</button>
-          <button class="lang-switch-btn" data-lang="ja" title="日本語 (name_jp)">🇯🇵 日本語</button>
-          <button class="lang-switch-btn" data-lang="en" title="English (name_en)">🇺🇸 English</button>
+          <div class="lang-switcher-controls" id="lang-switcher">
+            <button class="lang-switch-btn active" data-lang="ko" title="한국어 (name)">🇰🇷 한국어</button>
+            <button class="lang-switch-btn" data-lang="ja" title="日本語 (name_jp)">🇯🇵 日本語</button>
+            <button class="lang-switch-btn" data-lang="en" title="English (name_en)">🇺🇸 English</button>
+          </div>
         </div>
 
         <!-- Interactive Character Speech Bubble -->
@@ -119,27 +120,40 @@
           </div>
         </div>
 
-        <!-- Action Controls -->
-        <div class="action-controls-row">
-          <button class="game-btn secondary" id="btn-open-nickname">
-            ✏️ 닉네임 설정
-          </button>
-          <button class="game-btn secondary" id="btn-open-main-char">
-            ⭐ 메인캐릭터 세팅
-          </button>
-          <button class="game-btn primary" id="btn-open-binder">
-            📖 카드 도감
-          </button>
-          <button class="game-btn primary" id="btn-check-attendance">
-            📅 출석체크 (+1000P)
-          </button>
-          <button class="game-btn gacha-single" id="btn-gacha-single">
-            🎲 가챠 1회 <span style="font-size:0.8rem; opacity:0.9;">(100P)</span>
-          </button>
-          <button class="game-btn gacha-multi" id="btn-gacha-multi">
-            ✨ 가챠 10회 <span style="font-size:0.8rem; opacity:0.9;">(1000P)</span>
-            <span class="bonus-pill">11연!</span>
-          </button>
+        <!-- Action Controls Container -->
+        <div class="action-controls-container">
+          <!-- Sub Actions (2x2 on Mobile, 4x1 on PC) -->
+          <div class="sub-actions-grid">
+            <button class="game-btn secondary" id="btn-open-nickname" title="닉네임 설정">
+              <span class="btn-icon">✏️</span>
+              <span class="btn-text">닉네임 설정</span>
+            </button>
+            <button class="game-btn secondary" id="btn-open-main-char" title="대표 캐릭터 세팅">
+              <span class="btn-icon">⭐</span>
+              <span class="btn-text">대표 캐릭터</span>
+            </button>
+            <button class="game-btn primary" id="btn-open-binder" title="카드 도감 보기">
+              <span class="btn-icon">📖</span>
+              <span class="btn-text">카드 도감</span>
+            </button>
+            <button class="game-btn primary btn-attendance" id="btn-check-attendance" title="일일 출석체크 (+1000P)">
+              <span class="btn-icon">📅</span>
+              <span class="btn-text">출석 (+1000P)</span>
+            </button>
+          </div>
+
+          <!-- Main Gacha Actions (2 Columns) -->
+          <div class="gacha-actions-row">
+            <button class="game-btn gacha-single" id="btn-gacha-single" title="가챠 1회 소환 (100P)">
+              <span class="gacha-btn-title">🎲 가챠 1회</span>
+              <span class="gacha-btn-cost">(100P)</span>
+            </button>
+            <button class="game-btn gacha-multi" id="btn-gacha-multi" title="가챠 10회 소환 + 1장 보너스 (1000P)">
+              <span class="gacha-btn-title">✨ 가챠 10회</span>
+              <span class="gacha-btn-cost">(1000P)</span>
+              <span class="bonus-pill">11연!</span>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -521,13 +535,13 @@
   </div>
 
   <!-- Scripts with cache busters -->
-  <script src="js/audio.js?v=20260922_8"></script>
-  <script src="js/particles.js?v=20260922_8"></script>
-  <script src="js/gameData.js?v=20260922_8"></script>
-  <script src="js/api.js?v=20260922_8"></script>
-  <script src="js/userModel.js?v=20260922_8"></script>
-  <script src="js/gacha.js?v=20260922_8"></script>
-  <script src="js/auth.js?v=20260922_8"></script>
-  <script src="js/app.js?v=20260922_8"></script>
+  <script src="js/audio.js?v=20260922_9"></script>
+  <script src="js/particles.js?v=20260922_9"></script>
+  <script src="js/gameData.js?v=20260922_9"></script>
+  <script src="js/api.js?v=20260922_9"></script>
+  <script src="js/userModel.js?v=20260922_9"></script>
+  <script src="js/gacha.js?v=20260922_9"></script>
+  <script src="js/auth.js?v=20260922_9"></script>
+  <script src="js/app.js?v=20260922_9"></script>
 </body>
 </html>

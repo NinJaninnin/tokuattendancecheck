@@ -29,13 +29,21 @@
   -webkit-user-select: none;
 }
 
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
   font-family: var(--font-game);
   background-color: var(--bg-dark);
   color: var(--text-main);
   min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+  min-height: 100dvh;
 }
 
 /* --- Dynamic Background --- */
@@ -43,7 +51,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
   width: 100vw;
+  height: 100%;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -57,7 +67,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
   width: 100vw;
+  height: 100%;
   height: 100vh;
   background: radial-gradient(circle at center, rgba(11, 15, 25, 0.4) 0%, rgba(11, 15, 25, 0.92) 100%);
   z-index: -1;
@@ -68,9 +80,13 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  max-width: 1400px;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 1380px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 16px 20px;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* --- Top Header Bar --- */
@@ -276,13 +292,22 @@ body {
   overflow: hidden;
 }
 
-.bg-switcher-controls {
-  position: absolute;
-  top: 16px;
-  left: 16px;
+/* Stage Top Toolbar (배경 & 언어 통합 툴바) */
+.stage-top-controls {
+  width: 100%;
   display: flex;
-  gap: 6px;
-  z-index: 5;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  z-index: 6;
+  flex-wrap: wrap;
+}
+
+.bg-switcher-controls {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
 .bg-switch-btn {
@@ -294,6 +319,7 @@ body {
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .bg-switch-btn.active, .bg-switch-btn:hover {
@@ -304,12 +330,9 @@ body {
 
 /* Language Switcher Tabs */
 .lang-switcher-controls {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   display: flex;
-  gap: 5px;
-  z-index: 6;
+  gap: 4px;
+  align-items: center;
 }
 
 .lang-switch-btn {
@@ -324,6 +347,7 @@ body {
   align-items: center;
   gap: 3px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .lang-switch-btn:hover {
@@ -342,18 +366,18 @@ body {
 
 /* Speech Bubble */
 .character-speech-bubble {
-  position: absolute;
-  top: 54px;
-  right: 24px;
-  background: rgba(15, 23, 42, 0.9);
+  position: relative;
+  margin: 4px auto 12px;
+  background: rgba(15, 23, 42, 0.92);
   border: 2px solid var(--accent-cyan);
-  border-radius: 16px;
-  padding: 10px 16px;
-  max-width: 250px;
+  border-radius: 14px;
+  padding: 8px 16px;
+  max-width: min(340px, 92%);
   font-size: 0.84rem;
   line-height: 1.4;
   color: #e2e8f0;
-  box-shadow: 0 8px 24px rgba(0, 240, 255, 0.25);
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
   animation: floatBubble 4s ease-in-out infinite;
   z-index: 5;
 }
@@ -361,9 +385,10 @@ body {
 .character-speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: 30px;
-  border-width: 10px 10px 0;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0;
   border-style: solid;
   border-color: var(--accent-cyan) transparent;
   display: block;
@@ -372,7 +397,7 @@ body {
 
 @keyframes floatBubble {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-4px); }
 }
 
 /* Big Main Card Illustration */
@@ -383,12 +408,14 @@ body {
   align-items: center;
   cursor: pointer;
   perspective: 1000px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .card-stage-container {
   width: auto;
   max-width: min(320px, 86vw);
-  height: clamp(240px, 44vh, 460px);
+  height: clamp(260px, 42vh, 440px);
   aspect-ratio: 2 / 3;
   border-radius: 18px;
   position: relative;
@@ -575,12 +602,60 @@ body {
 }
 
 /* --- Control Buttons Panel --- */
+.action-controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+}
+
+.sub-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.sub-actions-grid .game-btn {
+  padding: 10px 8px;
+  font-size: 0.85rem;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.gacha-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.gacha-actions-row .game-btn {
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  justify-content: center;
+}
+
+.gacha-btn-title {
+  font-weight: 800;
+}
+
+.gacha-btn-cost {
+  font-size: 0.8rem;
+  opacity: 0.88;
+  margin-left: 2px;
+}
+
+/* Fallback for legacy class */
 .action-controls-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 14px;
-  margin-top: 24px;
+  gap: 10px;
+  margin-top: 18px;
   width: 100%;
 }
 
@@ -830,8 +905,8 @@ body {
 }
 
 .magic-summon-circle {
-  width: 320px;
-  height: 320px;
+  width: min(320px, 78vw);
+  height: min(320px, 78vw);
   border-radius: 50%;
   border: 3px dashed var(--accent-gold);
   position: absolute;
@@ -845,8 +920,8 @@ body {
 }
 
 .summon-core-crystal {
-  width: 100px;
-  height: 100px;
+  width: clamp(75px, 18vw, 100px);
+  height: clamp(75px, 18vw, 100px);
   border-radius: 50%;
   background: radial-gradient(circle, #fff, var(--accent-gold));
   box-shadow: 0 0 60px rgba(245, 158, 11, 0.9);
@@ -860,11 +935,13 @@ body {
 }
 
 .summon-tap-instruction {
-  margin-top: 220px;
-  font-size: 1.1rem;
+  margin-top: clamp(160px, 28vh, 220px);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   font-weight: 800;
   color: #fff;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  text-align: center;
+  max-width: 90vw;
   animation: textBlink 1.5s ease-in-out infinite;
 }
 
@@ -1406,24 +1483,139 @@ body {
   font-size: 0.75rem;
 }
 
-/* Tablet & Compact Desktop (768px ~ 1024px) */
+/* =========================================================================
+   RESPONSIVE LAYOUT & RESOLUTION ADAPTATION (모바일 & PC 전 해상도 최적화)
+   ========================================================================= */
+
+/* Ensure major container blocks never exceed viewport width */
+#app,
+.header-bar,
+.live-top-ranking-ribbon,
+.main-stage-grid,
+.character-stage-panel,
+.ranking-sidebar-panel,
+.action-controls-container,
+.stage-top-controls {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Tablet & Compact Desktop (861px ~ 1024px) */
 @media (max-width: 1024px) {
   #app {
-    padding: 10px 14px;
+    padding: 12px 14px;
   }
   .main-stage-grid {
-    grid-template-columns: 1fr 270px;
-    gap: 14px;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
   .card-stage-container {
     height: clamp(240px, 38vh, 380px);
   }
   .ranking-sidebar-panel {
-    padding: 14px;
+    padding: 16px;
+    height: auto;
+  }
+  .ranking-list {
+    max-height: 420px;
   }
 }
 
-/* Mobile & Small Screens (< 768px) */
+/* Tablet & Mobile Screens (<= 860px) - Header switches to structured 2-row layout */
+@media (max-width: 860px) {
+  #app {
+    padding: 10px 12px;
+  }
+
+  /* 2-Row Grid Header */
+  .header-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "profile actions"
+      "resources resources";
+    gap: 10px 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+  }
+
+  .user-profile-summary {
+    grid-area: profile;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .header-actions {
+    grid-area: actions;
+    gap: 6px;
+  }
+
+  .resources-group {
+    grid-area: resources;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .connection-timer-chip,
+  .res-chip {
+    padding: 6px 8px;
+    border-radius: 12px;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .connection-timer-chip {
+    font-size: 0.74rem;
+  }
+
+  .connection-timer-chip span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .res-chip .res-icon {
+    font-size: 0.95rem;
+  }
+
+  .res-chip .res-label {
+    font-size: 0.6rem;
+  }
+
+  .res-chip .res-val {
+    font-size: 0.88rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Sub actions become 2x2 grid */
+  .sub-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .sub-actions-grid .game-btn {
+    padding: 10px 8px;
+    font-size: 0.82rem;
+  }
+
+  .gacha-actions-row {
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8px;
+  }
+
+  .gacha-actions-row .game-btn {
+    padding: 11px 10px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Mobile Screens (< 768px) */
 @media (max-width: 768px) {
   #app {
     padding: 8px 10px;
@@ -1443,37 +1635,15 @@ body {
 
   .user-nickname {
     font-size: 0.92rem;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .badge-rank-title {
     font-size: 0.65rem;
     padding: 1px 6px;
-  }
-
-  .resources-group {
-    gap: 8px;
-  }
-
-  .res-chip {
-    padding: 4px 8px;
-    gap: 5px;
-  }
-
-  .res-chip .res-icon {
-    font-size: 0.85rem;
-  }
-
-  .res-chip .res-label {
-    font-size: 0.6rem;
-  }
-
-  .res-chip .res-val {
-    font-size: 0.82rem;
-  }
-
-  .connection-timer-chip {
-    padding: 4px 8px;
-    font-size: 0.72rem;
   }
 
   .icon-btn {
@@ -1485,72 +1655,67 @@ body {
   .live-top-ranking-ribbon {
     padding: 6px 10px;
     margin-bottom: 8px;
-  }
-
-  .main-stage-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    border-radius: 10px;
   }
 
   .character-stage-panel {
-    padding: 14px 10px;
+    padding: 12px 10px;
     border-radius: 14px;
+  }
+
+  .stage-top-controls {
+    margin-bottom: 6px;
+  }
+
+  .bg-switch-btn, .lang-switch-btn {
+    font-size: 0.7rem;
+    padding: 3px 7px;
   }
 
   .character-speech-bubble {
-    top: 48px;
-    right: 12px;
-    max-width: 190px;
+    font-size: 0.78rem;
     padding: 6px 12px;
-    font-size: 0.76rem;
+    margin: 2px auto 8px;
   }
 
   .card-stage-container {
-    height: clamp(220px, 34vh, 320px);
+    height: clamp(210px, 33vh, 310px);
     border-radius: 14px;
   }
 
-  .action-controls-row {
-    display: grid;
+  .action-controls-container {
+    margin-top: 10px;
+    gap: 6px;
+  }
+
+  .sub-actions-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6px;
-    margin-top: 10px;
-    width: 100%;
   }
 
-  .action-controls-row .game-btn {
-    padding: 8px 6px;
+  .sub-actions-grid .game-btn {
+    padding: 9px 6px;
     font-size: 0.78rem;
-    justify-content: center;
+    gap: 4px;
   }
 
-  .action-controls-row .game-btn:nth-child(5) {
-    grid-column: span 2;
-  }
-
-  .gacha-buttons-row {
-    display: flex;
+  .gacha-actions-row {
+    grid-template-columns: 1fr 1.2fr;
     gap: 6px;
-    width: 100%;
-    margin-top: 6px;
   }
 
-  .gacha-buttons-row .game-btn {
+  .gacha-actions-row .game-btn {
     padding: 10px 6px;
-    font-size: 0.82rem;
-    justify-content: center;
+    font-size: 0.84rem;
   }
 
-  .gacha-buttons-row .game-btn.gacha-single {
-    flex: 1;
-  }
-
-  .gacha-buttons-row .game-btn.gacha-multi {
-    flex: 1.2;
+  .bonus-pill {
+    font-size: 0.62rem;
+    padding: 1px 4px;
   }
 
   .ranking-sidebar-panel {
-    padding: 14px 10px;
+    padding: 12px 10px;
     border-radius: 14px;
   }
 
@@ -1559,43 +1724,167 @@ body {
   }
 }
 
-/* Height-constrained devices (e.g. Laptops 1366x768, Landscape mobile) */
+/* Small Smartphone Displays (<= 420px, e.g. iPhone SE, Galaxy A-series) */
+@media (max-width: 420px) {
+  #app {
+    padding: 6px 8px;
+  }
+
+  .header-bar {
+    padding: 6px 8px;
+    gap: 8px 6px;
+  }
+
+  .user-avatar-mini {
+    width: 32px;
+    height: 32px;
+  }
+
+  .user-nickname {
+    font-size: 0.84rem;
+    max-width: 95px;
+  }
+
+  .user-uid-sub {
+    font-size: 0.68rem;
+  }
+
+  .icon-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+
+  .resources-group {
+    gap: 4px;
+  }
+
+  .connection-timer-chip,
+  .res-chip {
+    padding: 5px 4px;
+    gap: 3px;
+  }
+
+  .connection-timer-chip span {
+    font-size: 0.65rem;
+  }
+
+  .timer-spinner {
+    width: 10px;
+    height: 10px;
+  }
+
+  .res-chip .res-icon {
+    font-size: 0.82rem;
+  }
+
+  .res-chip .res-val {
+    font-size: 0.76rem;
+  }
+
+  .stage-top-controls {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .bg-switch-btn, .lang-switch-btn {
+    font-size: 0.66rem;
+    padding: 2px 5px;
+    border-radius: 8px;
+  }
+
+  .card-stage-container {
+    height: clamp(190px, 30vh, 270px);
+  }
+
+  .sub-actions-grid .game-btn {
+    font-size: 0.72rem;
+    padding: 8px 4px;
+  }
+
+  .gacha-actions-row .game-btn {
+    font-size: 0.78rem;
+    padding: 9px 4px;
+  }
+
+  .gacha-btn-cost {
+    font-size: 0.72rem;
+  }
+}
+
+/* Height-constrained screens (e.g. Laptops 1366x768, Landscape phones) */
 @media (max-height: 800px) and (min-width: 769px) {
   #app {
-    padding: 8px 16px;
+    padding: 8px 14px;
   }
   .header-bar {
-    padding: 6px 14px;
+    padding: 6px 12px;
     margin-bottom: 6px;
   }
   .live-top-ranking-ribbon {
-    padding: 4px 12px;
+    padding: 4px 10px;
     margin-bottom: 6px;
   }
   .character-stage-panel {
-    padding: 12px 16px;
+    padding: 10px 14px;
+  }
+  .stage-top-controls {
+    margin-bottom: 4px;
+  }
+  .character-speech-bubble {
+    margin: 2px auto 6px;
+    padding: 4px 12px;
+    font-size: 0.76rem;
   }
   .card-stage-container {
-    height: clamp(210px, 38vh, 340px);
+    height: clamp(200px, 34vh, 310px);
   }
-  .action-controls-row {
+  .action-controls-container {
     margin-top: 8px;
     gap: 6px;
   }
-  .action-controls-row .game-btn {
-    padding: 6px 12px;
+  .sub-actions-grid .game-btn {
+    padding: 8px 8px;
     font-size: 0.8rem;
   }
-  .gacha-buttons-row {
-    margin-top: 6px;
-  }
-  .gacha-buttons-row .game-btn {
-    padding: 8px 16px;
-    font-size: 0.85rem;
+  .gacha-actions-row .game-btn {
+    padding: 9px 12px;
+    font-size: 0.88rem;
   }
   .ranking-list {
-    max-height: 380px;
+    max-height: 360px;
   }
 }
+
+/* Modals & Dialogs Responsive Tuning */
+.game-modal-overlay {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.game-modal-box {
+  width: 100%;
+  max-width: min(94vw, 500px);
+  max-height: 90vh;
+  max-height: 90dvh;
+}
+
+.game-modal-box.large {
+  max-width: min(96vw, 920px);
+  height: 88vh;
+  height: 88dvh;
+}
+
+.binder-grid {
+  grid-template-columns: repeat(auto-fill, minmax(clamp(72px, 20vw, 110px), 1fr));
+  gap: 8px;
+}
+
+.gacha-cards-grid {
+  grid-template-columns: repeat(auto-fill, minmax(clamp(82px, 25vw, 130px), 1fr));
+  gap: 8px;
+  padding: 6px;
+}
+
 
 
