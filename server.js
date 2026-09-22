@@ -450,27 +450,27 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (pathname === '/api/rankings') {
-    const isDummyUid = (uid) => {
-      if (!uid) return true;
-      const id = String(uid).trim();
-      return id === 'google_auth_uid_12345' ||
-             id.startsWith('ai_') ||
-             id.startsWith('dummy_') ||
-             id.startsWith('test_') ||
-             id.startsWith('mock_') ||
-             id.startsWith('user_godzilla') ||
-             id.startsWith('user_rider') ||
-             id.startsWith('user_ultra') ||
-             id.startsWith('user_space') ||
-             id.startsWith('user_red') ||
-             id.startsWith('user_v3') ||
-             id.startsWith('user_seven') ||
-             id.startsWith('user_sharivan') ||
-             id.startsWith('user_gamera') ||
-             id.startsWith('user_super');
-    };
+  const isDummyUid = (uid) => {
+    if (!uid) return true;
+    const id = String(uid).trim();
+    return id === 'google_auth_uid_12345' ||
+           id.startsWith('ai_') ||
+           id.startsWith('dummy_') ||
+           id.startsWith('test_') ||
+           id.startsWith('mock_') ||
+           id.startsWith('user_godzilla') ||
+           id.startsWith('user_rider') ||
+           id.startsWith('user_ultra') ||
+           id.startsWith('user_space') ||
+           id.startsWith('user_red') ||
+           id.startsWith('user_v3') ||
+           id.startsWith('user_seven') ||
+           id.startsWith('user_sharivan') ||
+           id.startsWith('user_gamera') ||
+           id.startsWith('user_super');
+  };
 
+  if (pathname === '/api/rankings') {
     let users = readUsers().filter(u => u && u.uid && !isDummyUid(u.uid));
 
     // 엑셀에서 동기화된 유저가 있다면 병합
@@ -496,6 +496,36 @@ const server = http.createServer((req, res) => {
       success: true,
       rankings: top10,
       total_users: users.length,
+      updated_at: new Date().toISOString()
+    }));
+    return;
+  }
+
+  // --- 실시간 현재 접속 유저 조회 엔드포인트 (최근 3분 이내 활동) ---
+  if (pathname === '/api/online-users' && req.method === 'GET') {
+    const now = Date.now();
+    const thresholdMs = 3 * 60 * 1000; // 3분 이내 활동한 유저를 온라인으로 판정
+    const users = readUsers().filter(u => {
+      if (!u || !u.uid || isDummyUid(u.uid)) return false;
+      const lastActive = u.last_active_timestamp || u.last_sync_timestamp || (u.updated_at ? new Date(u.updated_at).getTime() : 0);
+      return (now - lastActive) <= thresholdMs;
+    });
+
+    users.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+
+    const onlineList = users.map(u => ({
+      uid: u.uid,
+      nickname: u.nickname || '모험가',
+      main_character: u.main_character || 'card_0000',
+      total_sp: u.total_sp || 0,
+      last_active_timestamp: u.last_active_timestamp || u.last_sync_timestamp || now
+    }));
+
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({
+      success: true,
+      count: onlineList.length,
+      online_users: onlineList,
       updated_at: new Date().toISOString()
     }));
     return;
@@ -650,6 +680,7 @@ const server = http.createServer((req, res) => {
 
         // [F12 치트 원천 차단] 서버에서 정확한 SP 재계산
         user.total_sp = recalculateUserSP(user, metadata);
+        user.last_active_timestamp = Date.now();
         user.updated_at = new Date().toISOString();
         writeUsers(users);
 
@@ -700,6 +731,7 @@ const server = http.createServer((req, res) => {
         // 서버에서 출석 보상 1,000P 지급
         user.points = (user.points || 0) + 1000;
         user.last_attendance_date = today;
+        user.last_active_timestamp = Date.now();
         user.updated_at = new Date().toISOString();
         writeUsers(users);
 
@@ -744,8 +776,11 @@ const server = http.createServer((req, res) => {
           user.points = (user.points || 0) + pointsEarned;
           user.last_sync_timestamp = lastSync + (pointsEarned * 60000);
           user.updated_at = new Date().toISOString();
-          writeUsers(users);
         }
+
+        // 항상 활성 접속 타임스탬프 갱신
+        user.last_active_timestamp = now;
+        writeUsers(users);
 
         const nextRemaining = 60000 - ((now - (user.last_sync_timestamp || now)) % 60000);
         const remainingSec = Math.max(1, Math.ceil(nextRemaining / 1000));
@@ -792,6 +827,7 @@ const server = http.createServer((req, res) => {
           }
           // [F12 치트 원천 차단] 클라이언트가 임의로 보낸 points와 total_sp는 무시하고 서버 데이터 유지 및 재계산
           u.total_sp = recalculateUserSP(u, metadata);
+          u.last_active_timestamp = Date.now();
           u.updated_at = new Date().toISOString();
           users[existingIdx] = u;
         } else {
@@ -808,6 +844,7 @@ const server = http.createServer((req, res) => {
             points: 1000,
             last_attendance_date: getTodayKST(),
             last_sync_timestamp: Date.now(),
+            last_active_timestamp: Date.now(),
             is_initial_gift_received: true,
             created_at: Date.now(),
             owned_cards: initialOwned,

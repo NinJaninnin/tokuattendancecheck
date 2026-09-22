@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>매일 출석체크 & 가챠 시스템</title>
-  <link rel="stylesheet" href="css/style.css?v=20260922_9">
+  <link rel="stylesheet" href="css/style.css?v=20260922_10">
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Google Identity Services (GIS) -->
@@ -76,6 +76,10 @@
       <div class="ribbon-chips-container" id="live-top-ranking-chips">
         <!-- 동적 렌더링 -->
       </div>
+      <button class="online-users-badge-chip" id="btn-show-online" title="현재 접속 중인 모험가 보기">
+        <span class="online-pulse-dot"></span>
+        <span id="live-online-count-text">접속 중: 1명</span>
+      </button>
     </div>
 
     <!-- Main Stage Grid -->
@@ -157,20 +161,28 @@
         </div>
       </section>
 
-      <!-- Right Sidebar: 1-10 Ranking Board -->
+      <!-- Right Sidebar: 1-10 Ranking Board & Online Users -->
       <aside class="ranking-sidebar-panel">
-        <div class="ranking-header">
-          <div class="ranking-title-group">
-            <span style="font-size: 1.2rem;">🏅</span>
-            <span class="ranking-title">SP 랭킹 TOP 10</span>
-          </div>
+        <div class="ranking-tabs-header">
+          <button class="rank-tab-btn active" id="tab-btn-rankings" title="SP 랭킹 TOP 10">
+            <span>🏅 SP 랭킹</span>
+          </button>
+          <button class="rank-tab-btn" id="tab-btn-online" title="현재 접속 중인 플레이어">
+            <span class="online-pulse-dot mini"></span>
+            <span>접속자 (<span id="sidebar-online-count">1</span>)</span>
+          </button>
           <div class="ranking-refresh-badge" id="ranking-timer-badge">
             갱신: 59분
           </div>
         </div>
 
-        <!-- 1~10 Ranking List -->
+        <!-- 1~10 Ranking List Tab -->
         <div class="ranking-list" id="ranking-list-container">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Online Users List Tab -->
+        <div class="ranking-list online-users-list" id="online-users-container" style="display: none;">
           <!-- Dynamically populated -->
         </div>
 
@@ -534,14 +546,41 @@
     </div>
   </div>
 
+  <!-- =====================================================================
+       ONLINE USERS MODAL (실시간 접속 중인 모험가 목록)
+       ===================================================================== -->
+  <div class="game-modal-overlay" id="modal-online-users">
+    <div class="game-modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+          <span class="online-pulse-dot"></span>
+          실시간 접속 모험가 (<span id="modal-online-count">1</span>명)
+        </h3>
+        <button class="modal-close-btn" data-close="modal-online-users">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="online-users-modal-desc">
+          최근 3분 이내 활동 기록이 있는 실시간 접속 플레이어 목록입니다.
+        </div>
+        <div class="online-users-list" id="modal-online-users-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="game-btn secondary" id="btn-refresh-online-modal">🔄 새로고침</button>
+        <button class="game-btn primary" data-close="modal-online-users">닫기</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts with cache busters -->
-  <script src="js/audio.js?v=20260922_9"></script>
-  <script src="js/particles.js?v=20260922_9"></script>
-  <script src="js/gameData.js?v=20260922_9"></script>
-  <script src="js/api.js?v=20260922_9"></script>
-  <script src="js/userModel.js?v=20260922_9"></script>
-  <script src="js/gacha.js?v=20260922_9"></script>
-  <script src="js/auth.js?v=20260922_9"></script>
-  <script src="js/app.js?v=20260922_9"></script>
+  <script src="js/audio.js?v=20260922_10"></script>
+  <script src="js/particles.js?v=20260922_10"></script>
+  <script src="js/gameData.js?v=20260922_10"></script>
+  <script src="js/api.js?v=20260922_10"></script>
+  <script src="js/userModel.js?v=20260922_10"></script>
+  <script src="js/gacha.js?v=20260922_10"></script>
+  <script src="js/auth.js?v=20260922_10"></script>
+  <script src="js/app.js?v=20260922_10"></script>
 </body>
 </html>

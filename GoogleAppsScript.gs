@@ -39,6 +39,8 @@ function doGet(e) {
       result = getMetadata();
     } else if (action === 'getRankings') {
       result = getRankings();
+    } else if (action === 'getOnlineUsers') {
+      result = getOnlineUsers();
     } else if (action === 'getUser') {
       const uid = params.uid;
       result = getUser(uid);
@@ -245,6 +247,64 @@ function getRankings() {
     success: true,
     rankings: top10,
     total_users: users.length,
+    updated_at: new Date().toISOString()
+  };
+}
+
+/**
+ * 실시간 접속자 조회 (최근 5분 이내 활동 기록 유저)
+ */
+function getOnlineUsers() {
+  const ss = getSpreadsheet();
+  const userSheet = ss.getSheetByName('user');
+  if (!userSheet) {
+    return { success: true, count: 0, online_users: [], updated_at: new Date().toISOString() };
+  }
+
+  const data = userSheet.getDataRange().getValues();
+  if (data.length <= 1) {
+    return { success: true, count: 0, online_users: [], updated_at: new Date().toISOString() };
+  }
+
+  const headers = data[0].map(h => String(h).trim().toLowerCase());
+  const uidIdx = headers.indexOf('uid');
+  const nickIdx = headers.indexOf('nickname');
+  const charIdx = headers.indexOf('main_character');
+  const spIdx = headers.indexOf('total_sp');
+  const syncIdx = headers.indexOf('last_sync_timestamp');
+  const updatedIdx = headers.indexOf('updated_at');
+
+  const now = new Date().getTime();
+  const threshold = 5 * 60 * 1000;
+  let onlineUsers = [];
+
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const uid = String(row[uidIdx] || '').trim();
+    if (!uid || uid === 'google_auth_uid_12345' || uid.indexOf('test_') === 0 || uid.indexOf('dummy_') === 0 || uid.indexOf('ai_') === 0) continue;
+
+    let lastActive = Number(row[syncIdx]) || 0;
+    if (!lastActive && updatedIdx >= 0 && row[updatedIdx]) {
+      lastActive = new Date(row[updatedIdx]).getTime();
+    }
+
+    if (now - lastActive <= threshold) {
+      onlineUsers.push({
+        uid: uid,
+        nickname: String(row[nickIdx] || '모험가'),
+        main_character: String(row[charIdx] || 'card_0000'),
+        total_sp: Number(row[spIdx]) || 0,
+        last_active_timestamp: lastActive
+      });
+    }
+  }
+
+  onlineUsers.sort((a, b) => b.total_sp - a.total_sp);
+
+  return {
+    success: true,
+    count: onlineUsers.length,
+    online_users: onlineUsers,
     updated_at: new Date().toISOString()
   };
 }

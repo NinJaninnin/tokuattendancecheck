@@ -140,8 +140,128 @@ class ApiService {
       }
     } catch (e) {}
 
-    // 5. 기본 공식 랭커 데이터 및 로컬 유저 폴백
+    // 5. 기본 랭커 데이터 및 로컬 유저 폴백
     return this.getMockRankings();
+  }
+
+  // 실시간 접속 유저 조회 (최근 3~5분 이내 활동 유저)
+  async fetchOnlineUsers() {
+    const isDummyUid = (uid) => {
+      if (!uid) return true;
+      const id = String(uid).trim();
+      return id === 'google_auth_uid_12345' ||
+             id.startsWith('ai_') ||
+             id.startsWith('dummy_') ||
+             id.startsWith('test_') ||
+             id.startsWith('mock_') ||
+             id.startsWith('user_godzilla') ||
+             id.startsWith('user_rider') ||
+             id.startsWith('user_ultra') ||
+             id.startsWith('user_space') ||
+             id.startsWith('user_red') ||
+             id.startsWith('user_v3') ||
+             id.startsWith('user_seven') ||
+             id.startsWith('user_sharivan') ||
+             id.startsWith('user_gamera') ||
+             id.startsWith('user_super');
+    };
+
+    const userMap = new Map();
+    const now = Date.now();
+    const thresholdMs = 3 * 60 * 1000;
+
+    // 1. Google Apps Script 우선 시도
+    if (this.gasUrl) {
+      try {
+        const resp = await fetch(`${this.gasUrl}?action=getOnlineUsers`);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.success && Array.isArray(data.online_users)) {
+            data.online_users.forEach(u => {
+              if (u && u.uid && !isDummyUid(u.uid)) {
+                userMap.set(u.uid, {
+                  uid: u.uid,
+                  nickname: u.nickname || '특촬용사',
+                  main_character: u.main_character || 'card_0000',
+                  total_sp: Number(u.total_sp) || 0,
+                  last_active_timestamp: Number(u.last_active_timestamp) || now
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 2. 로컬 서버 조회 (localhost 환경)
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/online-users');
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.success && Array.isArray(data.online_users)) {
+            data.online_users.forEach(u => {
+              if (u && u.uid && !isDummyUid(u.uid)) {
+                userMap.set(u.uid, {
+                  uid: u.uid,
+                  nickname: u.nickname || '모험가',
+                  main_character: u.main_character || 'card_0000',
+                  total_sp: Number(u.total_sp) || 0,
+                  last_active_timestamp: Number(u.last_active_timestamp) || now
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 3. 로컬스토리지 내 최근 활동 유저 확인
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('toku_user_')) {
+          try {
+            const u = JSON.parse(localStorage.getItem(key));
+            if (u && u.uid && !isDummyUid(u.uid)) {
+              const lastActive = u.last_active_timestamp || u.last_sync_timestamp || (u.updated_at ? new Date(u.updated_at).getTime() : 0);
+              if (now - lastActive <= thresholdMs) {
+                userMap.set(u.uid, {
+                  uid: u.uid,
+                  nickname: u.nickname || '모험가',
+                  main_character: u.main_character || 'card_0000',
+                  total_sp: Number(u.total_sp) || 0,
+                  last_active_timestamp: lastActive
+                });
+              }
+            }
+          } catch (e) {}
+        }
+      }
+    } catch (e) {}
+
+    // 4. 현재 접속 중인 본인 유저 정보는 항상 1순위 온라인으로 보장
+    const curUser = window.userModel ? window.userModel.getUser() : null;
+    if (curUser && curUser.uid && !isDummyUid(curUser.uid)) {
+      userMap.set(curUser.uid, {
+        uid: curUser.uid,
+        nickname: curUser.nickname || '모험가',
+        main_character: curUser.main_character || 'card_0000',
+        total_sp: Number(curUser.total_sp) || 0,
+        last_active_timestamp: now,
+        is_me: true
+      });
+    }
+
+    const onlineList = Array.from(userMap.values());
+    onlineList.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+
+    return {
+      success: true,
+      count: onlineList.length,
+      online_users: onlineList,
+      updated_at: new Date().toISOString()
+    };
   }
 
   // 유저 데이터 저장 (GAS & 로컬 & 로컬스토리지 동시 동기화)

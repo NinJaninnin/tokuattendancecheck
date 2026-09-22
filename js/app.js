@@ -23,6 +23,7 @@ class AppController {
 
     this.rankingNextUpdateTime = Date.now() + 3600000;
     this.cachedRankings = window.api ? window.api.getMockRankings().rankings : [];
+    this.cachedOnlineUsers = [];
     this.currentBinderFilter = 'ALL';
     this.pendingGachaResult = null;
     this.currentLang = localStorage.getItem('toku_selected_lang') || 'ko';
@@ -43,8 +44,12 @@ class AppController {
     }
     this.checkAndUpdateSheetStatusUI(metadata && metadata.sheetConnected, metadata ? metadata.cardlist.length : 0);
 
-    // ★ 초기 랭킹 데이터를 즉시 로드하여 상단 리본 및 랭킹판에 상시 출력 (절대 빈 랭킹/나홀로 표시 방지)
+    // ★ 초기 랭킹 데이터를 즉시 로드하여 상단 리본 및 랭킹판에 상시 출력
     await this.refreshRankings();
+
+    // ★ 실시간 접속자 목록 즉시 로드 및 15초 주기 자동 갱신
+    await this.refreshOnlineUsers();
+    setInterval(() => this.refreshOnlineUsers(), 15000);
 
     // 2. 인증 컨트롤러 콜백 설정
     window.authController.onLoginSuccess = async (authData) => {
@@ -323,6 +328,9 @@ class AppController {
         else if (rankNum === 2) { posClass = 'silver'; crown = '🥈'; }
         else if (rankNum === 3) { posClass = 'bronze'; crown = '🥉'; }
 
+        const isOnline = this.cachedOnlineUsers.some(ou => ou.uid === item.uid) || (curUser && curUser.uid === item.uid);
+        const onlineDot = isOnline ? `<span class="online-pulse-dot mini" title="현재 접속 중"></span> ` : '';
+
         const row = document.createElement('div');
         row.className = `ranking-item ${curUser && curUser.uid === item.uid ? 'my-rank-item' : ''}`;
         row.innerHTML = `
@@ -331,7 +339,7 @@ class AppController {
             <img src="${cardImg}" alt="Card">
           </div>
           <div class="rank-user-info">
-            <span class="rank-username">${escapeHtml(item.nickname || '모험가')}</span>
+            <span class="rank-username">${onlineDot}${escapeHtml(item.nickname || '모험가')}</span>
             <span class="rank-sp-val">${(item.total_sp || 0).toLocaleString()} SP</span>
           </div>
         `;
@@ -367,11 +375,92 @@ class AppController {
       const myRank = myRankIdx >= 0 ? myRankIdx + 1 : '-';
 
       document.getElementById('my-rank-pos').textContent = myRank <= 3 ? ['🥇','🥈','🥉'][myRank-1] : `${myRank}위`;
-      document.getElementById('my-rank-name').textContent = curUser.nickname || '나';
+      const myNameEl = document.getElementById('my-rank-name');
+      if (myNameEl) {
+        myNameEl.innerHTML = `<span class="online-pulse-dot mini" title="현재 접속 중"></span> ${escapeHtml(curUser.nickname || '모험가')} (나)`;
+      }
       document.getElementById('my-rank-sp').textContent = `${(curUser.total_sp || 0).toLocaleString()} SP`;
       document.getElementById('my-rank-avatar').src = window.gameData.getCardImagePath(curUser.main_character);
       document.getElementById('header-rank-badge').textContent = `RANK ${myRank}`;
     }
+  }
+
+  // 실시간 접속자 목록 갱신 (15초 주기 및 이벤트 시 호출)
+  async refreshOnlineUsers() {
+    try {
+      const data = await window.api.fetchOnlineUsers();
+      if (data && Array.isArray(data.online_users)) {
+        this.cachedOnlineUsers = data.online_users;
+        const count = data.count !== undefined ? data.count : data.online_users.length;
+
+        // 1. 리본 배지 갱신
+        const ribbonCount = document.getElementById('live-online-count-text');
+        if (ribbonCount) ribbonCount.textContent = `접속 중: ${count}명`;
+
+        // 2. 사이드바 탭 카운트 갱신
+        const sidebarCount = document.getElementById('sidebar-online-count');
+        if (sidebarCount) sidebarCount.textContent = count;
+
+        // 3. 모달 카운트 갱신
+        const modalCount = document.getElementById('modal-online-count');
+        if (modalCount) modalCount.textContent = count;
+
+        // 4. 접속자 뷰 렌더링
+        this.renderOnlineUsersList();
+      }
+    } catch (e) {
+      console.warn('[App] Failed to refresh online users:', e);
+    }
+  }
+
+  // 실시간 접속자 목록 렌더링 (사이드바 탭 및 모달)
+  renderOnlineUsersList() {
+    const sidebarContainer = document.getElementById('online-users-container');
+    const modalContainer = document.getElementById('modal-online-users-list');
+    const curUser = window.userModel.getUser();
+
+    const renderTo = (container) => {
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (!this.cachedOnlineUsers || this.cachedOnlineUsers.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 28px 10px; color: var(--text-sub); font-size: 0.85rem;">
+            <div style="font-size: 1.5rem; margin-bottom: 4px;">🟢</div>
+            현재 접속 중인 플레이어가 없습니다.
+          </div>
+        `;
+        return;
+      }
+
+      this.cachedOnlineUsers.forEach(u => {
+        const isMe = curUser && curUser.uid === u.uid;
+        const cardImg = window.gameData.getCardImagePath(u.main_character);
+
+        const item = document.createElement('div');
+        item.className = `online-user-item ${isMe ? 'my-item' : ''}`;
+        item.innerHTML = `
+          <div class="online-user-avatar">
+            <img src="${cardImg}" alt="Avatar">
+          </div>
+          <div class="online-user-info">
+            <span class="online-user-name">
+              <span class="online-pulse-dot mini"></span>
+              ${escapeHtml(u.nickname || '모험가')}${isMe ? ' (나)' : ''}
+            </span>
+            <span class="online-user-sp">${(u.total_sp || 0).toLocaleString()} SP</span>
+          </div>
+          <div class="online-tag">
+            <span class="online-pulse-dot mini"></span>
+            <span>접속 중</span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    };
+
+    renderTo(sidebarContainer);
+    renderTo(modalContainer);
   }
 
   // =========================================================================
@@ -782,6 +871,52 @@ class AppController {
       window.soundCtrl.playClick();
       this.openSettingsModal();
     };
+
+    // 랭킹 / 실시간 접속자 탭 전환
+    const tabRankings = document.getElementById('tab-btn-rankings');
+    const tabOnline = document.getElementById('tab-btn-online');
+    const rankingList = document.getElementById('ranking-list-container');
+    const onlineList = document.getElementById('online-users-container');
+
+    if (tabRankings && tabOnline && rankingList && onlineList) {
+      tabRankings.onclick = () => {
+        window.soundCtrl.playClick();
+        tabRankings.classList.add('active');
+        tabOnline.classList.remove('active');
+        rankingList.style.display = 'flex';
+        onlineList.style.display = 'none';
+      };
+
+      tabOnline.onclick = () => {
+        window.soundCtrl.playClick();
+        tabOnline.classList.add('active');
+        tabRankings.classList.remove('active');
+        rankingList.style.display = 'none';
+        onlineList.style.display = 'flex';
+        this.refreshOnlineUsers();
+      };
+    }
+
+    // 리본 배지 클릭 시 접속자 모달 오픈
+    const btnShowOnline = document.getElementById('btn-show-online');
+    if (btnShowOnline) {
+      btnShowOnline.onclick = () => {
+        window.soundCtrl.playClick();
+        this.refreshOnlineUsers();
+        this.openModal('modal-online-users');
+      };
+    }
+
+    // 접속자 모달 새로고침 버튼
+    const btnRefreshOnlineModal = document.getElementById('btn-refresh-online-modal');
+    if (btnRefreshOnlineModal) {
+      btnRefreshOnlineModal.onclick = async () => {
+        window.soundCtrl.playClick();
+        btnRefreshOnlineModal.disabled = true;
+        await this.refreshOnlineUsers();
+        setTimeout(() => { btnRefreshOnlineModal.disabled = false; }, 400);
+      };
+    }
 
     // 구글 시트 즉시 동기화 버튼
     const syncBtn = document.getElementById('btn-trigger-sheet-sync');
