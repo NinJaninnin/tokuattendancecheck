@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>매일 출석체크 & 가챠 시스템</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20260922_2">
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Google Identity Services (GIS) -->
@@ -78,6 +78,13 @@
           <button class="bg-switch-btn" data-bg="2">배경 3</button>
         </div>
 
+        <!-- Language Switcher Tabs (name: 한국어 / name_jp: 日本語 / name_en: English) -->
+        <div class="lang-switcher-controls" id="lang-switcher">
+          <button class="lang-switch-btn active" data-lang="ko" title="한국어 (name)">🇰🇷 한국어</button>
+          <button class="lang-switch-btn" data-lang="ja" title="日本語 (name_jp)">🇯🇵 日本語</button>
+          <button class="lang-switch-btn" data-lang="en" title="English (name_en)">🇺🇸 English</button>
+        </div>
+
         <!-- Interactive Character Speech Bubble -->
         <div class="character-speech-bubble" id="char-speech-bubble">
           출석체크 완료! 오늘의 행운을 시험해 볼까요?
@@ -93,6 +100,7 @@
             <div class="card-info-bottom-banner">
               <div>
                 <div class="card-name-title" id="main-card-name">히어로 #0000</div>
+                <div class="card-name-sub" id="main-card-name-sub"></div>
                 <div class="card-count-badge" id="main-card-count">보유: 1장</div>
               </div>
               <div class="card-sp-tag" id="main-card-sp">SP +200</div>
@@ -324,11 +332,11 @@
       <div class="modal-body">
         <div class="binder-tabs" id="binder-tabs">
           <button class="tab-btn active" data-filter="ALL">전체</button>
+          <button class="tab-btn" data-filter="SUHR">SUHR</button>
+          <button class="tab-btn" data-filter="HR">HR</button>
           <button class="tab-btn" data-filter="UR">UR</button>
-          <button class="tab-btn" data-filter="SSR">SSR</button>
           <button class="tab-btn" data-filter="SR">SR</button>
           <button class="tab-btn" data-filter="R">R</button>
-          <button class="tab-btn" data-filter="N">N</button>
           <button class="tab-btn" data-filter="OWNED">보유 카드만</button>
         </div>
         <div class="binder-grid" id="binder-cards-grid"></div>
@@ -439,14 +447,14 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="js/audio.js"></script>
-  <script src="js/particles.js"></script>
-  <script src="js/gameData.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/userModel.js"></script>
-  <script src="js/gacha.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/app.js"></script>
+  <!-- Scripts with cache busters -->
+  <script src="js/audio.js?v=20260922_2"></script>
+  <script src="js/particles.js?v=20260922_2"></script>
+  <script src="js/gameData.js?v=20260922_2"></script>
+  <script src="js/api.js?v=20260922_2"></script>
+  <script src="js/userModel.js?v=20260922_2"></script>
+  <script src="js/gacha.js?v=20260922_2"></script>
+  <script src="js/auth.js?v=20260922_2"></script>
+  <script src="js/app.js?v=20260922_2"></script>
 </body>
 </html>

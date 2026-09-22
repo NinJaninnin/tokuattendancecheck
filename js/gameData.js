@@ -8,8 +8,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "고지라(1954)",
     "rank": "HR",
     "sp_point": 100,
-    "name_jp": "Godzilla(1954)",
-    "name_en": "ゴジラ(1954)",
+    "name_jp": "ゴジラ(1954)",
+    "name_en": "Godzilla(1954)",
     "is_complete": true
   },
   {
@@ -17,8 +17,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "킹콩(1962)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "King Kong(1962)",
-    "name_en": "キングコング(1962)",
+    "name_jp": "キングコング(1962)",
+    "name_en": "King Kong(1962)",
     "is_complete": true
   },
   {
@@ -26,8 +26,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오오타코(1962)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Giant Octopus(1962)",
-    "name_en": "大おおダコ(1962)",
+    "name_jp": "大おおダコ(1962)",
+    "name_en": "Giant Octopus(1962)",
     "is_complete": true
   },
   {
@@ -35,8 +35,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "모스라(1964)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Mothra(1964)",
-    "name_en": "モスラ(1964)",
+    "name_jp": "モスラ(1964)",
+    "name_en": "Mothra(1964)",
     "is_complete": true
   },
   {
@@ -44,8 +44,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "킹 기도라(1964)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "King Ghidorah(1964)",
-    "name_en": "キングギドラ(1964)",
+    "name_jp": "キングギドラ(1964)",
+    "name_en": "King Ghidorah(1964)",
     "is_complete": true
   },
   {
@@ -53,8 +53,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "라돈(1964)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Rodan(1964)",
-    "name_en": "ラドン(1964)",
+    "name_jp": "ラドン(1964)",
+    "name_en": "Rodan(1964)",
     "is_complete": true
   },
   {
@@ -62,8 +62,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "에비라(1966)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Ebirah(1966)",
-    "name_en": "エビラ(1966)",
+    "name_jp": "エビラ(1966)",
+    "name_en": "Ebirah(1966)",
     "is_complete": true
   },
   {
@@ -71,8 +71,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오오콘돌(1966)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Giant Condor(1966)",
-    "name_en": "大コンドル(1966)",
+    "name_jp": "大コンドル(1966)",
+    "name_en": "Giant Condor(1966)",
     "is_complete": true
   },
   {
@@ -80,8 +80,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미니라(1967)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Minilla(1967)",
-    "name_en": "ミニラ(1967)",
+    "name_jp": "ミニラ(1967)",
+    "name_en": "Minilla(1967)",
     "is_complete": true
   },
   {
@@ -89,8 +89,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "카마키라스(1967)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Kamacuras(1967)",
-    "name_en": "カマキラス(1967)",
+    "name_jp": "カマキラス(1967)",
+    "name_en": "Kamacuras(1967)",
     "is_complete": true
   },
   {
@@ -98,8 +98,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쿠몽가(1967)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Kumonga(1967)",
-    "name_en": "クモンガ(1967)",
+    "name_jp": "クモンガ(1967)",
+    "name_en": "Kumonga(1967)",
     "is_complete": true
   },
   {
@@ -107,8 +107,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "안기라스(1968)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Anguirus(1968)",
-    "name_en": "アンギラス(1968)",
+    "name_jp": "アンギラス(1968)",
+    "name_en": "Anguirus(1968)",
     "is_complete": true
   },
   {
@@ -116,8 +116,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "고로자우루스(1968)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Gorosaurus(1968)",
-    "name_en": "ゴロザウルス(1968)",
+    "name_jp": "ゴロザウルス(1968)",
+    "name_en": "Gorosaurus(1968)",
     "is_complete": true
   },
   {
@@ -125,8 +125,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "바라곤(1968)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Baragon(1968)",
-    "name_en": "バラゴン(1968)",
+    "name_jp": "バラゴン(1968)",
+    "name_en": "Baragon(1968)",
     "is_complete": true
   },
   {
@@ -134,8 +134,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "만다(1968)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Manda(1968)",
-    "name_en": "マンダ(1968)",
+    "name_jp": "マンダ(1968)",
+    "name_en": "Manda(1968)",
     "is_complete": true
   },
   {
@@ -143,8 +143,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "헤도라(1971)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Hedorah(1971)",
-    "name_en": "ヘドラ(1971)",
+    "name_jp": "ヘドラ(1971)",
+    "name_en": "Hedorah(1971)",
     "is_complete": true
   },
   {
@@ -152,8 +152,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "가이강(1972)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Gigan(1972)",
-    "name_en": "ガイガン(1972)",
+    "name_jp": "ガイガン(1972)",
+    "name_en": "Gigan(1972)",
     "is_complete": true
   },
   {
@@ -161,8 +161,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "메가로(1973)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Megalon(1973)",
-    "name_en": "メガロ(1973)",
+    "name_jp": "メガロ(1973)",
+    "name_en": "Megalon(1973)",
     "is_complete": true
   },
   {
@@ -170,8 +170,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "제트 쟈가(1973)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Jet Jaguar(1973)",
-    "name_en": "ジェット・ジャガー(1973)",
+    "name_jp": "ジェット・ジャガー(1973)",
+    "name_en": "Jet Jaguar(1973)",
     "is_complete": true
   },
   {
@@ -179,8 +179,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "메카고지라(1974)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "MechaGodzilla(1974)",
-    "name_en": "メカゴジラ(1974)",
+    "name_jp": "メカゴジラ(1974)",
+    "name_en": "MechaGodzilla(1974)",
     "is_complete": true
   },
   {
@@ -188,8 +188,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "킹 시사(1974)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "King Caesar(1974)",
-    "name_en": "キングシーサー(1974)",
+    "name_jp": "キングシーサー(1974)",
+    "name_en": "King Caesar(1974)",
     "is_complete": true
   },
   {
@@ -197,8 +197,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "치타노자우루스(1975)",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Titanosaurus(1975)",
-    "name_en": "チタノザウルス(1975)",
+    "name_jp": "チタノザウルス(1975)",
+    "name_en": "Titanosaurus(1975)",
     "is_complete": true
   },
   {
@@ -206,8 +206,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨",
     "rank": "HR",
     "sp_point": 100,
-    "name_jp": "Ultraman",
-    "name_en": "ウルトラマン",
+    "name_jp": "ウルトラマン",
+    "name_en": "Ultraman",
     "is_complete": true
   },
   {
@@ -215,8 +215,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "하야타 신",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Shin Hayata",
-    "name_en": "早田 進",
+    "name_jp": "早田 進",
+    "name_en": "Shin Hayata",
     "is_complete": true
   },
   {
@@ -224,8 +224,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주괴수 배무라",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Monster Bemular",
-    "name_en": "宇宙怪獣 ベムラー",
+    "name_jp": "宇宙怪獣 ベムラー",
+    "name_en": "Space Monster Bemular",
     "is_complete": true
   },
   {
@@ -233,8 +233,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "발탄 성인",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Alien Baltan",
-    "name_en": "バルタン 星人",
+    "name_jp": "バルタン 星人",
+    "name_en": "Alien Baltan",
     "is_complete": true
   },
   {
@@ -242,8 +242,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "가짜 울트라맨",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Imitation Ultraman",
-    "name_en": "にせウルトラマン",
+    "name_jp": "にせウルトラマン",
+    "name_en": "Imitation Ultraman",
     "is_complete": true
   },
   {
@@ -251,8 +251,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "모래지옥괴수 사이고",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Saigo",
-    "name_en": "サイゴ",
+    "name_jp": "サイゴ",
+    "name_en": "Saigo",
     "is_complete": true
   },
   {
@@ -260,8 +260,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "광열괴수 키라",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Keylla",
-    "name_en": "キーラ",
+    "name_jp": "キーラ",
+    "name_en": "Keylla",
     "is_complete": true
   },
   {
@@ -269,8 +269,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주공룡 젯톤",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Space Dinosaur Zetton",
-    "name_en": "宇宙恐竜 ゼットン",
+    "name_jp": "宇宙恐竜 ゼットン",
+    "name_en": "Space Dinosaur Zetton",
     "is_complete": true
   },
   {
@@ -278,8 +278,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨 세븐",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ultra Seven",
-    "name_en": "ウルトラセブン",
+    "name_jp": "ウルトラセブン",
+    "name_en": "Ultra Seven",
     "is_complete": true
   },
   {
@@ -287,8 +287,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "모로보시 단",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Dan Moroboshi",
-    "name_en": "モロボシ・ダン",
+    "name_jp": "モロボシ・ダン",
+    "name_en": "Dan Moroboshi",
     "is_complete": true
   },
   {
@@ -296,8 +296,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "유리 안느",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Anne Yuri",
-    "name_en": "友里アンヌ",
+    "name_jp": "友里アンヌ",
+    "name_en": "Anne Yuri",
     "is_complete": true
   },
   {
@@ -305,8 +305,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "후지 아키코",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Akiko Fuji",
-    "name_en": "フジ・アキコ",
+    "name_jp": "フジ・アキコ",
+    "name_en": "Akiko Fuji",
     "is_complete": true
   },
   {
@@ -314,8 +314,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨 잭",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ultraman Jack",
-    "name_en": "ウルトラマンジャック",
+    "name_jp": "ウルトラマンジャック",
+    "name_en": "Ultraman Jack",
     "is_complete": true
   },
   {
@@ -323,8 +323,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "고 히데키",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Hideki Go",
-    "name_en": "郷 秀樹",
+    "name_jp": "郷 秀樹",
+    "name_en": "Hideki Go",
     "is_complete": true
   },
   {
@@ -332,8 +332,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "사카타 아키",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Aki Sakata",
-    "name_en": "坂田 アキ",
+    "name_jp": "坂田 アキ",
+    "name_en": "Aki Sakata",
     "is_complete": true
   },
   {
@@ -341,8 +341,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "2대 우주공룡 젯톤",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Space Dinosaur Zetton 2",
-    "name_en": "宇宙恐竜 ゼットン2",
+    "name_jp": "宇宙恐竜 ゼットン2",
+    "name_en": "Space Dinosaur Zetton 2",
     "is_complete": true
   },
   {
@@ -350,8 +350,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "촉각우주인 배트 성인",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Antenna Alien Alien Bat",
-    "name_en": "触覚宇宙人 バット星人",
+    "name_jp": "触覚宇宙人 バット星人",
+    "name_en": "Antenna Alien Alien Bat",
     "is_complete": true
   },
   {
@@ -359,8 +359,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "촉각우주인 배트 성인 2",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Antenna Alien Alien Bat 2",
-    "name_en": "触覚宇宙人 バット星人 2",
+    "name_jp": "触覚宇宙人 バット星人 2",
+    "name_en": "Antenna Alien Alien Bat 2",
     "is_complete": true
   },
   {
@@ -368,8 +368,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨 에이스",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ultraman Ace",
-    "name_en": "ウルトラマン エース",
+    "name_jp": "ウルトラマン エース",
+    "name_en": "Ultraman Ace",
     "is_complete": true
   },
   {
@@ -377,8 +377,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "호쿠토 세이지",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Seiji Hokuto",
-    "name_en": "北斗 星司",
+    "name_jp": "北斗 星司",
+    "name_en": "Seiji Hokuto",
     "is_complete": true
   },
   {
@@ -386,8 +386,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미나미 유우코",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Yuko Minami",
-    "name_en": "南 夕子",
+    "name_jp": "南 夕子",
+    "name_en": "Yuko Minami",
     "is_complete": true
   },
   {
@@ -395,8 +395,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨 타로(초인 제트맨)",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ultraman Taro",
-    "name_en": "ウルトラマンタロウ",
+    "name_jp": "ウルトラマンタロウ",
+    "name_en": "Ultraman Taro",
     "is_complete": true
   },
   {
@@ -404,8 +404,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "히가시 코타로",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Kotaro Higashi",
-    "name_en": "ひがし 光太郎",
+    "name_jp": "ひがし 光太郎",
+    "name_en": "Kotaro Higashi",
     "is_complete": true
   },
   {
@@ -413,8 +413,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "모리야마 이즈미",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Izumi Moriyama",
-    "name_en": "森山 いずみ",
+    "name_jp": "森山 いずみ",
+    "name_en": "Izumi Moriyama",
     "is_complete": true
   },
   {
@@ -422,8 +422,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "신호초수 시그날리온",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Signalion",
-    "name_en": "シグナリオン",
+    "name_jp": "シグナリオン",
+    "name_en": "Signalion",
     "is_complete": true
   },
   {
@@ -431,8 +431,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "물병초수 아쿠에리우스",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Aquarius",
-    "name_en": "アクエリウス",
+    "name_jp": "アクエリウス",
+    "name_en": "Aquarius",
     "is_complete": true
   },
   {
@@ -440,8 +440,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주전기해파리 유니버라게스",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Univerlages",
-    "name_en": "ユニバーラゲス",
+    "name_jp": "ユニバーラゲス",
+    "name_en": "Univerlages",
     "is_complete": true
   },
   {
@@ -449,8 +449,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주대괴수 아스트로몬스",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Giant Space Monster Astromons",
-    "name_en": "宇宙大怪獣 アストロモンス",
+    "name_jp": "宇宙大怪獣 アストロモンス",
+    "name_en": "Giant Space Monster Astromons",
     "is_complete": true
   },
   {
@@ -458,8 +458,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "경호원괴수 블랙킹",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Bodyguard Monster Black King",
-    "name_en": "用心棒怪獣 ブラックキング",
+    "name_jp": "用心棒怪獣 ブラックキング",
+    "name_en": "Bodyguard Monster Black King",
     "is_complete": true
   },
   {
@@ -467,8 +467,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "폭군괴수 타일런트",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Despot Monster Tyrant",
-    "name_en": "暴君怪獣 タイラント",
+    "name_jp": "暴君怪獣 タイラント",
+    "name_en": "Despot Monster Tyrant",
     "is_complete": true
   },
   {
@@ -476,8 +476,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주어부 벌키 성인",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Alien Valky",
-    "name_en": "バルキー星人",
+    "name_jp": "バルキー星人",
+    "name_en": "Alien Valky",
     "is_complete": true
   },
   {
@@ -485,8 +485,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "울트라맨 레오",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ultraman Leo",
-    "name_en": "ウルトラマンレオ",
+    "name_jp": "ウルトラマンレオ",
+    "name_en": "Ultraman Leo",
     "is_complete": true
   },
   {
@@ -494,8 +494,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오오토리 겐",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Gen Otori",
-    "name_en": "おおとりゲン",
+    "name_jp": "おおとりゲン",
+    "name_en": "Gen Otori",
     "is_complete": true
   },
   {
@@ -503,8 +503,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "야마구치 모모코",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Momoko Yamaguchi",
-    "name_en": "山口百子",
+    "name_jp": "山口百子",
+    "name_en": "Momoko Yamaguchi",
     "is_complete": true
   },
   {
@@ -512,8 +512,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "사벨폭군 마그마 성인",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Saber Tyrant Alien Magma",
-    "name_en": "サーベル暴君 マグマ星人",
+    "name_jp": "サーベル暴君 マグマ星人",
+    "name_en": "Saber Tyrant Alien Magma",
     "is_complete": true
   },
   {
@@ -521,8 +521,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "블랙 커맨더",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Black Directive",
-    "name_en": "ブラック指令",
+    "name_jp": "ブラック指令",
+    "name_en": "Black Directive",
     "is_complete": true
   },
   {
@@ -530,8 +530,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "원반생물 블랙엔드",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Black End",
-    "name_en": "ブラックエンド",
+    "name_jp": "ブラックエンド",
+    "name_en": "Black End",
     "is_complete": true
   },
   {
@@ -539,8 +539,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "더★울트라맨",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "The★Ultraman",
-    "name_en": "ザ★ウルトラマン",
+    "name_jp": "ザ★ウルトラマン",
+    "name_en": "The★Ultraman",
     "is_complete": true
   },
   {
@@ -548,8 +548,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "히카리 초이치로",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Choichiro Hikari",
-    "name_en": "ヒカリ超一郎",
+    "name_jp": "ヒカリ超一郎",
+    "name_en": "Choichiro Hikari",
     "is_complete": true
   },
   {
@@ -557,8 +557,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "호시카와 무츠미",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Mutsumi Hoshikawa",
-    "name_en": "星川ムツミ",
+    "name_jp": "星川ムツミ",
+    "name_en": "Mutsumi Hoshikawa",
     "is_complete": true
   },
   {
@@ -566,8 +566,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "냉동괴수 시그라",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Seagra",
-    "name_en": "シーグラ",
+    "name_jp": "シーグラ",
+    "name_en": "Seagra",
     "is_complete": true
   },
   {
@@ -575,8 +575,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "구름괴수 레드스모기",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Red Smogy",
-    "name_en": "レッドスモーギ",
+    "name_jp": "レッドスモーギ",
+    "name_en": "Red Smogy",
     "is_complete": true
   },
   {
@@ -584,8 +584,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "처형괴수 마쿠다타",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Mac Datar",
-    "name_en": "マクダター",
+    "name_jp": "マクダター",
+    "name_en": "Mac Datar",
     "is_complete": true
   },
   {
@@ -593,8 +593,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "가면라이더 1호",
     "rank": "HR",
     "sp_point": 100,
-    "name_jp": "MASKED RIDER 1",
-    "name_en": "仮面ライダー 1号",
+    "name_jp": "仮面ライダー 1号",
+    "name_en": "MASKED RIDER 1",
     "is_complete": true
   },
   {
@@ -602,8 +602,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "혼고 타케시",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Takeshi Hongo",
-    "name_en": "ほんごう猛",
+    "name_jp": "ほんごう猛",
+    "name_en": "Takeshi Hongo",
     "is_complete": true
   },
   {
@@ -611,8 +611,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "가면라이더 2호",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "MASKED RIDER 2",
-    "name_en": "仮面ライダー 2号",
+    "name_jp": "仮面ライダー 2号",
+    "name_en": "MASKED RIDER 2",
     "is_complete": true
   },
   {
@@ -620,8 +620,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "이치몬지 하야토",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Hayato Ichimonji",
-    "name_en": "いちもんじ隼人",
+    "name_jp": "いちもんじ隼人",
+    "name_en": "Hayato Ichimonji",
     "is_complete": true
   },
   {
@@ -629,8 +629,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미도리카와 루리코",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Ruriko Midorikawa",
-    "name_en": "緑川ルリ子",
+    "name_jp": "緑川ルリ子",
+    "name_en": "Ruriko Midorikawa",
     "is_complete": true
   },
   {
@@ -638,8 +638,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쇼커 수령",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Shocker Leader",
-    "name_en": "ショッカー首領",
+    "name_jp": "ショッカー首領",
+    "name_en": "Shocker Leader",
     "is_complete": true
   },
   {
@@ -647,8 +647,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "졸 대령",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Colonel Zoll",
-    "name_en": "ゾル大佐",
+    "name_jp": "ゾル大佐",
+    "name_en": "Colonel Zoll",
     "is_complete": true
   },
   {
@@ -656,8 +656,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "사신박사",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Dr. Shinigami",
-    "name_en": "死神博士",
+    "name_jp": "死神博士",
+    "name_en": "Dr. Shinigami",
     "is_complete": true
   },
   {
@@ -665,8 +665,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "지옥대사",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Ambassador of Hell",
-    "name_en": "地獄大使",
+    "name_jp": "地獄大使",
+    "name_en": "Ambassador of Hell",
     "is_complete": true
   },
   {
@@ -674,8 +674,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쇼커 전투원",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Shocker Combatmen",
-    "name_en": "ショッカー戦闘員",
+    "name_jp": "ショッカー戦闘員",
+    "name_en": "Shocker Combatmen",
     "is_complete": true
   },
   {
@@ -683,8 +683,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쇼커 전투원팀",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Shocker Combatmen team",
-    "name_en": "ショッカー戦闘員チーム",
+    "name_jp": "ショッカー戦闘員チーム",
+    "name_en": "Shocker Combatmen team",
     "is_complete": true
   },
   {
@@ -692,8 +692,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "여자 쇼커 전투원팀",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Female Shocker Combatants team",
-    "name_en": "女性ショッカー戦闘員",
+    "name_jp": "女性ショッカー戦闘員",
+    "name_en": "Female Shocker Combatants team",
     "is_complete": true
   },
   {
@@ -701,8 +701,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "여자 쇼커 전투원",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Female Shocker Combatants",
-    "name_en": "女性ショッカー戦闘員チーム",
+    "name_jp": "女性ショッカー戦闘員チーム",
+    "name_en": "Female Shocker Combatants",
     "is_complete": true
   },
   {
@@ -710,8 +710,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 갸반",
     "rank": "HR",
     "sp_point": 100,
-    "name_jp": "Space Sheriff Gavan",
-    "name_en": "宇宙刑事ギャバン",
+    "name_jp": "宇宙刑事ギャバン",
+    "name_en": "Space Sheriff Gavan",
     "is_complete": true
   },
   {
@@ -719,8 +719,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 이치죠지 레츠",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Sheriff Gavan",
-    "name_en": "一条寺 烈",
+    "name_jp": "一条寺 烈",
+    "name_en": "Space Sheriff Gavan",
     "is_complete": true
   },
   {
@@ -728,8 +728,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "은하연방경찰 미미",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Sheriff Mimie",
-    "name_en": "ミミー",
+    "name_jp": "ミミー",
+    "name_en": "Space Sheriff Mimie",
     "is_complete": true
   },
   {
@@ -737,8 +737,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "돈 호러",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Don Horror",
-    "name_en": "ドン・ホラー",
+    "name_jp": "ドン・ホラー",
+    "name_en": "Don Horror",
     "is_complete": true
   },
   {
@@ -746,8 +746,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "호러걸",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Horror Girl",
-    "name_en": "ホラーガール",
+    "name_jp": "ホラーガール",
+    "name_en": "Horror Girl",
     "is_complete": true
   },
   {
@@ -755,8 +755,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "더블걸",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Double Girl",
-    "name_en": "ダブルガール",
+    "name_jp": "ダブルガール",
+    "name_en": "Double Girl",
     "is_complete": true
   },
   {
@@ -764,8 +764,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "크래셔",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Crusher",
-    "name_en": "クラッシャー",
+    "name_jp": "クラッシャー",
+    "name_en": "Crusher",
     "is_complete": true
   },
   {
@@ -773,8 +773,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 샤리반",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Space Sheriff Sharivan",
-    "name_en": "宇宙刑事シャリバン",
+    "name_jp": "宇宙刑事シャリバン",
+    "name_en": "Space Sheriff Sharivan",
     "is_complete": true
   },
   {
@@ -782,8 +782,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 이가 덴",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Sheriff Sharivan",
-    "name_en": "伊賀 電",
+    "name_jp": "伊賀 電",
+    "name_en": "Space Sheriff Sharivan",
     "is_complete": true
   },
   {
@@ -791,8 +791,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 릴리",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Sheriff Lily",
-    "name_en": "宇宙刑事 リリィ",
+    "name_jp": "宇宙刑事 リリィ",
+    "name_en": "Space Sheriff Lily",
     "is_complete": true
   },
   {
@@ -800,8 +800,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "마왕 사이코",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Demon King Psycho",
-    "name_en": "宇宙犯罪組織マドーの魔王サイコ",
+    "name_jp": "宇宙犯罪組織マドーの魔王サイコ",
+    "name_en": "Demon King Psycho",
     "is_complete": true
   },
   {
@@ -809,8 +809,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "닥터 폴터",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Doctor Polter",
-    "name_en": "ドクターポルター",
+    "name_jp": "ドクターポルター",
+    "name_en": "Doctor Polter",
     "is_complete": true
   },
   {
@@ -818,8 +818,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "파이트로",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Fightrow",
-    "name_en": "ファイトロー",
+    "name_jp": "ファイトロー",
+    "name_en": "Fightrow",
     "is_complete": true
   },
   {
@@ -827,8 +827,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 샤이다",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Space Sheriff Sharivan",
-    "name_en": "宇宙刑事シャイダー",
+    "name_jp": "宇宙刑事シャイダー",
+    "name_en": "Space Sheriff Sharivan",
     "is_complete": true
   },
   {
@@ -836,8 +836,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "사와무라 다이",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Dai Sawamura",
-    "name_en": "沢村大",
+    "name_jp": "沢村大",
+    "name_en": "Dai Sawamura",
     "is_complete": true
   },
   {
@@ -845,8 +845,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "우주형사 애니",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Space Sheriff Annie",
-    "name_en": "宇宙刑事アニー",
+    "name_jp": "宇宙刑事アニー",
+    "name_en": "Space Sheriff Annie",
     "is_complete": true
   },
   {
@@ -854,8 +854,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "대제왕 쿠빌라이",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Great Emperor Kubilai",
-    "name_en": "不思議界フーマの大帝王クビライ",
+    "name_jp": "不思議界フーマの大帝王クビライ",
+    "name_en": "Great Emperor Kubilai",
     "is_complete": true
   },
   {
@@ -863,8 +863,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "헤슬러 지휘관",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Commander Hessler",
-    "name_en": "ヘスラー指揮官",
+    "name_jp": "ヘスラー指揮官",
+    "name_en": "Commander Hessler",
     "is_complete": true
   },
   {
@@ -872,8 +872,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쿠노이치 5인조",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Girls Army",
-    "name_en": "ギャル軍団のくノ一・五人衆",
+    "name_jp": "ギャル軍団のくノ一・五人衆",
+    "name_en": "Girls Army",
     "is_complete": true
   },
   {
@@ -881,8 +881,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "전투원 미라클러",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Soldier Miraclers",
-    "name_en": "戦闘員ミラクラー",
+    "name_jp": "戦闘員ミラクラー",
+    "name_en": "Soldier Miraclers",
     "is_complete": true
   },
   {
@@ -890,8 +890,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "거수특수 쟈스피온",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "MegaBeast Investigator Juspion",
-    "name_en": "巨獣特捜ジャスピオン",
+    "name_jp": "巨獣特捜ジャスピオン",
+    "name_en": "MegaBeast Investigator Juspion",
     "is_complete": true
   },
   {
@@ -899,8 +899,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "자스피온",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Juspion",
-    "name_en": "ジャスピオン",
+    "name_jp": "ジャスピオン",
+    "name_en": "Juspion",
     "is_complete": true
   },
   {
@@ -908,8 +908,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "안드로이드 앙리",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Gynoid  Anri",
-    "name_en": "アンリ",
+    "name_jp": "アンリ",
+    "name_en": "Gynoid  Anri",
     "is_complete": true
   },
   {
@@ -917,8 +917,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "제왕 사탄고스",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Satan Gorth",
-    "name_en": "サタンゴース軍団の帝王サタンゴース",
+    "name_jp": "サタンゴース軍団の帝王サタンゴース",
+    "name_en": "Satan Gorth",
     "is_complete": true
   },
   {
@@ -926,8 +926,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "은하마녀 기르마자",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Witch Gilza",
-    "name_en": "銀河魔女ギルマーザ",
+    "name_jp": "銀河魔女ギルマーザ",
+    "name_en": "Witch Gilza",
     "is_complete": true
   },
   {
@@ -935,8 +935,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "매드 갤런",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Mad Gallant",
-    "name_en": "マッドギャラン",
+    "name_jp": "マッドギャラン",
+    "name_en": "Mad Gallant",
     "is_complete": true
   },
   {
@@ -944,8 +944,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "싸이보그 스필반",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Zikusensi Spielban",
-    "name_en": "時空戦士スピルバン",
+    "name_jp": "時空戦士スピルバン",
+    "name_en": "Zikusensi Spielban",
     "is_complete": true
   },
   {
@@ -953,8 +953,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "스필반",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Spielban",
-    "name_en": "スピルバン",
+    "name_jp": "スピルバン",
+    "name_en": "Spielban",
     "is_complete": true
   },
   {
@@ -962,8 +962,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "다이아나",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Diana",
-    "name_en": "ダイアナ",
+    "name_jp": "ダイアナ",
+    "name_en": "Diana",
     "is_complete": true
   },
   {
@@ -971,8 +971,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "헬렌",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Helen",
-    "name_en": "ヘレン",
+    "name_jp": "ヘレン",
+    "name_en": "Helen",
     "is_complete": true
   },
   {
@@ -980,8 +980,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "판도라 여왕",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Queen Pandora",
-    "name_en": "女王パンドラ",
+    "name_jp": "女王パンドラ",
+    "name_en": "Queen Pandora",
     "is_complete": true
   },
   {
@@ -989,8 +989,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "데스제로 장군",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "General Deathzerow",
-    "name_en": "デスゼロウ将軍",
+    "name_jp": "デスゼロウ将軍",
+    "name_en": "General Deathzerow",
     "is_complete": true
   },
   {
@@ -998,8 +998,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "릭키",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Spy Army Leader Licky",
-    "name_en": "リッキー",
+    "name_jp": "リッキー",
+    "name_en": "Spy Army Leader Licky",
     "is_complete": true
   },
   {
@@ -1007,8 +1007,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "섀도 & 가샤",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Shadow and Gasha",
-    "name_en": "シャドー&ガシャー",
+    "name_jp": "シャドー&ガシャー",
+    "name_en": "Shadow and Gasha",
     "is_complete": true
   },
   {
@@ -1016,8 +1016,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "기계병 킹크론",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Kinclons",
-    "name_en": "キンクロン",
+    "name_jp": "キンクロン",
+    "name_en": "Kinclons",
     "is_complete": true
   },
   {
@@ -1025,8 +1025,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "초인기 메탈더",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Choujinki Metalder",
-    "name_en": "超人機メタルダー",
+    "name_jp": "超人機メタルダー",
+    "name_en": "Choujinki Metalder",
     "is_complete": true
   },
   {
@@ -1034,8 +1034,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "츠루기 류세이",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Ryusei Tsurugi",
-    "name_en": "剣 流星",
+    "name_jp": "剣 流星",
+    "name_en": "Ryusei Tsurugi",
     "is_complete": true
   },
   {
@@ -1043,8 +1043,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오오기 마이",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Mai Ougi",
-    "name_en": "仰木 舞",
+    "name_jp": "仰木 舞",
+    "name_en": "Mai Ougi",
     "is_complete": true
   },
   {
@@ -1052,8 +1052,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "제왕 갓 네로스",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "God Neros",
-    "name_en": "帝王ゴッドネロス",
+    "name_jp": "帝王ゴッドネロス",
+    "name_en": "God Neros",
     "is_complete": true
   },
   {
@@ -1061,8 +1061,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미인비서 K, S",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Beautiful Secretary K&S",
-    "name_en": "美人秘書K、S",
+    "name_jp": "美人秘書K、S",
+    "name_en": "Beautiful Secretary K&S",
     "is_complete": true
   },
   {
@@ -1070,8 +1070,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "경투사 영",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Light Fighter",
-    "name_en": "軽闘士 影",
+    "name_jp": "軽闘士 影",
+    "name_en": "Light Fighter",
     "is_complete": true
   },
   {
@@ -1079,8 +1079,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "세계닌자 지라이야",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "World Ninja Jiraiya",
-    "name_en": "世界忍者ジライヤ",
+    "name_jp": "世界忍者ジライヤ",
+    "name_en": "World Ninja Jiraiya",
     "is_complete": true
   },
   {
@@ -1088,8 +1088,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "야마지 토우하",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Toha Yamaji",
-    "name_en": "山地 闘破",
+    "name_jp": "山地 闘破",
+    "name_en": "Toha Yamaji",
     "is_complete": true
   },
   {
@@ -1097,8 +1097,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "공주닌 에미하",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Princess Ninja Emiha",
-    "name_en": "姫忍 恵美破",
+    "name_jp": "姫忍 恵美破",
+    "name_en": "Princess Ninja Emiha",
     "is_complete": true
   },
   {
@@ -1106,8 +1106,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "야마지 케이",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Yamaji Kei",
-    "name_en": "山地 ケイ",
+    "name_jp": "山地 ケイ",
+    "name_en": "Yamaji Kei",
     "is_complete": true
   },
   {
@@ -1115,8 +1115,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "야마지 마나부",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Manabu Yamaji",
-    "name_en": "山地 学",
+    "name_jp": "山地 学",
+    "name_en": "Manabu Yamaji",
     "is_complete": true
   },
   {
@@ -1124,8 +1124,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "야규 레이",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Rei Yagyu",
-    "name_en": "柳生 レイ",
+    "name_jp": "柳生 レイ",
+    "name_en": "Rei Yagyu",
     "is_complete": true
   },
   {
@@ -1133,8 +1133,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "아스카 류",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Ryu Asuka",
-    "name_en": "飛鳥 竜",
+    "name_jp": "飛鳥 竜",
+    "name_en": "Ryu Asuka",
     "is_complete": true
   },
   {
@@ -1142,8 +1142,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오니닌자 도쿠사이",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Manabu Yamaji",
-    "name_en": "鬼忍 毒斎",
+    "name_jp": "鬼忍 毒斎",
+    "name_en": "Manabu Yamaji",
     "is_complete": true
   },
   {
@@ -1151,8 +1151,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "나비닌자 베니키바",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Butterfly Ninja Benikiba",
-    "name_en": "蝶忍 紅牙",
+    "name_jp": "蝶忍 紅牙",
+    "name_en": "Butterfly Ninja Benikiba",
     "is_complete": true
   },
   {
@@ -1160,8 +1160,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "요닌자 쿠모고젠",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Witch Ninja Madam Spider",
-    "name_en": "妖忍 クモ御前",
+    "name_jp": "妖忍 クモ御前",
+    "name_en": "Witch Ninja Madam Spider",
     "is_complete": true
   },
   {
@@ -1169,8 +1169,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "새닌자 카라스 텐구",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Bird Ninjas Karasutengu",
-    "name_en": "鳥忍 カラス天狗",
+    "name_jp": "鳥忍 カラス天狗",
+    "name_en": "Bird Ninjas Karasutengu",
     "is_complete": true
   },
   {
@@ -1178,8 +1178,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "기동형사 지반",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "The Mobile Cop Jiban",
-    "name_en": "機動刑事ジバン",
+    "name_jp": "機動刑事ジバン",
+    "name_en": "The Mobile Cop Jiban",
     "is_complete": true
   },
   {
@@ -1187,8 +1187,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "타무라 나오토",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Naoto Tamura",
-    "name_en": "田村 直人",
+    "name_jp": "田村 直人",
+    "name_en": "Naoto Tamura",
     "is_complete": true
   },
   {
@@ -1196,8 +1196,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "닥터 기바",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Doctor Giba",
-    "name_en": "ドクター・ギバ",
+    "name_jp": "ドクター・ギバ",
+    "name_en": "Doctor Giba",
     "is_complete": true
   },
   {
@@ -1205,8 +1205,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "마샤&카샤",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Marsha and Karsha",
-    "name_en": "マーシャ&カーシャ",
+    "name_jp": "マーシャ&カーシャ",
+    "name_en": "Marsha and Karsha",
     "is_complete": true
   },
   {
@@ -1214,8 +1214,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "매드 가르보",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Madogarbo",
-    "name_en": "マッド・ガルボ",
+    "name_jp": "マッド・ガルボ",
+    "name_en": "Madogarbo",
     "is_complete": true
   },
   {
@@ -1223,8 +1223,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "마스크",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Masques",
-    "name_en": "マスク",
+    "name_jp": "マスク",
+    "name_en": "Masques",
     "is_complete": true
   },
   {
@@ -1232,8 +1232,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "아카레인저",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Akarenger",
-    "name_en": "アカレンジャー",
+    "name_jp": "アカレンジャー",
+    "name_en": "Akarenger",
     "is_complete": true
   },
   {
@@ -1241,8 +1241,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "카이조 츠요시",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Tsuyoshi Kaijo",
-    "name_en": "海城 剛",
+    "name_jp": "海城 剛",
+    "name_en": "Tsuyoshi Kaijo",
     "is_complete": true
   },
   {
@@ -1250,8 +1250,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "아오레인저",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Aorenger",
-    "name_en": "アオレンジャー",
+    "name_jp": "アオレンジャー",
+    "name_en": "Aorenger",
     "is_complete": true
   },
   {
@@ -1259,8 +1259,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "신메이 아키라",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Akira Shinmei",
-    "name_en": "新命 明",
+    "name_jp": "新命 明",
+    "name_en": "Akira Shinmei",
     "is_complete": true
   },
   {
@@ -1268,8 +1268,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "키레인저",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Kirenger",
-    "name_en": "キレンジャー",
+    "name_jp": "キレンジャー",
+    "name_en": "Kirenger",
     "is_complete": true
   },
   {
@@ -1277,8 +1277,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "오이와 다이타",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Daita Oiwa",
-    "name_en": "大岩 大太",
+    "name_jp": "大岩 大太",
+    "name_en": "Daita Oiwa",
     "is_complete": true
   },
   {
@@ -1286,8 +1286,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "쿠마노 다이고로",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Daigoro Kumano",
-    "name_en": "くまの 大五郎",
+    "name_jp": "くまの 大五郎",
+    "name_en": "Daigoro Kumano",
     "is_complete": true
   },
   {
@@ -1295,8 +1295,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "모모레인저",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Momorenger",
-    "name_en": "モモレンジャー",
+    "name_jp": "モモレンジャー",
+    "name_en": "Momorenger",
     "is_complete": true
   },
   {
@@ -1304,8 +1304,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "페기 마츠야마",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Peggy Matsuyama",
-    "name_en": "ペギー 松山",
+    "name_jp": "ペギー 松山",
+    "name_en": "Peggy Matsuyama",
     "is_complete": true
   },
   {
@@ -1313,8 +1313,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미도레인저",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Midorenger",
-    "name_en": "ミドレンジャー",
+    "name_jp": "ミドレンジャー",
+    "name_en": "Midorenger",
     "is_complete": true
   },
   {
@@ -1322,8 +1322,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "아스카 켄지",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Kenji Asuka",
-    "name_en": "あすか 健二",
+    "name_jp": "あすか 健二",
+    "name_en": "Kenji Asuka",
     "is_complete": true
   },
   {
@@ -1331,8 +1331,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "흑십자 총통",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Black Cross Führer",
-    "name_en": "黒十字総統",
+    "name_jp": "黒十字総統",
+    "name_en": "Black Cross Führer",
     "is_complete": true
   },
   {
@@ -1340,8 +1340,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "흑십자 왕",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Black Cross King",
-    "name_en": "黒十字王",
+    "name_jp": "黒十字王",
+    "name_en": "Black Cross King",
     "is_complete": true
   },
   {
@@ -1349,8 +1349,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "골든가면 대장군",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Commander Golden Mask",
-    "name_en": "ゴールデン仮面大将軍",
+    "name_jp": "ゴールデン仮面大将軍",
+    "name_en": "Commander Golden Mask",
     "is_complete": true
   },
   {
@@ -1358,8 +1358,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "강철검룡",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Steel Sword Dragon",
-    "name_en": "鋼鉄剣竜",
+    "name_jp": "鋼鉄剣竜",
+    "name_en": "Steel Sword Dragon",
     "is_complete": true
   },
   {
@@ -1367,8 +1367,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "화산가면 마그만장군",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Volcano Mask General Magman",
-    "name_en": "火の山仮面マグマン将軍",
+    "name_jp": "火の山仮面マグマン将軍",
+    "name_en": "Volcano Mask General Magman",
     "is_complete": true
   },
   {
@@ -1376,8 +1376,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "철인가면 테무진 장군",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Iron Man Mask General Temujin",
-    "name_en": "鉄人仮面 テムジン将軍",
+    "name_jp": "鉄人仮面 テムジン将軍",
+    "name_en": "Iron Man Mask General Temujin",
     "is_complete": true
   },
   {
@@ -1385,8 +1385,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "일륜가면",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Sun Halo Mask",
-    "name_en": "日輪仮面",
+    "name_jp": "日輪仮面",
+    "name_en": "Sun Halo Mask",
     "is_complete": true
   },
   {
@@ -1394,8 +1394,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "졸더",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Zolders",
-    "name_en": "ゾルダー",
+    "name_jp": "ゾルダー",
+    "name_en": "Zolders",
     "is_complete": true
   },
   {
@@ -1403,8 +1403,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "마그",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Mag",
-    "name_en": "マグ",
+    "name_jp": "マグ",
+    "name_en": "Mag",
     "is_complete": true
   },
   {
@@ -1412,8 +1412,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "레드 후뢰시",
     "rank": "HR",
     "sp_point": 100,
-    "name_jp": "Red Flash",
-    "name_en": "レッドフラッシュ",
+    "name_jp": "レッドフラッシュ",
+    "name_en": "Red Flash",
     "is_complete": true
   },
   {
@@ -1421,8 +1421,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "진",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Jin",
-    "name_en": "ジン",
+    "name_jp": "ジン",
+    "name_en": "Jin",
     "is_complete": true
   },
   {
@@ -1430,8 +1430,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "그린 후뢰시",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Green Flash",
-    "name_en": "グリーンフラッシュ",
+    "name_jp": "グリーンフラッシュ",
+    "name_en": "Green Flash",
     "is_complete": true
   },
   {
@@ -1439,8 +1439,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "다이(라이)",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Dai",
-    "name_en": "ダイ",
+    "name_jp": "ダイ",
+    "name_en": "Dai",
     "is_complete": true
   },
   {
@@ -1448,8 +1448,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "블루 후뢰시",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Blue Flash",
-    "name_en": "ブルーフラッシュ",
+    "name_jp": "ブルーフラッシュ",
+    "name_en": "Blue Flash",
     "is_complete": true
   },
   {
@@ -1457,8 +1457,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "붕",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Bun",
-    "name_en": "ブン",
+    "name_jp": "ブン",
+    "name_en": "Bun",
     "is_complete": true
   },
   {
@@ -1466,8 +1466,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "옐로 후뢰시",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Yellow Flash",
-    "name_en": "イエローフラッシュ",
+    "name_jp": "イエローフラッシュ",
+    "name_en": "Yellow Flash",
     "is_complete": true
   },
   {
@@ -1475,8 +1475,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "사라",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Sara",
-    "name_en": "サラ",
+    "name_jp": "サラ",
+    "name_en": "Sara",
     "is_complete": true
   },
   {
@@ -1484,8 +1484,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "핑크 후뢰시",
     "rank": "UR",
     "sp_point": 16,
-    "name_jp": "Pink Flash",
-    "name_en": "ピンクフラッシュ",
+    "name_jp": "ピンクフラッシュ",
+    "name_en": "Pink Flash",
     "is_complete": true
   },
   {
@@ -1493,8 +1493,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "루",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Lou",
-    "name_en": "ルー",
+    "name_jp": "ルー",
+    "name_en": "Lou",
     "is_complete": true
   },
   {
@@ -1502,8 +1502,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "플래시성인",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Alien Flash",
-    "name_en": "フラッシュ星人",
+    "name_jp": "フラッシュ星人",
+    "name_en": "Alien Flash",
     "is_complete": true
   },
   {
@@ -1511,8 +1511,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "영웅타이탄",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Hero Titan",
-    "name_en": "英雄・タイタン",
+    "name_jp": "英雄・タイタン",
+    "name_en": "Hero Titan",
     "is_complete": true
   },
   {
@@ -1520,8 +1520,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "레이 바라키",
     "rank": "SR",
     "sp_point": 4,
-    "name_jp": "Leh Baraki",
-    "name_en": "レー・バラキ",
+    "name_jp": "レー・バラキ",
+    "name_en": "Leh Baraki",
     "is_complete": true
   },
   {
@@ -1529,8 +1529,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "차미래",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Sumire Okano",
-    "name_en": "スミレ",
+    "name_jp": "スミレ",
+    "name_en": "Sumire Okano",
     "is_complete": true
   },
   {
@@ -1538,8 +1538,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "미랑",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Milan",
-    "name_en": "ミラン",
+    "name_jp": "ミラン",
+    "name_en": "Milan",
     "is_complete": true
   },
   {
@@ -1547,8 +1547,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "와카쿠사 류",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Ryu Wakasa",
-    "name_en": "若草リュウ",
+    "name_jp": "若草リュウ",
+    "name_en": "Ryu Wakasa",
     "is_complete": true
   },
   {
@@ -1556,8 +1556,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "시벨",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Shibehl",
-    "name_en": "シベール",
+    "name_jp": "シベール",
+    "name_en": "Shibehl",
     "is_complete": true
   },
   {
@@ -1565,8 +1565,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "강진영 박사",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Dr. Tokimura",
-    "name_en": "時村博士",
+    "name_jp": "時村博士",
+    "name_en": "Dr. Tokimura",
     "is_complete": true
   },
   {
@@ -1574,8 +1574,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "강박사 부인",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Setsuko Tokimura",
-    "name_en": "時村 節子",
+    "name_jp": "時村 節子",
+    "name_en": "Setsuko Tokimura",
     "is_complete": true
   },
   {
@@ -1583,8 +1583,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "강세진",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Midori Tokimura",
-    "name_en": "時村 みどり",
+    "name_jp": "時村 みどり",
+    "name_en": "Midori Tokimura",
     "is_complete": true
   },
   {
@@ -1592,8 +1592,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "강세영",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Kaori Tokimura",
-    "name_en": "時村 かおり",
+    "name_jp": "時村 かおり",
+    "name_en": "Kaori Tokimura",
     "is_complete": true
   },
   {
@@ -1601,8 +1601,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "채유리",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Sayuri",
-    "name_en": "サユリ",
+    "name_jp": "サユリ",
+    "name_en": "Sayuri",
     "is_complete": true
   },
   {
@@ -1610,8 +1610,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "채유리?",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Sayuri?",
-    "name_en": "サユリ?",
+    "name_jp": "サユリ?",
+    "name_en": "Sayuri?",
     "is_complete": true
   },
   {
@@ -1619,8 +1619,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "유성의 수진",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Bad Girl Yuki",
-    "name_en": "スケバンユキ",
+    "name_jp": "スケバンユキ",
+    "name_en": "Bad Girl Yuki",
     "is_complete": true
   },
   {
@@ -1628,8 +1628,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "수진",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Yuki",
-    "name_en": "ユキ",
+    "name_jp": "ユキ",
+    "name_en": "Yuki",
     "is_complete": true
   },
   {
@@ -1637,8 +1637,8 @@ const DEFAULT_TOKU_CARDS = [
     "name": "산장 아주머니",
     "rank": "R",
     "sp_point": 2,
-    "name_jp": "Kayoko",
-    "name_en": "加代子",
+    "name_jp": "加代子",
+    "name_en": "Kayoko",
     "is_complete": true
   }
 ];
@@ -1773,11 +1773,25 @@ class GameDataManager {
       metadata.cardlist.forEach(c => {
         const rawRank = c.rank ? String(c.rank).trim().toUpperCase() : '';
         const rawName = c.name ? String(c.name).trim() : '';
+        let rawJp = c.name_jp ? String(c.name_jp).trim() : '';
+        let rawEn = c.name_en ? String(c.name_en).trim() : '';
+
+        // 일본어/영어 자동 감지 및 스왑 정규화
+        const hasJpInEn = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/.test(rawEn);
+        const hasJpInJp = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]/.test(rawJp);
+        if (hasJpInEn && !hasJpInJp) {
+          const temp = rawJp;
+          rawJp = rawEn;
+          rawEn = temp;
+        }
+
         const cardObj = {
           card_id: String(c.card_id || '').trim(),
           name: rawName,
           rank: rawRank,
-          sp_point: this.getRankSP(rawRank)
+          sp_point: Number(c.sp_point) || this.getRankSP(rawRank),
+          name_jp: rawJp,
+          name_en: rawEn
         };
 
         // 데이터 작성 완결 여부 체크
@@ -1788,6 +1802,20 @@ class GameDataManager {
 
     const completeCount = this.getAllCompleteCards().length;
     console.log(`[GameData] Loaded ${Object.keys(this.cards).length} total cards (${completeCount} complete & available for gacha)`);
+  }
+
+  // 언어별 카드 이름 반환 (ko: 한국어, ja: 일본어, en: 영어)
+  getCardLocalizedName(card, lang = 'ko') {
+    if (!card) return '';
+    if (typeof card === 'string') {
+      card = this.getCard(card);
+    }
+    if (lang === 'ja') {
+      return card.name_jp || card.name || card.name_en || '';
+    } else if (lang === 'en') {
+      return card.name_en || card.name || card.name_jp || '';
+    }
+    return card.name || card.name_jp || card.name_en || '';
   }
 
   // 보유 카드 기반 총 SP 계산

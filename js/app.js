@@ -25,12 +25,14 @@ class AppController {
     this.cachedRankings = null;
     this.currentBinderFilter = 'ALL';
     this.pendingGachaResult = null;
+    this.currentLang = localStorage.getItem('toku_selected_lang') || 'ko';
   }
 
   async init() {
     this.initAntiCheat();
     this.initAudioAndParticles();
     this.initBackground();
+    this.initLanguage();
     this.bindEvents();
     this.setupUserModelCallbacks();
 
@@ -85,6 +87,34 @@ class AppController {
       const bIdx = parseInt(btn.dataset.bg, 10);
       btn.classList.toggle('active', bIdx === this.currentBgIndex);
     });
+  }
+
+  initLanguage() {
+    this.setLanguage(this.currentLang);
+    document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+      btn.onclick = () => {
+        const lang = btn.dataset.lang;
+        window.soundCtrl.playClick();
+        this.setLanguage(lang);
+      };
+    });
+  }
+
+  setLanguage(lang) {
+    this.currentLang = lang;
+    localStorage.setItem('toku_selected_lang', lang);
+    document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    const user = window.userModel.getUser();
+    if (user) {
+      this.renderUserProfile(user);
+    }
+    const binderModal = document.getElementById('modal-binder');
+    if (binderModal && binderModal.classList.contains('active')) {
+      this.renderBinderModal(this.currentBinderFilter);
+    }
   }
 
   setupUserModelCallbacks() {

@@ -153,8 +153,19 @@ def parse_xlsx(file_path):
                 card_id = r[id_idx] if len(r) > id_idx else ''
                 rank = r[rank_idx].upper() if len(r) > rank_idx else ''
                 name = r[name_idx] if len(r) > name_idx else ''
-                name_jp = r[jp_idx] if jp_idx >= 0 and len(r) > jp_idx else ''
-                name_en = r[en_idx] if en_idx >= 0 and len(r) > en_idx else ''
+                raw_jp = r[jp_idx] if jp_idx >= 0 and len(r) > jp_idx else ''
+                raw_en = r[en_idx] if en_idx >= 0 and len(r) > en_idx else ''
+
+                # Excel 열의 일본어/영어 데이터 스왑 자동 감지 및 정규화
+                import re
+                has_jp_chars_in_en = bool(re.search(r'[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]', raw_en))
+                has_jp_chars_in_jp = bool(re.search(r'[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]', raw_jp))
+                if has_jp_chars_in_en and not has_jp_chars_in_jp:
+                    name_jp = raw_en
+                    name_en = raw_jp
+                else:
+                    name_jp = raw_jp
+                    name_en = raw_en
 
                 if not card_id:
                     continue
