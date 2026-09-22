@@ -294,30 +294,62 @@ class AppController {
     container.innerHTML = '';
     const top10 = rankings.slice(0, 10);
 
-    top10.forEach((item, index) => {
-      const rankNum = index + 1;
-      const cardImg = window.gameData.getCardImagePath(item.main_character);
-
-      let posClass = '';
-      let crown = `${rankNum}`;
-      if (rankNum === 1) { posClass = 'gold'; crown = '🥇'; }
-      else if (rankNum === 2) { posClass = 'silver'; crown = '🥈'; }
-      else if (rankNum === 3) { posClass = 'bronze'; crown = '🥉'; }
-
-      const row = document.createElement('div');
-      row.className = `ranking-item ${curUser && curUser.uid === item.uid ? 'my-rank-item' : ''}`;
-      row.innerHTML = `
-        <div class="rank-pos ${posClass}">${crown}</div>
-        <div class="rank-avatar">
-          <img src="${cardImg}" alt="Card">
-        </div>
-        <div class="rank-user-info">
-          <span class="rank-username">${escapeHtml(item.nickname || '모험가')}</span>
-          <span class="rank-sp-val">${(item.total_sp || 0).toLocaleString()} SP</span>
+    if (top10.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 28px 10px; color: var(--text-sub); font-size: 0.85rem;">
+          <div style="font-size: 1.6rem; margin-bottom: 6px;">🏅</div>
+          등록된 랭킹 플레이어가 없습니다.<br>
+          <span style="font-size: 0.78rem; color: #94a3b8;">출석체크하고 첫 번째 랭커가 되어보세요!</span>
         </div>
       `;
-      container.appendChild(row);
-    });
+    } else {
+      top10.forEach((item, index) => {
+        const rankNum = index + 1;
+        const cardImg = window.gameData.getCardImagePath(item.main_character);
+
+        let posClass = '';
+        let crown = `${rankNum}`;
+        if (rankNum === 1) { posClass = 'gold'; crown = '🥇'; }
+        else if (rankNum === 2) { posClass = 'silver'; crown = '🥈'; }
+        else if (rankNum === 3) { posClass = 'bronze'; crown = '🥉'; }
+
+        const row = document.createElement('div');
+        row.className = `ranking-item ${curUser && curUser.uid === item.uid ? 'my-rank-item' : ''}`;
+        row.innerHTML = `
+          <div class="rank-pos ${posClass}">${crown}</div>
+          <div class="rank-avatar">
+            <img src="${cardImg}" alt="Card">
+          </div>
+          <div class="rank-user-info">
+            <span class="rank-username">${escapeHtml(item.nickname || '모험가')}</span>
+            <span class="rank-sp-val">${(item.total_sp || 0).toLocaleString()} SP</span>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // 실시간 랭킹 TOP 리본 (항상 첫 화면에 노출) 갱신
+    const ribbonContainer = document.getElementById('live-top-ranking-chips');
+    if (ribbonContainer) {
+      ribbonContainer.innerHTML = '';
+      if (top10.length === 0) {
+        ribbonContainer.innerHTML = `<span style="font-size:0.75rem; color:#94a3b8; padding-left: 4px;">출석체크하고 첫 번째 랭커가 되어보세요!</span>`;
+      } else {
+        top10.slice(0, 3).forEach((item, index) => {
+          const medal = ['🥇', '🥈', '🥉'][index] || `${index + 1}위`;
+          const chip = document.createElement('div');
+          chip.className = `top-rank-chip rank-${index + 1}`;
+          chip.innerHTML = `
+            <span class="chip-medal">${medal}</span>
+            <img class="chip-avatar" src="${window.gameData.getCardImagePath(item.main_character)}" alt="Avatar">
+            <span class="chip-name">${escapeHtml(item.nickname || '모험가')}</span>
+            <span class="chip-sp">${(item.total_sp || 0).toLocaleString()} SP</span>
+          `;
+          ribbonContainer.appendChild(chip);
+        });
+      }
+    }
 
     // 내 순위 바 갱신
     if (curUser) {

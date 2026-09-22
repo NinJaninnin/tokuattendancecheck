@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>매일 출석체크 & 가챠 시스템</title>
-  <link rel="stylesheet" href="css/style.css?v=20260922_3">
+  <link rel="stylesheet" href="css/style.css?v=20260922_4">
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Google Identity Services (GIS) -->
@@ -66,6 +66,17 @@
         <button class="icon-btn" id="btn-logout" title="로그아웃">🚪</button>
       </div>
     </header>
+
+    <!-- Real-time Top Ranking Ribbon (모든 기기 첫 화면 상시 노출) -->
+    <div class="live-top-ranking-ribbon" id="live-top-ranking-ribbon">
+      <div class="ribbon-title">
+        <span class="ribbon-icon">🏆</span>
+        <span class="ribbon-text">실시간 랭킹 TOP</span>
+      </div>
+      <div class="ribbon-chips-container" id="live-top-ranking-chips">
+        <!-- 동적 렌더링 -->
+      </div>
+    </div>
 
     <!-- Main Stage Grid -->
     <main class="main-stage-grid">
@@ -510,13 +521,13 @@
   </div>
 
   <!-- Scripts with cache busters -->
-  <script src="js/audio.js?v=20260922_3"></script>
-  <script src="js/particles.js?v=20260922_3"></script>
-  <script src="js/gameData.js?v=20260922_3"></script>
-  <script src="js/api.js?v=20260922_3"></script>
-  <script src="js/userModel.js?v=20260922_3"></script>
-  <script src="js/gacha.js?v=20260922_3"></script>
-  <script src="js/auth.js?v=20260922_3"></script>
-  <script src="js/app.js?v=20260922_3"></script>
+  <script src="js/audio.js?v=20260922_4"></script>
+  <script src="js/particles.js?v=20260922_4"></script>
+  <script src="js/gameData.js?v=20260922_4"></script>
+  <script src="js/api.js?v=20260922_4"></script>
+  <script src="js/userModel.js?v=20260922_4"></script>
+  <script src="js/gacha.js?v=20260922_4"></script>
+  <script src="js/auth.js?v=20260922_4"></script>
+  <script src="js/app.js?v=20260922_4"></script>
 </body>
 </html>

@@ -255,15 +255,9 @@ body {
 /* --- Main Layout Grid --- */
 .main-stage-grid {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 24px;
+  grid-template-columns: 1fr minmax(260px, 320px);
+  gap: 18px;
   flex: 1;
-}
-
-@media (max-width: 1024px) {
-  .main-stage-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* --- Center Character Stage --- */
@@ -392,9 +386,11 @@ body {
 }
 
 .card-stage-container {
-  width: 320px;
-  height: 480px;
-  border-radius: 20px;
+  width: auto;
+  max-width: min(320px, 86vw);
+  height: clamp(240px, 44vh, 460px);
+  aspect-ratio: 2 / 3;
+  border-radius: 18px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
@@ -1310,6 +1306,296 @@ body {
 .google-btn:hover {
   background: #f8fafc !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* =========================================================================
+   RESPONSIVE LAYOUT & RESOLUTION ADAPTATION (각 기기별 최적화)
+   ========================================================================= */
+
+/* --- Live Top Ranking Ribbon (모든 기기 첫 화면 상시 노출) --- */
+.live-top-ranking-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.live-top-ranking-ribbon::-webkit-scrollbar {
+  display: none;
+}
+
+.ribbon-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.84rem;
+  color: var(--accent-gold);
+  white-space: nowrap;
+}
+
+.ribbon-chips-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.top-rank-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 4px 10px 4px 6px;
+  font-size: 0.78rem;
+  color: #fff;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.top-rank-chip.rank-1 {
+  border-color: rgba(245, 158, 11, 0.75);
+  background: rgba(245, 158, 11, 0.18);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+.top-rank-chip.rank-2 {
+  border-color: rgba(203, 213, 225, 0.6);
+  background: rgba(203, 213, 225, 0.15);
+}
+
+.top-rank-chip.rank-3 {
+  border-color: rgba(217, 119, 6, 0.6);
+  background: rgba(217, 119, 6, 0.15);
+}
+
+.top-rank-chip .chip-medal {
+  font-size: 0.92rem;
+}
+
+.top-rank-chip .chip-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.top-rank-chip .chip-name {
+  font-weight: 700;
+  color: #f8fafc;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-rank-chip .chip-sp {
+  color: var(--accent-gold);
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
+/* Tablet & Compact Desktop (768px ~ 1024px) */
+@media (max-width: 1024px) {
+  #app {
+    padding: 10px 14px;
+  }
+  .main-stage-grid {
+    grid-template-columns: 1fr 270px;
+    gap: 14px;
+  }
+  .card-stage-container {
+    height: clamp(240px, 38vh, 380px);
+  }
+  .ranking-sidebar-panel {
+    padding: 14px;
+  }
+}
+
+/* Mobile & Small Screens (< 768px) */
+@media (max-width: 768px) {
+  #app {
+    padding: 8px 10px;
+    min-height: 100dvh;
+  }
+
+  .header-bar {
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+  }
+
+  .user-avatar-mini {
+    width: 38px;
+    height: 38px;
+  }
+
+  .user-nickname {
+    font-size: 0.92rem;
+  }
+
+  .badge-rank-title {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+  }
+
+  .resources-group {
+    gap: 8px;
+  }
+
+  .res-chip {
+    padding: 4px 8px;
+    gap: 5px;
+  }
+
+  .res-chip .res-icon {
+    font-size: 0.85rem;
+  }
+
+  .res-chip .res-label {
+    font-size: 0.6rem;
+  }
+
+  .res-chip .res-val {
+    font-size: 0.82rem;
+  }
+
+  .connection-timer-chip {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+  }
+
+  .live-top-ranking-ribbon {
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+
+  .main-stage-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .character-stage-panel {
+    padding: 14px 10px;
+    border-radius: 14px;
+  }
+
+  .character-speech-bubble {
+    top: 48px;
+    right: 12px;
+    max-width: 190px;
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
+
+  .card-stage-container {
+    height: clamp(220px, 34vh, 320px);
+    border-radius: 14px;
+  }
+
+  .action-controls-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .action-controls-row .game-btn {
+    padding: 8px 6px;
+    font-size: 0.78rem;
+    justify-content: center;
+  }
+
+  .action-controls-row .game-btn:nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .gacha-buttons-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    margin-top: 6px;
+  }
+
+  .gacha-buttons-row .game-btn {
+    padding: 10px 6px;
+    font-size: 0.82rem;
+    justify-content: center;
+  }
+
+  .gacha-buttons-row .game-btn.gacha-single {
+    flex: 1;
+  }
+
+  .gacha-buttons-row .game-btn.gacha-multi {
+    flex: 1.2;
+  }
+
+  .ranking-sidebar-panel {
+    padding: 14px 10px;
+    border-radius: 14px;
+  }
+
+  .ranking-list {
+    max-height: 360px;
+  }
+}
+
+/* Height-constrained devices (e.g. Laptops 1366x768, Landscape mobile) */
+@media (max-height: 800px) and (min-width: 769px) {
+  #app {
+    padding: 8px 16px;
+  }
+  .header-bar {
+    padding: 6px 14px;
+    margin-bottom: 6px;
+  }
+  .live-top-ranking-ribbon {
+    padding: 4px 12px;
+    margin-bottom: 6px;
+  }
+  .character-stage-panel {
+    padding: 12px 16px;
+  }
+  .card-stage-container {
+    height: clamp(210px, 38vh, 340px);
+  }
+  .action-controls-row {
+    margin-top: 8px;
+    gap: 6px;
+  }
+  .action-controls-row .game-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .gacha-buttons-row {
+    margin-top: 6px;
+  }
+  .gacha-buttons-row .game-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  .ranking-list {
+    max-height: 380px;
+  }
 }
 
 

@@ -451,7 +451,7 @@ const server = http.createServer((req, res) => {
   }
 
   if (pathname === '/api/rankings') {
-    const users = readUsers();
+    const users = readUsers().filter(u => u && u.uid && !u.uid.startsWith('ai_'));
     users.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
     const top10 = users.slice(0, 10).map((u, idx) => ({
       rank: idx + 1,

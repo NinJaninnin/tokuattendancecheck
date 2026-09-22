@@ -365,23 +365,43 @@ class ApiService {
   }
 
   getMockRankings() {
-    const mockUsers = [
-      { rank: 1, uid: 'ai_01', nickname: '전설의마스터', main_character: 'card_0007', total_sp: 18450 },
-      { rank: 2, uid: 'ai_02', nickname: '빛의수호자', main_character: 'card_0000', total_sp: 14200 },
-      { rank: 3, uid: 'ai_03', nickname: '가챠장인', main_character: 'card_0022', total_sp: 11800 },
-      { rank: 4, uid: 'ai_04', nickname: '카이저', main_character: 'card_0065', total_sp: 9400 },
-      { rank: 5, uid: 'ai_05', nickname: '출석왕', main_character: 'card_0078', total_sp: 8150 },
-      { rank: 6, uid: 'ai_06', nickname: '성검의기사', main_character: 'card_0156', total_sp: 7300 },
-      { rank: 7, uid: 'ai_07', nickname: '루비나이트', main_character: 'card_0009', total_sp: 6200 },
-      { rank: 8, uid: 'ai_08', nickname: '사파이어', main_character: 'card_0012', total_sp: 5100 },
-      { rank: 9, uid: 'ai_09', nickname: '질풍노도', main_character: 'card_0018', total_sp: 4350 },
-      { rank: 10, uid: 'ai_10', nickname: '초보모험가', main_character: 'card_0033', total_sp: 3800 }
-    ];
+    // 더미 계정 데이터는 모두 삭제 (실제 유저 데이터만 수집)
+    const realUsers = [];
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('toku_user_')) {
+          try {
+            const u = JSON.parse(localStorage.getItem(key));
+            if (u && u.uid && u.nickname && !u.uid.startsWith('ai_')) {
+              realUsers.push({
+                uid: u.uid,
+                nickname: u.nickname,
+                main_character: u.main_character || 'card_0000',
+                total_sp: Number(u.total_sp) || 0
+              });
+            }
+          } catch (e) {}
+        }
+      }
+    } catch (e) {}
+
+    const curUser = window.userModel ? window.userModel.getUser() : null;
+    if (curUser && curUser.uid && !realUsers.some(u => u.uid === curUser.uid)) {
+      realUsers.push({
+        uid: curUser.uid,
+        nickname: curUser.nickname,
+        main_character: curUser.main_character || 'card_0000',
+        total_sp: Number(curUser.total_sp) || 0
+      });
+    }
+
+    realUsers.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
 
     return {
       success: true,
-      rankings: mockUsers,
-      total_users: 10,
+      rankings: realUsers,
+      total_users: realUsers.length,
       updated_at: new Date().toISOString()
     };
   }
