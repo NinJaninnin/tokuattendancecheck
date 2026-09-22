@@ -22,7 +22,7 @@ class AppController {
     ];
 
     this.rankingNextUpdateTime = Date.now() + 3600000;
-    this.cachedRankings = null;
+    this.cachedRankings = window.api ? window.api.getMockRankings().rankings : [];
     this.currentBinderFilter = 'ALL';
     this.pendingGachaResult = null;
     this.currentLang = localStorage.getItem('toku_selected_lang') || 'ko';
@@ -42,6 +42,9 @@ class AppController {
       window.gameData.loadMetadata(metadata);
     }
     this.checkAndUpdateSheetStatusUI(metadata && metadata.sheetConnected, metadata ? metadata.cardlist.length : 0);
+
+    // ★ 초기 랭킹 데이터를 즉시 로드하여 상단 리본 및 랭킹판에 상시 출력 (절대 빈 랭킹/나홀로 표시 방지)
+    await this.refreshRankings();
 
     // 2. 인증 컨트롤러 콜백 설정
     window.authController.onLoginSuccess = async (authData) => {
@@ -267,6 +270,13 @@ class AppController {
   updateRankingsDisplay() {
     const container = document.getElementById('ranking-list-container');
     if (!container) return;
+
+    if (!this.cachedRankings || this.cachedRankings.length === 0) {
+      if (window.api && typeof window.api.getMockRankings === 'function') {
+        const mock = window.api.getMockRankings();
+        this.cachedRankings = mock.rankings || [];
+      }
+    }
 
     let rankings = this.cachedRankings ? [...this.cachedRankings] : [];
 

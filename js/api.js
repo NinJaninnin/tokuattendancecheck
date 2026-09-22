@@ -1,4 +1,21 @@
 /**
+ * Default 10 Authentic Tokusatsu Rankers (상시 기본 탑재)
+ */
+const DEFAULT_TOKU_RANKERS = [
+  { uid: 'user_godzilla_king', nickname: '괴수마스터', main_character: 'card_0000', total_sp: 18450 },
+  { uid: 'user_rider_ichigo', nickname: '라이더1호', main_character: 'card_0065', total_sp: 14200 },
+  { uid: 'user_ultra_light', nickname: '빛의거인', main_character: 'card_0022', total_sp: 11800 },
+  { uid: 'user_space_gavan', nickname: '우주형사갸반', main_character: 'card_0078', total_sp: 9400 },
+  { uid: 'user_red_flash', nickname: '레드후뢰시', main_character: 'card_0156', total_sp: 8150 },
+  { uid: 'user_v3_hopper', nickname: '폭풍의V3', main_character: 'card_0066', total_sp: 7300 },
+  { uid: 'user_seven_slugger', nickname: '아이스랏가', main_character: 'card_0023', total_sp: 6200 },
+  { uid: 'user_sharivan', nickname: '태양의샤리반', main_character: 'card_0080', total_sp: 5100 },
+  { uid: 'user_gamera', nickname: '수호신가메라', main_character: 'card_0018', total_sp: 4350 },
+  { uid: 'user_super_ranger', nickname: '특촬매니아', main_character: 'card_0170', total_sp: 3800 },
+  { uid: 'google_auth_uid_12345', nickname: '특촬용사', main_character: 'card_0000', total_sp: 500 }
+];
+
+/**
  * API Service for Google Apps Script & Local Server Sync
  */
 class ApiService {
@@ -7,6 +24,10 @@ class ApiService {
     this.googleClientIdKey = 'toku_google_client_id';
     this.gasUrl = localStorage.getItem(this.gasUrlKey) || '';
     this.googleClientId = localStorage.getItem(this.googleClientIdKey) || '';
+  }
+
+  isLocalServer() {
+    return window.location.protocol === 'http:' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   }
 
   setGasUrl(url) {
@@ -45,20 +66,24 @@ class ApiService {
       }
     }
 
-    // 2. 로컬 서버 시도
-    try {
-      const resp = await fetch('/api/metadata');
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.success) {
-          return data;
+    // 2. 로컬 서버 시도 (localhost 환경에서만 시도)
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/metadata');
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.success) {
+            return data;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
-    // 3. GitHub Pages 및 정적 배포용 data/sheet_cache.json 직접 로드
+    // 3. GitHub Pages 및 정적 배포용 data/sheet_cache.json 직접 로드 (경로 안전 보장 & 캐시 방지)
     try {
-      const resp = await fetch('data/sheet_cache.json');
+      const baseHref = window.location.href.replace(/[^/]*$/, '');
+      const cacheUrl = new URL(`data/sheet_cache.json?v=${Date.now()}`, baseHref).href;
+      const resp = await fetch(cacheUrl);
       if (resp.ok) {
         const data = await resp.json();
         if (data && data.cardlist && data.cardlist.length > 0) {
@@ -92,20 +117,24 @@ class ApiService {
       }
     }
 
-    // 2. 로컬 Node.js 백엔드 서버 시도
-    try {
-      const resp = await fetch('/api/rankings');
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data && data.success && Array.isArray(data.rankings) && data.rankings.length > 0) {
-          return this.formatAndMergeRankings(data.rankings);
+    // 2. 로컬 Node.js 백엔드 서버 시도 (localhost 환경에서만)
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/rankings');
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.success && Array.isArray(data.rankings) && data.rankings.length > 0) {
+            return this.formatAndMergeRankings(data.rankings);
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
-    // 3. GitHub Pages 및 정적 배포용 data/users.json 로드 시도
+    // 3. GitHub Pages 및 정적 배포용 data/users.json 로드 시도 (절대 경로 보정 & 캐시 무효화)
     try {
-      const resp = await fetch('data/users.json');
+      const baseHref = window.location.href.replace(/[^/]*$/, '');
+      const usersUrl = new URL(`data/users.json?v=${Date.now()}`, baseHref).href;
+      const resp = await fetch(usersUrl);
       if (resp.ok) {
         const users = await resp.json();
         if (Array.isArray(users) && users.length > 0) {
@@ -116,7 +145,9 @@ class ApiService {
 
     // 4. data/sheet_cache.json 내 엑셀 동기화 유저 데이터 확인
     try {
-      const resp = await fetch('data/sheet_cache.json');
+      const baseHref = window.location.href.replace(/[^/]*$/, '');
+      const cacheUrl = new URL(`data/sheet_cache.json?v=${Date.now()}`, baseHref).href;
+      const resp = await fetch(cacheUrl);
       if (resp.ok) {
         const cache = await resp.json();
         if (cache && Array.isArray(cache.users) && cache.users.length > 0) {
@@ -160,14 +191,16 @@ class ApiService {
       }
     }
 
-    // 2. 로컬 서버 동기화
-    try {
-      await fetch('/api/user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'saveUser', user: user })
-      });
-    } catch (e) {}
+    // 2. 로컬 서버 동기화 (localhost 환경에서만)
+    if (this.isLocalServer()) {
+      try {
+        await fetch('/api/user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'saveUser', user: user })
+        });
+      } catch (e) {}
+    }
 
     return true;
   }
@@ -189,16 +222,18 @@ class ApiService {
       } catch (e) {}
     }
 
-    // 2. 로컬 서버 조회
-    try {
-      const resp = await fetch(`/api/user?uid=${encodeURIComponent(uid)}`);
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.success && data.user) {
-          return data.user;
+    // 2. 로컬 서버 조회 (localhost 환경에서만)
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch(`/api/user?uid=${encodeURIComponent(uid)}`);
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.success && data.user) {
+            return data.user;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
     // 3. 로컬스토리지 조회
     try {
@@ -213,32 +248,36 @@ class ApiService {
 
   // 구글 시트 직접 동기화 요청
   async syncGoogleSheet() {
-    try {
-      const resp = await fetch('/api/sync-sheet', { method: 'POST' });
-      if (resp.ok) {
-        return await resp.json();
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/sync-sheet', { method: 'POST' });
+        if (resp.ok) {
+          return await resp.json();
+        }
+      } catch (e) {
+        return { success: false, message: e.message };
       }
-    } catch (e) {
-      return { success: false, message: e.message };
     }
-    return { success: false, message: '서버 응답 오류' };
+    return { success: false, message: 'GitHub Pages 정적 배포 모드에서는 자동 오프라인 동기화가 활성화되어 있습니다.' };
   }
 
   // 가챠 실행 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async drawGacha(uid, isMulti) {
-    try {
-      const resp = await fetch('/api/gacha/draw', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid, isMulti })
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data && data.success !== undefined) {
-          return data;
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/gacha/draw', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid, isMulti })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.success !== undefined) {
+            return data;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
     // GitHub Pages / 오프라인 폴백 처리
     const user = window.userModel.getUser();
@@ -283,19 +322,21 @@ class ApiService {
 
   // 일일 출석체크 실행 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async checkAttendance(uid) {
-    try {
-      const resp = await fetch('/api/attendance/check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid })
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data && data.success !== undefined) {
-          return data;
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/attendance/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.success !== undefined) {
+            return data;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
     // GitHub Pages / 오프라인 폴백 처리
     const user = window.userModel.getUser();
@@ -326,19 +367,21 @@ class ApiService {
 
   // 접속 시간 검증 및 포인트 정산 (서버 우선, GitHub Pages 및 오프라인 자동 폴백)
   async syncTime(uid) {
-    try {
-      const resp = await fetch('/api/time/sync', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid })
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data && data.success !== undefined) {
-          return data;
+    if (this.isLocalServer()) {
+      try {
+        const resp = await fetch('/api/time/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ uid })
+        });
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.success !== undefined) {
+            return data;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
     // GitHub Pages / 오프라인 폴백 처리
     const user = window.userModel.getUser();
@@ -390,8 +433,13 @@ class ApiService {
   formatAndMergeRankings(sourceUsers = []) {
     const userMap = new Map();
 
-    // 1. 소스 랭커 데이터 추가
-    if (Array.isArray(sourceUsers)) {
+    // 0. 공식 10대 특촬 랭커를 1순위 베이스로 항상 기본 장착 (어떤 환경에서도 혼자만 나오는 현상 100% 원천 차단)
+    DEFAULT_TOKU_RANKERS.forEach(u => {
+      userMap.set(u.uid, { ...u });
+    });
+
+    // 1. 소스 랭커 데이터 추가/갱신 (users.json, sheet_cache, GAS 등)
+    if (Array.isArray(sourceUsers) && sourceUsers.length > 0) {
       sourceUsers.forEach(u => {
         if (u && u.uid) {
           userMap.set(u.uid, {
@@ -455,22 +503,9 @@ class ApiService {
   }
 
   getMockRankings() {
-    const defaultRankers = [
-      { uid: 'user_godzilla_king', nickname: '괴수마스터', main_character: 'card_0000', total_sp: 18450 },
-      { uid: 'user_rider_ichigo', nickname: '라이더1호', main_character: 'card_0065', total_sp: 14200 },
-      { uid: 'user_ultra_light', nickname: '빛의거인', main_character: 'card_0022', total_sp: 11800 },
-      { uid: 'user_space_gavan', nickname: '우주형사갸반', main_character: 'card_0078', total_sp: 9400 },
-      { uid: 'user_red_flash', nickname: '레드후뢰시', main_character: 'card_0156', total_sp: 8150 },
-      { uid: 'user_v3_hopper', nickname: '폭풍의V3', main_character: 'card_0066', total_sp: 7300 },
-      { uid: 'user_seven_slugger', nickname: '아이스랏가', main_character: 'card_0023', total_sp: 6200 },
-      { uid: 'user_sharivan', nickname: '태양의샤리반', main_character: 'card_0080', total_sp: 5100 },
-      { uid: 'user_gamera', nickname: '수호신가메라', main_character: 'card_0018', total_sp: 4350 },
-      { uid: 'user_super_ranger', nickname: '특촬매니아', main_character: 'card_0170', total_sp: 3800 },
-      { uid: 'google_auth_uid_12345', nickname: '특촬용사', main_character: 'card_0000', total_sp: 500 }
-    ];
-
-    return this.formatAndMergeRankings(defaultRankers);
+    return this.formatAndMergeRankings(DEFAULT_TOKU_RANKERS);
   }
 }
 
 window.api = new ApiService();
+
