@@ -189,13 +189,64 @@ def parse_xlsx(file_path):
                     'is_complete': is_comp
                 })
 
+        # --- 6. Parse user sheet ---
+        user_rows = read_rows_by_name('user')
+        parsed_users = []
+        card_sp_lookup = {c['card_id']: c['sp_point'] for c in cardlist}
+
+        if user_rows and len(user_rows) > 1:
+            headers = [h.lower() for h in user_rows[0]]
+            uid_idx = headers.index('uid') if 'uid' in headers else 0
+            nick_idx = headers.index('nickname') if 'nickname' in headers else 1
+            main_char_idx = headers.index('main_character') if 'main_character' in headers else 2
+            pts_idx = headers.index('points') if 'points' in headers else 3
+            sp_idx = headers.index('total_sp') if 'total_sp' in headers else 4
+            cards_idx = headers.index('owned_cards') if 'owned_cards' in headers else -1
+
+            for r in user_rows[1:]:
+                uid = r[uid_idx] if len(r) > uid_idx else ''
+                if not uid or not uid.strip():
+                    continue
+                nickname = r[nick_idx] if len(r) > nick_idx and r[nick_idx] else '특촬용사'
+                if any(ord(ch) == 0xfffd for ch in nickname) or not nickname.strip():
+                    nickname = '특촬용사'
+                main_char = r[main_char_idx] if len(r) > main_char_idx and r[main_char_idx] else 'card_0000'
+                try:
+                    points = int(float(r[pts_idx])) if len(r) > pts_idx and r[pts_idx] else 1000
+                except:
+                    points = 1000
+                try:
+                    total_sp = int(float(r[sp_idx])) if len(r) > sp_idx and r[sp_idx] else 0
+                except:
+                    total_sp = 0
+
+                owned_cards = {}
+                if cards_idx >= 0 and len(r) > cards_idx and r[cards_idx]:
+                    try:
+                        owned_cards = json.loads(r[cards_idx])
+                    except:
+                        pass
+
+                if total_sp == 0 and owned_cards:
+                    total_sp = sum(card_sp_lookup.get(cid, 30) * count for cid, count in owned_cards.items())
+
+                parsed_users.append({
+                    'uid': uid,
+                    'nickname': nickname,
+                    'main_character': main_char,
+                    'points': points,
+                    'total_sp': total_sp,
+                    'owned_cards': owned_cards
+                })
+
         output_data = {
             'connected': True,
             'source': os.path.basename(file_path),
             'synced_at': str(os.path.getmtime(file_path)),
             'cardrank': cardrank,
             'gacha': gacha,
-            'cardlist': cardlist
+            'cardlist': cardlist,
+            'users': parsed_users
         }
 
         os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
@@ -203,7 +254,7 @@ def parse_xlsx(file_path):
             json.dump(output_data, fp, ensure_ascii=False, indent=2)
 
         complete_count = len([c for c in cardlist if c['is_complete']])
-        print(f"Successfully parsed '{os.path.basename(file_path)}': {len(cardlist)} total cards ({complete_count} complete).")
+        print(f"Successfully parsed '{os.path.basename(file_path)}': {len(cardlist)} total cards ({complete_count} complete), {len(parsed_users)} users.")
         return output_data
 
 if __name__ == '__main__':

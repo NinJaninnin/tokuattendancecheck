@@ -451,7 +451,18 @@ const server = http.createServer((req, res) => {
   }
 
   if (pathname === '/api/rankings') {
-    const users = readUsers().filter(u => u && u.uid && !u.uid.startsWith('ai_'));
+    let users = readUsers().filter(u => u && u.uid && !u.uid.startsWith('ai_'));
+
+    // 엑셀에서 동기화된 유저가 있다면 병합
+    const cache = readSheetCache();
+    if (cache && Array.isArray(cache.users) && cache.users.length > 0) {
+      cache.users.forEach(cu => {
+        if (cu && cu.uid && !users.some(u => u.uid === cu.uid)) {
+          users.push(cu);
+        }
+      });
+    }
+
     users.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
     const top10 = users.slice(0, 10).map((u, idx) => ({
       rank: idx + 1,

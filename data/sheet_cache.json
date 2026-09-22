@@ -2029,5 +2029,19 @@
       "name_en": "",
       "is_complete": false
     }
+  ],
+  "users": [
+    {
+      "uid": "google_auth_uid_12345",
+      "nickname": "빵구빵꾸빵구빵꾸",
+      "main_character": "card_0000",
+      "points": 1000,
+      "total_sp": 500,
+      "owned_cards": {
+        "card_0000": 1,
+        "card_0022": 3,
+        "card_0078": 1
+      }
+    }
   ]
 }

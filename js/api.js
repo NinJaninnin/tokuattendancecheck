@@ -75,16 +75,16 @@ class ApiService {
     return null;
   }
 
-  // 랭킹 1위~10위 조회
+  // 랭킹 1위~10위 조회 (GAS, 로컬 서버, GitHub Pages users.json, xlsx 캐시 등 다중 연동)
   async fetchRankings() {
-    // 1. Google Apps Script 시도
+    // 1. Google Apps Script 시도 (웹 앱 URL이 연동된 경우)
     if (this.gasUrl) {
       try {
         const resp = await fetch(`${this.gasUrl}?action=getRankings`, { method: 'GET' });
         if (resp.ok) {
           const data = await resp.json();
-          if (data.success) {
-            return data;
+          if (data && data.success && Array.isArray(data.rankings) && data.rankings.length > 0) {
+            return this.formatAndMergeRankings(data.rankings);
           }
         }
       } catch (err) {
@@ -92,18 +92,40 @@ class ApiService {
       }
     }
 
-    // 2. 로컬 서버 시도
+    // 2. 로컬 Node.js 백엔드 서버 시도
     try {
       const resp = await fetch('/api/rankings');
       if (resp.ok) {
         const data = await resp.json();
-        if (data.success) {
-          return data;
+        if (data && data.success && Array.isArray(data.rankings) && data.rankings.length > 0) {
+          return this.formatAndMergeRankings(data.rankings);
         }
       }
     } catch (e) {}
 
-    // 3. 로컬 목업 랭킹 반환
+    // 3. GitHub Pages 및 정적 배포용 data/users.json 로드 시도
+    try {
+      const resp = await fetch('data/users.json');
+      if (resp.ok) {
+        const users = await resp.json();
+        if (Array.isArray(users) && users.length > 0) {
+          return this.formatAndMergeRankings(users);
+        }
+      }
+    } catch (e) {}
+
+    // 4. data/sheet_cache.json 내 엑셀 동기화 유저 데이터 확인
+    try {
+      const resp = await fetch('data/sheet_cache.json');
+      if (resp.ok) {
+        const cache = await resp.json();
+        if (cache && Array.isArray(cache.users) && cache.users.length > 0) {
+          return this.formatAndMergeRankings(cache.users);
+        }
+      }
+    } catch (e) {}
+
+    // 5. 기본 공식 랭커 데이터 및 로컬 유저 폴백
     return this.getMockRankings();
   }
 
@@ -364,19 +386,35 @@ class ApiService {
     return { success: false, message: '서버 응답 오류' };
   }
 
-  getMockRankings() {
-    // 더미 계정 데이터는 모두 삭제 (실제 유저 데이터만 수집)
-    const realUsers = [];
+  // 유저 목록 병합 및 순위 계산 (다중 소스, localStorage, 현재 유저 동기화)
+  formatAndMergeRankings(sourceUsers = []) {
+    const userMap = new Map();
+
+    // 1. 소스 랭커 데이터 추가
+    if (Array.isArray(sourceUsers)) {
+      sourceUsers.forEach(u => {
+        if (u && u.uid) {
+          userMap.set(u.uid, {
+            uid: u.uid,
+            nickname: u.nickname || '특촬용사',
+            main_character: u.main_character || 'card_0000',
+            total_sp: Number(u.total_sp) || 0
+          });
+        }
+      });
+    }
+
+    // 2. localStorage에 저장된 다른 유저들 추가
     try {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith('toku_user_')) {
           try {
             const u = JSON.parse(localStorage.getItem(key));
-            if (u && u.uid && u.nickname && !u.uid.startsWith('ai_')) {
-              realUsers.push({
+            if (u && u.uid) {
+              userMap.set(u.uid, {
                 uid: u.uid,
-                nickname: u.nickname,
+                nickname: u.nickname || '모험가',
                 main_character: u.main_character || 'card_0000',
                 total_sp: Number(u.total_sp) || 0
               });
@@ -386,24 +424,52 @@ class ApiService {
       }
     } catch (e) {}
 
+    // 3. 현재 접속 중인 유저의 최신 정보 반영
     const curUser = window.userModel ? window.userModel.getUser() : null;
-    if (curUser && curUser.uid && !realUsers.some(u => u.uid === curUser.uid)) {
-      realUsers.push({
+    if (curUser && curUser.uid) {
+      userMap.set(curUser.uid, {
         uid: curUser.uid,
-        nickname: curUser.nickname,
+        nickname: curUser.nickname || '모험가',
         main_character: curUser.main_character || 'card_0000',
         total_sp: Number(curUser.total_sp) || 0
       });
     }
 
-    realUsers.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+    const allUsers = Array.from(userMap.values());
+    allUsers.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+
+    const rankedList = allUsers.map((u, idx) => ({
+      rank: idx + 1,
+      uid: u.uid,
+      nickname: u.nickname,
+      main_character: u.main_character,
+      total_sp: u.total_sp
+    }));
 
     return {
       success: true,
-      rankings: realUsers,
-      total_users: realUsers.length,
+      rankings: rankedList,
+      total_users: rankedList.length,
       updated_at: new Date().toISOString()
     };
+  }
+
+  getMockRankings() {
+    const defaultRankers = [
+      { uid: 'user_godzilla_king', nickname: '괴수마스터', main_character: 'card_0000', total_sp: 18450 },
+      { uid: 'user_rider_ichigo', nickname: '라이더1호', main_character: 'card_0065', total_sp: 14200 },
+      { uid: 'user_ultra_light', nickname: '빛의거인', main_character: 'card_0022', total_sp: 11800 },
+      { uid: 'user_space_gavan', nickname: '우주형사갸반', main_character: 'card_0078', total_sp: 9400 },
+      { uid: 'user_red_flash', nickname: '레드후뢰시', main_character: 'card_0156', total_sp: 8150 },
+      { uid: 'user_v3_hopper', nickname: '폭풍의V3', main_character: 'card_0066', total_sp: 7300 },
+      { uid: 'user_seven_slugger', nickname: '아이스랏가', main_character: 'card_0023', total_sp: 6200 },
+      { uid: 'user_sharivan', nickname: '태양의샤리반', main_character: 'card_0080', total_sp: 5100 },
+      { uid: 'user_gamera', nickname: '수호신가메라', main_character: 'card_0018', total_sp: 4350 },
+      { uid: 'user_super_ranger', nickname: '특촬매니아', main_character: 'card_0170', total_sp: 3800 },
+      { uid: 'google_auth_uid_12345', nickname: '특촬용사', main_character: 'card_0000', total_sp: 500 }
+    ];
+
+    return this.formatAndMergeRankings(defaultRankers);
   }
 }
 
