@@ -572,6 +572,55 @@ class AppController {
     });
   }
 
+  // 게임 옵션 및 구글 로그인 모달 열기
+  openSettingsModal() {
+    const user = window.userModel.getUser();
+    const isGoogle = user && (user.uid.startsWith('google_') || (user.email && user.email.includes('@')));
+
+    const authBadge = document.getElementById('settings-auth-badge');
+    const authDesc = document.getElementById('settings-auth-desc');
+    const guestBox = document.getElementById('settings-guest-login-box');
+    const connBox = document.getElementById('settings-connected-box');
+    const connLabel = document.getElementById('settings-connected-email-label');
+
+    if (isGoogle) {
+      if (authBadge) {
+        authBadge.textContent = '연동됨';
+        authBadge.style.background = '#10b981';
+      }
+      if (authDesc) {
+        authDesc.textContent = '구글 계정에 안전하게 연결되어 있습니다. 카드와 포인트가 계정에 자동 보관됩니다.';
+      }
+      if (guestBox) guestBox.style.display = 'none';
+      if (connBox) connBox.style.display = 'block';
+      if (connLabel) connLabel.textContent = user.email || user.nickname;
+    } else {
+      if (authBadge) {
+        authBadge.textContent = '게스트';
+        authBadge.style.background = '#3b82f6';
+      }
+      if (authDesc) {
+        authDesc.textContent = '구글 계정으로 로그인하시면 현재 획득한 카드와 출석 포인트를 안전하게 계정에 보관할 수 있습니다.';
+      }
+      if (guestBox) guestBox.style.display = 'block';
+      if (connBox) connBox.style.display = 'none';
+    }
+
+    // 언어 버튼 활성화 상태 표시
+    document.querySelectorAll('.settings-opt-lang-btn').forEach(btn => {
+      const active = btn.dataset.lang === this.currentLang;
+      btn.style.background = active ? 'linear-gradient(135deg, #0284c7, #0369a1)' : 'rgba(255, 255, 255, 0.1)';
+      btn.style.borderColor = active ? 'var(--accent-cyan)' : 'var(--border-color)';
+      btn.style.fontWeight = active ? '700' : 'normal';
+    });
+
+    const gasInput = document.getElementById('input-gas-url');
+    if (gasInput) gasInput.value = window.api.getGasUrl();
+
+    this.openModal('modal-settings');
+    this.checkAndUpdateSheetStatusUI();
+  }
+
   async checkAndUpdateSheetStatusUI(forcedConnected = false, count = 0) {
     const box = document.getElementById('sheet-sync-status-box');
     const title = document.getElementById('sheet-sync-status-title');
@@ -686,13 +735,10 @@ class AppController {
       }
     };
 
-    // 설정 모달
+    // 설정/옵션 모달
     document.getElementById('btn-settings').onclick = () => {
       window.soundCtrl.playClick();
-      document.getElementById('input-gas-url').value = window.api.getGasUrl();
-      document.getElementById('input-google-client-id').value = window.api.getGoogleClientId();
-      this.openModal('modal-settings');
-      this.checkAndUpdateSheetStatusUI();
+      this.openSettingsModal();
     };
 
     // 구글 시트 즉시 동기화 버튼
@@ -814,6 +860,58 @@ class AppController {
         }
       };
     }
+
+    // 옵션 모달 내 구글 원클릭 로그인
+    const optGoogleBtn = document.getElementById('btn-settings-google-login');
+    if (optGoogleBtn) {
+      optGoogleBtn.onclick = () => {
+        window.soundCtrl.playClick();
+        window.authController.triggerGoogleLogin();
+      };
+    }
+
+    // 옵션 모달 내 구글 이메일 직접 연동
+    const optSubmitEmailBtn = document.getElementById('btn-settings-submit-email');
+    if (optSubmitEmailBtn) {
+      optSubmitEmailBtn.onclick = () => {
+        const email = document.getElementById('settings-google-email-input').value;
+        if (!email || !email.includes('@')) {
+          alert('유효한 구글 이메일 주소를 입력해 주세요.');
+          return;
+        }
+        if (window.authController.loginWithGoogleEmail(email)) {
+          window.soundCtrl.playAttendanceFanfare();
+          alert(`🎉 구글 계정 연동 완료!\n[${email}] 계정으로 출석체크 및 카드 데이터가 안전하게 연동되었습니다.`);
+          this.closeModal('modal-settings');
+        }
+      };
+    }
+
+    // 옵션 모달 내 계정 전환 버튼
+    const optSwitchBtn = document.getElementById('btn-settings-switch-account');
+    if (optSwitchBtn) {
+      optSwitchBtn.onclick = () => {
+        const guestBox = document.getElementById('settings-guest-login-box');
+        const connBox = document.getElementById('settings-connected-box');
+        if (guestBox) guestBox.style.display = 'block';
+        if (connBox) connBox.style.display = 'none';
+        window.soundCtrl.playClick();
+      };
+    }
+
+    // 옵션 모달 내 언어 버튼 클릭
+    document.querySelectorAll('.settings-opt-lang-btn').forEach(btn => {
+      btn.onclick = () => {
+        window.soundCtrl.playClick();
+        this.setLanguage(btn.dataset.lang);
+        document.querySelectorAll('.settings-opt-lang-btn').forEach(b => {
+          const active = b.dataset.lang === this.currentLang;
+          b.style.background = active ? 'linear-gradient(135deg, #0284c7, #0369a1)' : 'rgba(255, 255, 255, 0.1)';
+          b.style.borderColor = active ? 'var(--accent-cyan)' : 'var(--border-color)';
+          b.style.fontWeight = active ? '700' : 'normal';
+        });
+      };
+    });
 
     // 로그아웃
     document.getElementById('btn-logout').onclick = () => {

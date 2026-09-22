@@ -41,23 +41,33 @@ class UserModel {
       const todayStr = this.getTodayDateString();
       const now = Date.now();
 
-      // 스타터 5종 중 1장 무작위 추첨
-      const starters = window.gameData.starterCards;
-      initialGiftCard = starters[Math.floor(Math.random() * starters.length)];
+      // 만약 기존에 게스트로 플레이하던 데이터가 있다면 카드 및 포인트 승계 연동
+      const prevGuest = this.user && this.user.uid && !this.user.uid.startsWith('google_') ? this.user : null;
+      let initialOwned = {};
+      let starterSp = 0;
+      let initialPoints = 1000;
 
-      const initialOwned = {};
-      initialOwned[initialGiftCard] = 1;
-
-      const starterSp = window.gameData.getCard(initialGiftCard).sp_point;
+      if (prevGuest && prevGuest.owned_cards && Object.keys(prevGuest.owned_cards).length > 0) {
+        initialOwned = { ...prevGuest.owned_cards };
+        initialGiftCard = prevGuest.main_character || 'card_0000';
+        initialPoints = prevGuest.points || 0;
+        starterSp = prevGuest.total_sp || window.gameData.calculateTotalSP(initialOwned);
+      } else {
+        // 스타터 5종 중 1장 무작위 추첨
+        const starters = window.gameData.starterCards;
+        initialGiftCard = starters[Math.floor(Math.random() * starters.length)];
+        initialOwned[initialGiftCard] = 1;
+        starterSp = window.gameData.getCard(initialGiftCard).sp_point;
+      }
 
       this.user = {
         uid: uid,
         nickname: nickname,
         email: authData.email || '',
         main_character: initialGiftCard,
-        points: 1000, // 초기 1000p 출석 지급
+        points: initialPoints,
         total_sp: starterSp,
-        last_attendance_date: todayStr,
+        last_attendance_date: (prevGuest && prevGuest.last_attendance_date) || todayStr,
         last_sync_timestamp: now,
         is_initial_gift_received: true,
         created_at: now,

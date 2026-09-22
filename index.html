@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>매일 출석체크 & 가챠 시스템</title>
-  <link rel="stylesheet" href="css/style.css?v=20260922_2">
+  <link rel="stylesheet" href="css/style.css?v=20260922_3">
   <!-- Pretendard Font -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <!-- Google Identity Services (GIS) -->
@@ -379,67 +379,129 @@
   </div>
 
   <!-- =====================================================================
-       SETTINGS / GOOGLE SHEET SYNC MODAL
+       SETTINGS & GOOGLE LOGIN MODAL (옵션 팝업창)
        ===================================================================== -->
   <div class="game-modal-overlay" id="modal-settings">
-    <div class="game-modal-box" style="max-width: 600px;">
+    <div class="game-modal-box" style="max-width: 540px;">
       <div class="modal-header">
-        <h3 class="modal-title">⚙️ 구글 시트 및 연동 설정</h3>
+        <h3 class="modal-title">⚙️ 게임 옵션 & 계정 설정</h3>
         <button class="modal-close-btn" data-close="modal-settings">&times;</button>
       </div>
-      <div class="modal-body">
-        <!-- Live Connection Status Alert -->
-        <div id="sheet-sync-status-box" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 14px; border-radius: 10px; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-weight: 800; color: #f87171; font-size: 0.95rem;" id="sheet-sync-status-title">
-              ⚠️ 구글 시트 미연결 (권한 필요)
+      <div class="modal-body" style="padding: 20px; text-align: left;">
+
+        <!-- 1. 구글 계정 로그인 & 연동 섹션 -->
+        <div style="background: rgba(30, 41, 59, 0.85); border: 1.5px solid rgba(66, 133, 244, 0.45); border-radius: 14px; padding: 18px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-weight: 800; color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              구글 계정 연동 & 로그인
             </div>
-            <button class="game-btn secondary" id="btn-trigger-sheet-sync" style="padding: 6px 12px; font-size: 0.8rem;">
-              🔄 지금 연동 재시도
+            <span id="settings-auth-badge" style="background: #3b82f6; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 12px;">게스트</span>
+          </div>
+
+          <p id="settings-auth-desc" style="font-size: 0.84rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 14px;">
+            구글 계정으로 로그인하시면 수집한 영웅 카드, SP 점수, 포인트가 안전하게 계정에 저장됩니다.
+          </p>
+
+          <!-- 게스트 모드일 때 노출되는 구글 로그인 컨트롤 -->
+          <div id="settings-guest-login-box">
+            <button class="game-btn google-btn" id="btn-settings-google-login" style="width: 100%; justify-content: center; background: #fff; color: #1f2937; border: 1px solid #d1d5db; font-weight: 700; margin-bottom: 10px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right: 8px;">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              구글 원클릭 계정 연동
+            </button>
+
+            <div style="position: relative; margin: 12px 0; text-align: center;">
+              <hr style="border: none; border-top: 1px solid var(--border-color);">
+              <span style="position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: #1e293b; padding: 0 8px; font-size: 0.75rem; color: var(--text-sub);">또는 이메일 직접 연동</span>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <input type="email" class="form-input" id="settings-google-email-input" placeholder="구글 이메일 (예: hero@gmail.com)" style="flex: 1; font-size: 0.85rem;">
+              <button class="game-btn primary" id="btn-settings-submit-email" style="font-size: 0.82rem; padding: 8px 16px; white-space: nowrap;">
+                🚀 연동하기
+              </button>
+            </div>
+          </div>
+
+          <!-- 구글 연동 완료 상태일 때 노출 -->
+          <div id="settings-connected-box" style="display: none;">
+            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); padding: 12px; border-radius: 8px; font-size: 0.88rem; color: #34d399; margin-bottom: 12px;">
+              ✓ 현재 <strong id="settings-connected-email-label"></strong> 구글 계정에 데이터가 안전하게 연동되어 있습니다.
+            </div>
+            <button class="game-btn secondary" id="btn-settings-switch-account" style="width: 100%; justify-content: center; font-size: 0.85rem;">
+              🔄 다른 구글 계정으로 전환 / 재연동
             </button>
           </div>
-          <p style="color: #cbd5e1; font-size: 0.82rem; margin-top: 8px; line-height: 1.5;" id="sheet-sync-status-desc">
-            현재 구글 시트가 <strong>[제한됨(비공개)]</strong> 상태여서 임시 카드명(영웅 #XXXX)으로 표시되고 있습니다.<br>
-            아래 2가지 방법 중 하나를 이용하시면 <strong>실제 카드 이름</strong>이 즉시 적용됩니다!
-          </p>
         </div>
 
-        <!-- Method 1: Public link guide -->
-        <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 16px;">
-          <div style="font-weight: 700; color: var(--accent-gold); font-size: 0.9rem; margin-bottom: 6px;">
-            💡 방법 1. 구글 시트 공유 권한 변경 (5초 완료, 권장)
+        <!-- 2. 게임 언어 및 설정 섹션 -->
+        <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+          <div style="font-weight: 700; color: #e2e8f0; font-size: 0.9rem; margin-bottom: 8px;">
+            🌐 카드 및 게임 언어 선택
           </div>
-          <ol style="margin-left: 20px; font-size: 0.82rem; color: #cbd5e1; line-height: 1.6;">
-            <li>
-              <a href="https://docs.google.com/spreadsheets/d/1asIP47jypSXf280OkIf5stQZ2TvUQWKZsjDs2vwt_I4/edit?usp=sharing" target="_blank" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 700;">
-                구글 스프레드시트 열기 ↗
-              </a>
-            </li>
-            <li>시트 우측 상단 <strong>[공유]</strong> 버튼 클릭</li>
-            <li>일반 액세스를 <strong>[링크가 있는 모든 사용자]</strong> (역할: 뷰어) 로 변경 후 [완료]</li>
-            <li>위의 <strong>[🔄 지금 연동 재시도]</strong> 버튼 클릭!</li>
-          </ol>
-        </div>
-
-        <!-- Method 2: Direct Paste -->
-        <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 16px;">
-          <div style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem; margin-bottom: 6px;">
-            📋 방법 2. 시트 데이터 직접 복사-붙여넣기 (즉시 적용)
+          <div style="display: flex; gap: 8px;" id="settings-lang-buttons">
+            <button class="game-btn secondary settings-opt-lang-btn" data-lang="ko" style="flex: 1; justify-content: center; font-size: 0.82rem; padding: 8px;">
+              🇰🇷 한국어
+            </button>
+            <button class="game-btn secondary settings-opt-lang-btn" data-lang="ja" style="flex: 1; justify-content: center; font-size: 0.82rem; padding: 8px;">
+              🇯🇵 日本語
+            </button>
+            <button class="game-btn secondary settings-opt-lang-btn" data-lang="en" style="flex: 1; justify-content: center; font-size: 0.82rem; padding: 8px;">
+              🇺🇸 English
+            </button>
           </div>
-          <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 8px;">
-            구글 시트의 <code>cardlist</code> 탭 전체(card_id, name, rank)를 복사(Ctrl+C)하여 아래에 붙여넣으세요:
-          </p>
-          <textarea class="form-input" id="textarea-paste-cardlist" rows="4" placeholder="card_id	name	rank&#10;card_0000	배틀재팬	SR&#10;card_0001	덴지레드	N..." style="font-family: monospace; font-size: 0.78rem;"></textarea>
-          <button class="game-btn primary" id="btn-apply-pasted-data" style="margin-top: 8px; width: 100%; justify-content: center; font-size: 0.85rem; padding: 8px;">
-            📥 붙여넣은 카드 데이터 즉시 적용
-          </button>
         </div>
 
-        <!-- Method 3: Apps Script URL -->
-        <div class="form-group">
-          <label class="form-label">Google Apps Script 웹 앱 URL (선택 사항)</label>
-          <input type="text" class="form-input" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec">
-        </div>
+        <!-- 3. 구글 시트 데이터 연동 설정 (접이식 아코디언) -->
+        <details style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px;">
+          <summary style="font-weight: 700; font-size: 0.85rem; color: var(--accent-cyan); cursor: pointer;">
+            📊 구글 스프레드시트 데이터 수동 동기화 설정
+          </summary>
+          <div style="margin-top: 12px;">
+            <!-- Live Connection Status Alert -->
+            <div id="sheet-sync-status-box" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 800; color: #f87171; font-size: 0.88rem;" id="sheet-sync-status-title">
+                  ⚠️ 구글 시트 상태
+                </div>
+                <button class="game-btn secondary" id="btn-trigger-sheet-sync" style="padding: 5px 10px; font-size: 0.78rem;">
+                  🔄 지금 연동 재시도
+                </button>
+              </div>
+              <p style="color: #cbd5e1; font-size: 0.8rem; margin-top: 6px; line-height: 1.4;" id="sheet-sync-status-desc">
+                시트 데이터를 갱신하거나 최신화할 수 있습니다.
+              </p>
+            </div>
+
+            <!-- Method 2: Direct Paste -->
+            <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+              <p style="font-size: 0.78rem; color: var(--text-sub); margin-bottom: 6px;">
+                구글 시트의 <code>cardlist</code> 탭 전체 복사 후 붙여넣기:
+              </p>
+              <textarea class="form-input" id="textarea-paste-cardlist" rows="3" placeholder="card_id	cardrank	name	name_jp	name_en..." style="font-family: monospace; font-size: 0.75rem;"></textarea>
+              <button class="game-btn primary" id="btn-apply-pasted-data" style="margin-top: 6px; width: 100%; justify-content: center; font-size: 0.8rem; padding: 6px;">
+                📥 붙여넣은 카드 데이터 즉시 적용
+              </button>
+            </div>
+
+            <!-- Method 3: Apps Script URL -->
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-size: 0.78rem;">Google Apps Script 웹 앱 URL (선택 사항)</label>
+              <input type="text" class="form-input" id="input-gas-url" placeholder="https://script.google.com/macros/s/.../exec" style="font-size: 0.8rem;">
+            </div>
+          </div>
+        </details>
+
       </div>
       <div class="modal-footer">
         <button class="game-btn secondary" data-close="modal-settings">닫기</button>
@@ -448,13 +510,13 @@
   </div>
 
   <!-- Scripts with cache busters -->
-  <script src="js/audio.js?v=20260922_2"></script>
-  <script src="js/particles.js?v=20260922_2"></script>
-  <script src="js/gameData.js?v=20260922_2"></script>
-  <script src="js/api.js?v=20260922_2"></script>
-  <script src="js/userModel.js?v=20260922_2"></script>
-  <script src="js/gacha.js?v=20260922_2"></script>
-  <script src="js/auth.js?v=20260922_2"></script>
-  <script src="js/app.js?v=20260922_2"></script>
+  <script src="js/audio.js?v=20260922_3"></script>
+  <script src="js/particles.js?v=20260922_3"></script>
+  <script src="js/gameData.js?v=20260922_3"></script>
+  <script src="js/api.js?v=20260922_3"></script>
+  <script src="js/userModel.js?v=20260922_3"></script>
+  <script src="js/gacha.js?v=20260922_3"></script>
+  <script src="js/auth.js?v=20260922_3"></script>
+  <script src="js/app.js?v=20260922_3"></script>
 </body>
 </html>
