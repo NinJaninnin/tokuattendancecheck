@@ -76,7 +76,7 @@ class GameDataManager {
 
   getCardImagePath(cardId) {
     if (!cardId) cardId = 'card_0000';
-    return `img_card/BandiView_${cardId}.webp`;
+    return `img_card/${cardId}.webp`;
   }
 
   // 카드 필수 데이터 완성도 검증

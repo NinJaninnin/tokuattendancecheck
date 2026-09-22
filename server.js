@@ -806,24 +806,23 @@ const server = http.createServer((req, res) => {
 
   let filePath = path.join(ROOT_DIR, safePath);
 
-  // 카드 이미지 별칭 지원 (/img_card/card_XXXX.webp -> BandiView_card_XXXX.webp)
-  if (!fs.existsSync(filePath) && safePath.includes('img_card')) {
-    const filename = path.basename(filePath);
-    if (!filename.startsWith('BandiView_')) {
-      const altFilePath = path.join(path.dirname(filePath), `BandiView_${filename}`);
-      if (fs.existsSync(altFilePath)) {
-        filePath = altFilePath;
-      }
-    }
-  }
-
-  // 배경 이미지 별칭 지원 (/img_bg/bg_XXXX.webp -> BandiView_bg_XXXX.webp)
-  if (!fs.existsSync(filePath) && safePath.includes('img_bg')) {
-    const filename = path.basename(filePath);
-    if (!filename.startsWith('BandiView_')) {
-      const altFilePath = path.join(path.dirname(filePath), `BandiView_${filename}`);
-      if (fs.existsSync(altFilePath)) {
-        filePath = altFilePath;
+  // 지능형 이미지 별칭 지원 (BandiView_, 반디뷰_ 접두사 존재 여부와 무관하게 양방향 자동 탐색)
+  if (safePath.includes('img_card') || safePath.includes('img_bg')) {
+    if (!fs.existsSync(filePath)) {
+      const dir = path.dirname(filePath);
+      const filename = path.basename(filePath);
+      const cleanName = filename.replace(/^(BandiView_|반디뷰_|bandiview_)/i, '');
+      const candidates = [
+        cleanName,
+        `BandiView_${cleanName}`,
+        `반디뷰_${cleanName}`
+      ];
+      for (const cand of candidates) {
+        const alt = path.join(dir, cand);
+        if (fs.existsSync(alt)) {
+          filePath = alt;
+          break;
+        }
       }
     }
   }
