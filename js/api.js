@@ -314,11 +314,12 @@ class ApiService {
 
   // 유저 데이터 저장 (GAS & 로컬 & 로컬스토리지 동시 동기화)
   async saveUser(user) {
-    if (!user || !user.uid) return false;
+    if (!user || (!user.uid && !user.email)) return false;
 
-    // 로컬스토리지 캐시
+    // 로컬스토리지 캐시 (UID 및 이메일 동시 캐싱)
     try {
-      localStorage.setItem(`toku_user_${user.uid}`, JSON.stringify(user));
+      if (user.uid) localStorage.setItem(`toku_user_${user.uid}`, JSON.stringify(user));
+      if (user.email) localStorage.setItem(`toku_user_email_${user.email.trim().toLowerCase()}`, JSON.stringify(user));
     } catch (e) {}
 
     let gasSuccess = false;
@@ -346,25 +347,36 @@ class ApiService {
     // 2. 로컬 서버 동기화 (localhost 환경에서만)
     if (this.isLocalServer()) {
       try {
-        await fetch('/api/user', {
+        const resp = await fetch('/api/user', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'saveUser', user: user })
         });
+        if (resp.ok) {
+          const resJson = await resp.json();
+          if (resJson && resJson.success && resJson.user) {
+            return resJson.user;
+          }
+        }
       } catch (e) {}
     }
 
     return true;
   }
 
-  // 유저 데이터 불러오기
-  async fetchUser(uid) {
-    if (!uid) return null;
+  // 유저 데이터 불러오기 (UID 및 이메일 동시 조회 지원)
+  async fetchUser(uid, email) {
+    if (!uid && !email) return null;
+
+    const queryParts = [];
+    if (uid) queryParts.push(`uid=${encodeURIComponent(uid)}`);
+    if (email) queryParts.push(`email=${encodeURIComponent(email.trim().toLowerCase())}`);
+    const qs = queryParts.join('&');
 
     // 1. GAS 조회
     if (this.gasUrl) {
       try {
-        const resp = await fetch(`${this.gasUrl}?action=getUser&uid=${encodeURIComponent(uid)}`);
+        const resp = await fetch(`${this.gasUrl}?action=getUser&${qs}`);
         if (resp.ok) {
           const data = await resp.json();
           if (data.success && data.user) {
@@ -377,7 +389,7 @@ class ApiService {
     // 2. 로컬 서버 조회 (localhost 환경에서만)
     if (this.isLocalServer()) {
       try {
-        const resp = await fetch(`/api/user?uid=${encodeURIComponent(uid)}`);
+        const resp = await fetch(`/api/user?${qs}`);
         if (resp.ok) {
           const data = await resp.json();
           if (data.success && data.user) {
@@ -389,9 +401,13 @@ class ApiService {
 
     // 3. 로컬스토리지 조회
     try {
-      const cached = localStorage.getItem(`toku_user_${uid}`);
-      if (cached) {
-        return JSON.parse(cached);
+      if (uid) {
+        const cached = localStorage.getItem(`toku_user_${uid}`);
+        if (cached) return JSON.parse(cached);
+      }
+      if (email) {
+        const cachedEmail = localStorage.getItem(`toku_user_email_${email.trim().toLowerCase()}`);
+        if (cachedEmail) return JSON.parse(cachedEmail);
       }
     } catch (e) {}
 

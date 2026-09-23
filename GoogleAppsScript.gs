@@ -43,7 +43,8 @@ function doGet(e) {
       result = getOnlineUsers();
     } else if (action === 'getUser') {
       const uid = params.uid;
-      result = getUser(uid);
+      const email = params.email;
+      result = getUser(uid, email);
     } else if (action === 'init') {
       result = initSpreadsheet();
     } else {
@@ -315,8 +316,8 @@ function getOnlineUsers() {
 /**
  * 유저 정보 조회
  */
-function getUser(uid) {
-  if (!uid) return { success: false, message: 'UID is required' };
+function getUser(uid, email) {
+  if (!uid && !email) return { success: false, message: 'UID or Email is required' };
   const ss = getSpreadsheet();
   const userSheet = ss.getSheetByName('user');
   if (!userSheet) return { success: false, message: 'User sheet not found' };
@@ -326,10 +327,18 @@ function getUser(uid) {
   
   const headers = data[0].map(h => String(h).trim().toLowerCase());
   const uidIdx = headers.indexOf('uid');
+  const emailIdx = headers.indexOf('email');
+  const cleanEmail = email ? String(email).trim().toLowerCase() : '';
   
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
-    if (String(row[uidIdx]) === String(uid)) {
+    const rowUid = uidIdx >= 0 ? String(row[uidIdx]) : '';
+    const rowEmail = emailIdx >= 0 ? String(row[emailIdx]).trim().toLowerCase() : '';
+
+    const matchUid = uid && rowUid === String(uid);
+    const matchEmail = cleanEmail && rowEmail === cleanEmail;
+
+    if (matchUid || matchEmail) {
       const ownedCardsStr = row[headers.indexOf('owned_cards')];
       let ownedCards = {};
       try {
@@ -339,7 +348,8 @@ function getUser(uid) {
       return {
         success: true,
         user: {
-          uid: String(row[headers.indexOf('uid')]),
+          uid: rowUid,
+          email: rowEmail,
           nickname: String(row[headers.indexOf('nickname')]),
           main_character: String(row[headers.indexOf('main_character')]),
           points: Number(row[headers.indexOf('points')]),
@@ -361,45 +371,65 @@ function getUser(uid) {
  * 유저 정보 저장 및 업데이트 (Upsert)
  */
 function saveUser(user) {
-  if (!user || !user.uid) return { success: false, message: 'Valid user object with uid required' };
+  if (!user || (!user.uid && !user.email)) return { success: false, message: 'Valid user object with uid or email required' };
   
   const ss = getSpreadsheet();
   let userSheet = ss.getSheetByName('user');
   if (!userSheet) {
     userSheet = ss.insertSheet('user');
     userSheet.appendRow([
-      'uid', 'nickname', 'main_character', 'points', 'total_sp',
+      'uid', 'email', 'nickname', 'main_character', 'points', 'total_sp',
       'last_attendance_date', 'last_sync_timestamp', 'is_initial_gift_received',
       'created_at', 'owned_cards', 'updated_at'
     ]);
   }
   
-  const data = userSheet.getDataRange().getValues();
-  const headers = data[0].map(h => String(h).trim().toLowerCase());
-  const uidIdx = headers.indexOf('uid');
-  
-  const rowValues = [
-    user.uid,
-    user.nickname || '',
-    user.main_character || 'card_0000',
-    Number(user.points) || 0,
-    Number(user.total_sp) || 0,
-    user.last_attendance_date || '',
-    Number(user.last_sync_timestamp) || new Date().getTime(),
-    Boolean(user.is_initial_gift_received),
-    Number(user.created_at) || new Date().getTime(),
-    JSON.stringify(user.owned_cards || {}),
-    new Date().toISOString()
-  ];
-  
+  let data = userSheet.getDataRange().getValues();
+  let headers = data[0].map(h => String(h).trim().toLowerCase());
+  let uidIdx = headers.indexOf('uid');
+  let emailIdx = headers.indexOf('email');
+
+  // 이메일 컬럼이 기존 시트에 없을 경우 자동 확장
+  if (emailIdx < 0) {
+    userSheet.getRange(1, headers.length + 1).setValue('email');
+    data = userSheet.getDataRange().getValues();
+    headers = data[0].map(h => String(h).trim().toLowerCase());
+    emailIdx = headers.indexOf('email');
+  }
+
+  const cleanEmail = user.email ? String(user.email).trim().toLowerCase() : '';
+
   let targetRowIndex = -1;
   for (let i = 1; i < data.length; i++) {
-    if (String(data[i][uidIdx]) === String(user.uid)) {
+    const row = data[i];
+    const rowUid = uidIdx >= 0 ? String(row[uidIdx]) : '';
+    const rowEmail = emailIdx >= 0 ? String(row[emailIdx]).trim().toLowerCase() : '';
+
+    if ((user.uid && rowUid === String(user.uid)) || (cleanEmail && rowEmail === cleanEmail)) {
       targetRowIndex = i + 1; // 1-based index in Sheet
       break;
     }
   }
-  
+
+  const rowValues = [];
+  headers.forEach(h => {
+    switch (h) {
+      case 'uid': rowValues.push(user.uid || ''); break;
+      case 'email': rowValues.push(cleanEmail); break;
+      case 'nickname': rowValues.push(user.nickname || ''); break;
+      case 'main_character': rowValues.push(user.main_character || 'card_0000'); break;
+      case 'points': rowValues.push(Number(user.points) || 0); break;
+      case 'total_sp': rowValues.push(Number(user.total_sp) || 0); break;
+      case 'last_attendance_date': rowValues.push(user.last_attendance_date || ''); break;
+      case 'last_sync_timestamp': rowValues.push(Number(user.last_sync_timestamp) || new Date().getTime()); break;
+      case 'is_initial_gift_received': rowValues.push(Boolean(user.is_initial_gift_received)); break;
+      case 'created_at': rowValues.push(Number(user.created_at) || new Date().getTime()); break;
+      case 'owned_cards': rowValues.push(JSON.stringify(user.owned_cards || {})); break;
+      case 'updated_at': rowValues.push(new Date().toISOString()); break;
+      default: rowValues.push(''); break;
+    }
+  });
+
   if (targetRowIndex > 0) {
     // 기존 유저 행 업데이트
     userSheet.getRange(targetRowIndex, 1, 1, rowValues.length).setValues([rowValues]);
@@ -407,11 +437,12 @@ function saveUser(user) {
     // 신규 유저 행 추가
     userSheet.appendRow(rowValues);
   }
-  
+
   return {
     success: true,
     message: 'User saved successfully',
     uid: user.uid,
+    email: cleanEmail,
     updated_at: new Date().toISOString()
   };
 }
@@ -429,7 +460,7 @@ function initSpreadsheet() {
   }
   if (userSheet.getLastRow() === 0) {
     userSheet.appendRow([
-      'uid', 'nickname', 'main_character', 'points', 'total_sp',
+      'uid', 'email', 'nickname', 'main_character', 'points', 'total_sp',
       'last_attendance_date', 'last_sync_timestamp', 'is_initial_gift_received',
       'created_at', 'owned_cards', 'updated_at'
     ]);

@@ -1080,11 +1080,27 @@ class AppController {
     // 구글 이메일 직접 연동 제출 버튼
     const submitGoogleBtn = document.getElementById('btn-submit-google-email');
     if (submitGoogleBtn) {
-      submitGoogleBtn.onclick = () => {
-        const email = document.getElementById('input-google-email').value;
-        if (window.authController.loginWithGoogleEmail(email)) {
-          window.soundCtrl.playClick();
-          this.closeModal('modal-google-auth');
+      submitGoogleBtn.onclick = async () => {
+        const input = document.getElementById('input-google-email');
+        const email = (input ? input.value : '').trim().toLowerCase();
+        if (!email || !email.includes('@')) {
+          alert('유효한 구글 이메일 주소를 입력해 주세요.');
+          return;
+        }
+        submitGoogleBtn.disabled = true;
+        submitGoogleBtn.textContent = '⏳ 연동 확인 중...';
+        try {
+          const success = await window.authController.loginWithGoogleEmail(email);
+          if (success) {
+            window.soundCtrl.playClick();
+            this.closeModal('modal-google-auth');
+            this.closeModal('modal-login');
+          }
+        } catch (e) {
+          alert('구글 연동 처리 중 오류가 발생했습니다: ' + e.message);
+        } finally {
+          submitGoogleBtn.disabled = false;
+          submitGoogleBtn.textContent = '🚀 구글 계정으로 시작하기';
         }
       };
     }
@@ -1117,16 +1133,28 @@ class AppController {
     // 옵션 모달 내 구글 이메일 직접 연동
     const optSubmitEmailBtn = document.getElementById('btn-settings-submit-email');
     if (optSubmitEmailBtn) {
-      optSubmitEmailBtn.onclick = () => {
-        const email = document.getElementById('settings-google-email-input').value;
+      optSubmitEmailBtn.onclick = async () => {
+        const input = document.getElementById('settings-google-email-input');
+        const email = (input ? input.value : '').trim().toLowerCase();
         if (!email || !email.includes('@')) {
           alert('유효한 구글 이메일 주소를 입력해 주세요.');
           return;
         }
-        if (window.authController.loginWithGoogleEmail(email)) {
-          window.soundCtrl.playAttendanceFanfare();
-          alert(`🎉 구글 계정 연동 완료!\n[${email}] 계정으로 출석체크 및 카드 데이터가 안전하게 연동되었습니다.`);
-          this.closeModal('modal-settings');
+        optSubmitEmailBtn.disabled = true;
+        optSubmitEmailBtn.textContent = '⏳ 연동 중...';
+        try {
+          const success = await window.authController.loginWithGoogleEmail(email);
+          if (success) {
+            window.soundCtrl.playAttendanceFanfare();
+            alert(`🎉 구글 계정 연동 완료!\n[${email}] 계정으로 출석체크 및 카드 데이터가 안전하게 연동되었습니다.`);
+            this.closeModal('modal-settings');
+            this.renderUserProfile(window.userModel.getUser());
+          }
+        } catch (e) {
+          alert('구글 연동 처리 중 오류가 발생했습니다: ' + e.message);
+        } finally {
+          optSubmitEmailBtn.disabled = false;
+          optSubmitEmailBtn.textContent = '🚀 연동하기';
         }
       };
     }

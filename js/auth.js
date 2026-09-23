@@ -43,20 +43,21 @@ class AuthController {
   }
 
   // 구글 JWT 토큰 파싱
-  handleGoogleCredentialResponse(response) {
+  async handleGoogleCredentialResponse(response) {
     if (!response || !response.credential) return;
 
     try {
       const payload = this.decodeJwtResponse(response.credential);
+      const cleanEmail = (payload.email || '').trim().toLowerCase();
       const authData = {
         uid: `google_${payload.sub}`,
-        name: payload.name || payload.email.split('@')[0],
-        email: payload.email,
+        name: payload.name || (cleanEmail ? cleanEmail.split('@')[0] : '모험가'),
+        email: cleanEmail,
         picture: payload.picture,
         isGoogle: true
       };
 
-      this.completeLogin(authData);
+      await this.completeLogin(authData);
     } catch (e) {
       console.error('Failed to parse Google credential:', e);
       alert('구글 로그인 처리 중 오류가 발생했습니다.');
@@ -93,7 +94,7 @@ class AuthController {
   }
 
   // 2. 구글 이메일 직접 연동 로그인
-  loginWithGoogleEmail(email) {
+  async loginWithGoogleEmail(email) {
     if (!email || !email.includes('@')) {
       alert('유효한 구글 이메일 주소를 입력해 주세요.');
       return false;
@@ -116,7 +117,7 @@ class AuthController {
       isGoogle: true
     };
 
-    this.completeLogin(authData);
+    await this.completeLogin(authData);
     return true;
   }
 

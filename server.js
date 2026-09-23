@@ -545,13 +545,17 @@ const server = http.createServer((req, res) => {
 
   if (pathname === '/api/user' && req.method === 'GET') {
     const uid = parsedUrl.query.uid;
-    if (!uid) {
+    const email = parsedUrl.query.email ? String(parsedUrl.query.email).trim().toLowerCase() : '';
+    if (!uid && !email) {
       res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ success: false, message: 'uid is required' }));
+      res.end(JSON.stringify({ success: false, message: 'uid or email is required' }));
       return;
     }
     const users = readUsers();
-    const user = users.find(u => u.uid === uid);
+    const user = users.find(u => 
+      (uid && u.uid === uid) || 
+      (email && u.email && u.email.toLowerCase() === email)
+    );
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify({ success: !!user, user: user || null }));
     return;
@@ -770,8 +774,12 @@ const server = http.createServer((req, res) => {
       try {
         const payload = JSON.parse(body);
         const uid = payload.uid;
+        const email = payload.email ? String(payload.email).trim().toLowerCase() : '';
         const users = readUsers();
-        let user = users.find(u => u.uid === uid);
+        let user = users.find(u => 
+          (uid && u.uid === uid) || 
+          (email && u.email && u.email.toLowerCase() === email)
+        );
         if (!user) {
           // 서버 재시작 등으로 메모리/파일에 유저가 누락된 경우 즉시 복원 등록
           if (uid && !isDummyUid(uid)) {
@@ -851,11 +859,23 @@ const server = http.createServer((req, res) => {
         }
 
         const users = readUsers();
-        const existingIdx = users.findIndex(u => u.uid === userData.uid);
+        const cleanEmail = userData.email ? String(userData.email).trim().toLowerCase() : '';
+        const existingIdx = users.findIndex(u => 
+          (userData.uid && u.uid === userData.uid) || 
+          (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail)
+        );
         const metadata = getActiveMetadata();
 
         if (existingIdx >= 0) {
           const u = users[existingIdx];
+          // 이메일 보존 및 업데이트
+          if (cleanEmail) {
+            u.email = cleanEmail;
+          }
+          // 게스트/오프라인 계정이 구글 계정으로 연동된 경우 UID 승계
+          if (userData.uid && userData.uid.startsWith('google_') && !u.uid.startsWith('google_')) {
+            u.uid = userData.uid;
+          }
           // 닉네임 변경 및 대표 캐릭터 변경 허용
           if (userData.nickname) u.nickname = String(userData.nickname).trim().slice(0, 16);
           if (userData.owned_cards && typeof userData.owned_cards === 'object') {
@@ -869,6 +889,9 @@ const server = http.createServer((req, res) => {
           if (userData.main_character && u.owned_cards && u.owned_cards[userData.main_character]) {
             u.main_character = userData.main_character;
           }
+          if (typeof u.points !== 'number') {
+            u.points = typeof userData.points === 'number' && userData.points >= 0 ? userData.points : 1000;
+          }
           // [F12 치트 원천 차단] 클라이언트가 임의로 보낸 points와 total_sp는 무시하고 서버 데이터 유지 및 재계산
           u.total_sp = recalculateUserSP(u, metadata);
           u.last_active_timestamp = Date.now();
@@ -879,23 +902,28 @@ const server = http.createServer((req, res) => {
           const starterCards = ['card_0000', 'card_0022', 'card_0065', 'card_0078', 'card_0156'];
           let gift = starterCards[Math.floor(Math.random() * starterCards.length)];
           const initialOwned = {};
-          initialOwned[gift] = 1;
 
-          if (userData.main_character && starterCards.includes(userData.main_character)) {
-            gift = userData.main_character;
-            delete initialOwned[Object.keys(initialOwned)[0]];
-            initialOwned[gift] = 1;
-          } else if (userData.owned_cards && typeof userData.owned_cards === 'object') {
-            const keys = Object.keys(userData.owned_cards);
-            if (keys.length > 0 && keys.every(k => /^card_\d{4}$/.test(k))) {
-              delete initialOwned[Object.keys(initialOwned)[0]];
-              Object.assign(initialOwned, userData.owned_cards);
-              gift = (userData.main_character && initialOwned[userData.main_character]) ? userData.main_character : keys[0];
+          if (userData.owned_cards && typeof userData.owned_cards === 'object' && Object.keys(userData.owned_cards).length > 0) {
+            for (const [cid, cnt] of Object.entries(userData.owned_cards)) {
+              if (/^card_\d{4}$/.test(cid) && Number(cnt) > 0) {
+                initialOwned[cid] = Number(cnt);
+              }
             }
+            if (userData.main_character && initialOwned[userData.main_character]) {
+              gift = userData.main_character;
+            } else if (Object.keys(initialOwned).length > 0) {
+              gift = Object.keys(initialOwned)[0];
+            }
+          } else {
+            if (userData.main_character && starterCards.includes(userData.main_character)) {
+              gift = userData.main_character;
+            }
+            initialOwned[gift] = 1;
           }
 
           const newUser = {
             uid: userData.uid,
+            email: cleanEmail,
             nickname: (userData.nickname || '모험가').slice(0, 16),
             main_character: gift,
             points: typeof userData.points === 'number' && userData.points >= 0 ? userData.points : 1000,
@@ -912,7 +940,10 @@ const server = http.createServer((req, res) => {
         }
         writeUsers(users);
 
-        const targetUser = users.find(u => u.uid === userData.uid);
+        const targetUser = users.find(u => 
+          (userData.uid && u.uid === userData.uid) || 
+          (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail)
+        );
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ success: true, message: 'User saved', user: targetUser }));
       } catch (err) {

@@ -27,13 +27,17 @@ class UserModel {
 
   async login(authData) {
     const uid = (authData && authData.uid) ? authData.uid : ('guest_' + Math.random().toString(36).substring(2, 10));
+    const email = (authData && authData.email) ? authData.email.trim().toLowerCase() : '';
     const nickname = authData.nickname || authData.name || '모험가';
 
-    // 1. 기존 유저 정보 조회
-    let existing = await window.api.fetchUser(uid);
+    // 1. 기존 유저 정보 조회 (UID 및 이메일 동시 조회 지원)
+    let existing = await window.api.fetchUser(uid, email);
 
     let isNewUser = false;
     let initialGiftCard = null;
+
+    // 만약 기존에 게스트로 플레이하던 데이터가 있다면 카드 및 포인트 승계 연동
+    const prevGuest = this.user && this.user.uid && !this.user.uid.startsWith('google_') ? this.user : null;
 
     if (!existing) {
       // 신규 유저 생성
@@ -41,8 +45,6 @@ class UserModel {
       const todayStr = this.getTodayDateString();
       const now = Date.now();
 
-      // 만약 기존에 게스트로 플레이하던 데이터가 있다면 카드 및 포인트 승계 연동
-      const prevGuest = this.user && this.user.uid && !this.user.uid.startsWith('google_') ? this.user : null;
       let initialOwned = {};
       let starterSp = 0;
       let initialPoints = 1000;
@@ -62,8 +64,8 @@ class UserModel {
 
       this.user = {
         uid: uid,
-        nickname: nickname,
-        email: authData.email || '',
+        nickname: (prevGuest && prevGuest.nickname && prevGuest.nickname !== '모험가') ? prevGuest.nickname : nickname,
+        email: email,
         main_character: initialGiftCard,
         points: initialPoints,
         total_sp: starterSp,
@@ -75,9 +77,28 @@ class UserModel {
       };
     } else {
       this.user = existing;
-      if (authData.email && !this.user.email) {
-        this.user.email = authData.email;
+      if (email && !this.user.email) {
+        this.user.email = email;
       }
+      // 서버 계정의 UID와 로컬 세션의 UID 동기화 (GIS <-> 이메일 로그인 상호 연동)
+      if (existing.uid && authData) {
+        authData.uid = existing.uid;
+        try {
+          const sKey = (window.authController && window.authController.sessionKey) || 'toku_auth_session';
+          localStorage.setItem(sKey, JSON.stringify(authData));
+        } catch (e) {}
+      }
+
+      // 게스트 플레이 중 뽑은 카드가 있다면 기존 계정에 안전하게 병합
+      if (prevGuest && prevGuest.owned_cards && typeof prevGuest.owned_cards === 'object') {
+        if (!this.user.owned_cards) this.user.owned_cards = {};
+        for (const [cid, cnt] of Object.entries(prevGuest.owned_cards)) {
+          if (Number(cnt) > 0) {
+            this.user.owned_cards[cid] = Math.max(this.user.owned_cards[cid] || 0, Number(cnt) || 1);
+          }
+        }
+      }
+
       if (!this.user.last_sync_timestamp) {
         this.user.last_sync_timestamp = Date.now();
       }
