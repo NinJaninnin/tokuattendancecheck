@@ -858,6 +858,14 @@ const server = http.createServer((req, res) => {
           const u = users[existingIdx];
           // 닉네임 변경 및 대표 캐릭터 변경 허용
           if (userData.nickname) u.nickname = String(userData.nickname).trim().slice(0, 16);
+          if (userData.owned_cards && typeof userData.owned_cards === 'object') {
+            if (!u.owned_cards) u.owned_cards = {};
+            for (const [cid, cnt] of Object.entries(userData.owned_cards)) {
+              if (/^card_\d{4}$/.test(cid) && Number(cnt) > 0) {
+                u.owned_cards[cid] = Math.max(u.owned_cards[cid] || 0, Number(cnt) || 1);
+              }
+            }
+          }
           if (userData.main_character && u.owned_cards && u.owned_cards[userData.main_character]) {
             u.main_character = userData.main_character;
           }
