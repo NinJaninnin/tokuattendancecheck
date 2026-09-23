@@ -76,10 +76,16 @@
       <div class="ribbon-chips-container" id="live-top-ranking-chips">
         <!-- 동적 렌더링 -->
       </div>
-      <button class="online-users-badge-chip" id="btn-show-online" title="현재 접속 중인 모험가 보기">
-        <span class="online-pulse-dot"></span>
-        <span id="live-online-count-text">접속 중: 1명</span>
-      </button>
+      <div class="ribbon-badges-group">
+        <button class="total-users-badge-chip" id="btn-show-total-users" title="전체 가입한 모험가 통계 보기">
+          <span class="total-users-icon">👥</span>
+          <span id="live-total-users-text">전체: 1명</span>
+        </button>
+        <button class="online-users-badge-chip" id="btn-show-online" title="현재 접속 중인 모험가 보기">
+          <span class="online-pulse-dot"></span>
+          <span id="live-online-count-text">접속 중: 1명</span>
+        </button>
+      </div>
     </div>
 
     <!-- Main Stage Grid -->
@@ -166,6 +172,7 @@
         <div class="ranking-tabs-header">
           <button class="rank-tab-btn active" id="tab-btn-rankings" title="SP 랭킹 TOP 10">
             <span>🏅 SP 랭킹</span>
+            <span class="tab-count-pill" id="sidebar-total-users-count" title="총 가입 유저 수">1명</span>
           </button>
           <button class="rank-tab-btn" id="tab-btn-online" title="현재 접속 중인 플레이어">
             <span class="online-pulse-dot mini"></span>
@@ -196,6 +203,9 @@
             <div class="rank-user-info">
               <span class="rank-username" id="my-rank-name">나 (모험가)</span>
               <span class="rank-sp-val" id="my-rank-sp">0 SP</span>
+            </div>
+            <div class="rank-total-users-sub" id="my-rank-total-sub" title="전체 참가자 중 내 순위">
+              전체 1명 중
             </div>
           </div>
         </div>
@@ -559,6 +569,24 @@
         <button class="modal-close-btn" data-close="modal-online-users">&times;</button>
       </div>
       <div class="modal-body">
+        <!-- 실시간 접속자 & 총 가입자 통계 카드 -->
+        <div class="online-users-modal-stats-bar">
+          <div class="online-modal-stat-box online">
+            <div class="online-modal-stat-title">
+              <span class="online-pulse-dot mini"></span>
+              <span>현재 접속 중</span>
+            </div>
+            <div class="online-modal-stat-value" id="modal-stat-online-count">1명</div>
+          </div>
+          <div class="online-modal-stat-box total">
+            <div class="online-modal-stat-title">
+              <span>👥</span>
+              <span>총 가입 모험가</span>
+            </div>
+            <div class="online-modal-stat-value" id="modal-stat-total-count">1명</div>
+          </div>
+        </div>
+
         <div class="online-users-modal-desc">
           최근 3분 이내 활동 기록이 있는 실시간 접속 플레이어 목록입니다.
         </div>
@@ -574,13 +602,13 @@
   </div>
 
   <!-- Scripts with cache busters -->
-  <script src="js/audio.js?v=20260922_10"></script>
-  <script src="js/particles.js?v=20260922_10"></script>
-  <script src="js/gameData.js?v=20260922_10"></script>
-  <script src="js/api.js?v=20260922_10"></script>
-  <script src="js/userModel.js?v=20260922_10"></script>
-  <script src="js/gacha.js?v=20260922_10"></script>
-  <script src="js/auth.js?v=20260922_10"></script>
-  <script src="js/app.js?v=20260922_10"></script>
+  <script src="js/audio.js?v=20260923_02"></script>
+  <script src="js/particles.js?v=20260923_02"></script>
+  <script src="js/gameData.js?v=20260923_02"></script>
+  <script src="js/api.js?v=20260923_02"></script>
+  <script src="js/userModel.js?v=20260923_02"></script>
+  <script src="js/gacha.js?v=20260923_02"></script>
+  <script src="js/auth.js?v=20260923_02"></script>
+  <script src="js/app.js?v=20260923_02"></script>
 </body>
 </html>

@@ -24,6 +24,7 @@ class AppController {
     this.rankingNextUpdateTime = Date.now() + 3600000;
     this.cachedRankings = window.api ? window.api.getMockRankings().rankings : [];
     this.cachedOnlineUsers = [];
+    this.cachedTotalUsers = 1;
     this.currentBinderFilter = 'ALL';
     this.pendingGachaResult = null;
     this.currentLang = localStorage.getItem('toku_selected_lang') || 'ko';
@@ -44,6 +45,14 @@ class AppController {
     }
     this.checkAndUpdateSheetStatusUI(metadata && metadata.sheetConnected, metadata ? metadata.cardlist.length : 0);
 
+    // 2. 인증 컨트롤러 콜백 설정
+    window.authController.onLoginSuccess = async (authData) => {
+      await this.handleLoginSuccess(authData);
+    };
+
+    // 3. 기존 세션 확인 및 복원
+    const hasSession = window.authController.checkSavedSession();
+
     // ★ 초기 랭킹 데이터를 즉시 로드하여 상단 리본 및 랭킹판에 상시 출력
     await this.refreshRankings();
 
@@ -51,13 +60,6 @@ class AppController {
     await this.refreshOnlineUsers();
     setInterval(() => this.refreshOnlineUsers(), 15000);
 
-    // 2. 인증 컨트롤러 콜백 설정
-    window.authController.onLoginSuccess = async (authData) => {
-      await this.handleLoginSuccess(authData);
-    };
-
-    // 3. 기존 세션 확인 (없으면 로그인 모달 오픈)
-    const hasSession = window.authController.checkSavedSession();
     if (!hasSession) {
       this.openModal('modal-login');
       // Google Identity Client 렌더링
@@ -129,6 +131,7 @@ class AppController {
     window.userModel.onUserUpdate = (user) => {
       this.renderUserProfile(user);
       this.updateRankingsDisplay();
+      this.refreshOnlineUsers();
     };
 
     // 1분당 1P 지급 시 연출
@@ -145,6 +148,7 @@ class AppController {
 
     this.renderUserProfile(result.user);
     await this.refreshRankings();
+    await this.refreshOnlineUsers();
 
     if (result.isNewUser) {
       // 신규 가입 선물 연출
@@ -254,7 +258,13 @@ class AppController {
 
     const rankBadge = document.getElementById('ranking-timer-badge');
     if (rankBadge) {
-      rankBadge.textContent = `갱신: ${mins}분 ${secs}초`;
+      const tabOnline = document.getElementById('tab-btn-online');
+      const isOnlineTabActive = tabOnline && tabOnline.classList.contains('active');
+      if (isOnlineTabActive) {
+        rankBadge.textContent = '실시간 (15초)';
+      } else {
+        rankBadge.textContent = `갱신: ${mins}분 ${secs}초`;
+      }
     }
 
     if (remainingToRank <= 0) {
@@ -263,11 +273,44 @@ class AppController {
     }
   }
 
+  // 총 가입 유저 수 UI 동기화
+  updateTotalUsersDisplay(total) {
+    if (typeof total === 'number' && total > 0) {
+      this.cachedTotalUsers = Math.max(this.cachedTotalUsers, total);
+    }
+    const count = this.cachedTotalUsers;
+
+    // 1. 상단 리본 전체 유저 뱃지
+    const ribbonTotal = document.getElementById('live-total-users-text');
+    if (ribbonTotal) ribbonTotal.textContent = `전체: ${count.toLocaleString()}명`;
+
+    // 2. 사이드바 SP 랭킹 탭 뱃지
+    const sidebarTotal = document.getElementById('sidebar-total-users-count');
+    if (sidebarTotal) sidebarTotal.textContent = `${count.toLocaleString()}명`;
+
+    // 3. 모달 통계 카드 (전체 가입자)
+    const modalTotalStat = document.getElementById('modal-stat-total-count');
+    if (modalTotalStat) modalTotalStat.textContent = `${count.toLocaleString()}명`;
+
+    // 4. 모달 통계 카드 (실시간 접속자)
+    const modalOnlineStat = document.getElementById('modal-stat-online-count');
+    if (modalOnlineStat && this.cachedOnlineUsers) {
+      modalOnlineStat.textContent = `${this.cachedOnlineUsers.length.toLocaleString()}명`;
+    }
+
+    // 5. 내 순위 바 하단 안내
+    const myRankSub = document.getElementById('my-rank-total-sub');
+    if (myRankSub) myRankSub.textContent = `전체 ${count.toLocaleString()}명 중`;
+  }
+
   // 랭킹 데이터 가져오기 및 렌더링 (1시간 캐싱)
   async refreshRankings() {
     const data = await window.api.fetchRankings();
     if (data && data.rankings) {
       this.cachedRankings = data.rankings;
+      if (data.total_users) {
+        this.updateTotalUsersDisplay(data.total_users);
+      }
     }
     this.updateRankingsDisplay();
   }
@@ -381,7 +424,12 @@ class AppController {
       }
       document.getElementById('my-rank-sp').textContent = `${(curUser.total_sp || 0).toLocaleString()} SP`;
       document.getElementById('my-rank-avatar').src = window.gameData.getCardImagePath(curUser.main_character);
-      document.getElementById('header-rank-badge').textContent = `RANK ${myRank}`;
+      const totalCount = this.cachedTotalUsers || rankings.length || 1;
+      document.getElementById('header-rank-badge').textContent = `RANK ${myRank} / ${totalCount}`;
+      const myRankSub = document.getElementById('my-rank-total-sub');
+      if (myRankSub) {
+        myRankSub.textContent = `전체 ${totalCount.toLocaleString()}명 중`;
+      }
     }
   }
 
@@ -392,6 +440,9 @@ class AppController {
       if (data && Array.isArray(data.online_users)) {
         this.cachedOnlineUsers = data.online_users;
         const count = data.count !== undefined ? data.count : data.online_users.length;
+        if (data.total_users) {
+          this.updateTotalUsersDisplay(data.total_users);
+        }
 
         // 1. 리본 배지 갱신
         const ribbonCount = document.getElementById('live-online-count-text');
@@ -407,6 +458,9 @@ class AppController {
 
         // 4. 접속자 뷰 렌더링
         this.renderOnlineUsersList();
+
+        // 5. 랭킹 보드의 실시간 접속 상태 점(dot) 동기화
+        this.updateRankingsDisplay();
       }
     } catch (e) {
       console.warn('[App] Failed to refresh online users:', e);
@@ -434,7 +488,7 @@ class AppController {
       }
 
       this.cachedOnlineUsers.forEach(u => {
-        const isMe = curUser && curUser.uid === u.uid;
+        const isMe = (curUser && curUser.uid === u.uid) || !!u.is_me;
         const cardImg = window.gameData.getCardImagePath(u.main_character);
 
         const item = document.createElement('div');
@@ -885,6 +939,7 @@ class AppController {
         tabOnline.classList.remove('active');
         rankingList.style.display = 'flex';
         onlineList.style.display = 'none';
+        this.updateUiTimers();
       };
 
       tabOnline.onclick = () => {
@@ -893,6 +948,8 @@ class AppController {
         tabRankings.classList.remove('active');
         rankingList.style.display = 'none';
         onlineList.style.display = 'flex';
+        const rankBadge = document.getElementById('ranking-timer-badge');
+        if (rankBadge) rankBadge.textContent = '실시간 (15초)';
         this.refreshOnlineUsers();
       };
     }
@@ -901,6 +958,16 @@ class AppController {
     const btnShowOnline = document.getElementById('btn-show-online');
     if (btnShowOnline) {
       btnShowOnline.onclick = () => {
+        window.soundCtrl.playClick();
+        this.refreshOnlineUsers();
+        this.openModal('modal-online-users');
+      };
+    }
+
+    // 전체 가입자 배지 클릭 시에도 접속자/유저 현황 모달 오픈
+    const btnShowTotal = document.getElementById('btn-show-total-users');
+    if (btnShowTotal) {
+      btnShowTotal.onclick = () => {
         window.soundCtrl.playClick();
         this.refreshOnlineUsers();
         this.openModal('modal-online-users');

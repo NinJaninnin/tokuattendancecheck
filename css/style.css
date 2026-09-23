@@ -832,6 +832,40 @@ body {
   50% { transform: scale(1.3); opacity: 0.75; box-shadow: 0 0 12px #22c55e; }
 }
 
+/* Ribbon Badges Group */
+.ribbon-badges-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Ribbon Total Users Badge Chip */
+.total-users-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14, 165, 233, 0.15);
+  border: 1px solid rgba(14, 165, 233, 0.45);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.total-users-badge-chip:hover {
+  background: rgba(14, 165, 233, 0.28);
+  border-color: #38bdf8;
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+  transform: translateY(-1px);
+}
+
 /* Ribbon Online Badge Chip */
 .online-users-badge-chip {
   display: inline-flex;
@@ -848,7 +882,6 @@ body {
   transition: all 0.2s ease;
   white-space: nowrap;
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 .online-users-badge-chip:hover {
@@ -948,12 +981,78 @@ body {
   flex-shrink: 0;
 }
 
+/* Online Users Modal Stats Bar */
+.online-users-modal-stats-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.online-modal-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.online-modal-stat-box.online {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.online-modal-stat-box.total {
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.online-modal-stat-title {
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+
+.online-modal-stat-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.online-modal-stat-box.online .online-modal-stat-value {
+  color: #86efac;
+}
+
+.online-modal-stat-box.total .online-modal-stat-value {
+  color: #7dd3fc;
+}
+
 .online-users-modal-desc {
   font-size: 0.82rem;
   color: var(--text-sub);
   margin-bottom: 12px;
   line-height: 1.4;
   padding: 0 4px;
+}
+
+/* My Rank Bar Total Users Subtext */
+.rank-total-users-sub {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-left: auto;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ranking-title-group {

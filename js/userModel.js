@@ -26,7 +26,7 @@ class UserModel {
   }
 
   async login(authData) {
-    const uid = authData.uid || 'test_guest_01';
+    const uid = (authData && authData.uid) ? authData.uid : ('guest_' + Math.random().toString(36).substring(2, 10));
     const nickname = authData.nickname || authData.name || '모험가';
 
     // 1. 기존 유저 정보 조회

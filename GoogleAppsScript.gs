@@ -277,11 +277,13 @@ function getOnlineUsers() {
   const now = new Date().getTime();
   const threshold = 5 * 60 * 1000;
   let onlineUsers = [];
+  let totalUsers = 0;
 
   for (let i = 1; i < data.length; i++) {
     const row = data[i];
     const uid = String(row[uidIdx] || '').trim();
     if (!uid || uid === 'google_auth_uid_12345' || uid.indexOf('test_') === 0 || uid.indexOf('dummy_') === 0 || uid.indexOf('ai_') === 0) continue;
+    totalUsers++;
 
     let lastActive = Number(row[syncIdx]) || 0;
     if (!lastActive && updatedIdx >= 0 && row[updatedIdx]) {
@@ -304,6 +306,7 @@ function getOnlineUsers() {
   return {
     success: true,
     count: onlineUsers.length,
+    total_users: totalUsers,
     online_users: onlineUsers,
     updated_at: new Date().toISOString()
   };

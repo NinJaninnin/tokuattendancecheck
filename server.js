@@ -505,15 +505,26 @@ const server = http.createServer((req, res) => {
   if (pathname === '/api/online-users' && req.method === 'GET') {
     const now = Date.now();
     const thresholdMs = 3 * 60 * 1000; // 3분 이내 활동한 유저를 온라인으로 판정
-    const users = readUsers().filter(u => {
-      if (!u || !u.uid || isDummyUid(u.uid)) return false;
+    const allUsers = readUsers().filter(u => u && u.uid && !isDummyUid(u.uid));
+
+    // 엑셀에서 동기화된 유저가 있다면 총 유저 수에 포함
+    const cache = readSheetCache();
+    if (cache && Array.isArray(cache.users) && cache.users.length > 0) {
+      cache.users.forEach(cu => {
+        if (cu && cu.uid && !isDummyUid(cu.uid) && !allUsers.some(u => u.uid === cu.uid)) {
+          allUsers.push(cu);
+        }
+      });
+    }
+
+    const onlineUsers = allUsers.filter(u => {
       const lastActive = u.last_active_timestamp || u.last_sync_timestamp || (u.updated_at ? new Date(u.updated_at).getTime() : 0);
       return (now - lastActive) <= thresholdMs;
     });
 
-    users.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+    onlineUsers.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
 
-    const onlineList = users.map(u => ({
+    const onlineList = onlineUsers.map(u => ({
       uid: u.uid,
       nickname: u.nickname || '모험가',
       main_character: u.main_character || 'card_0000',
@@ -525,6 +536,7 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({
       success: true,
       count: onlineList.length,
+      total_users: allUsers.length,
       online_users: onlineList,
       updated_at: new Date().toISOString()
     }));
@@ -761,9 +773,33 @@ const server = http.createServer((req, res) => {
         const users = readUsers();
         let user = users.find(u => u.uid === uid);
         if (!user) {
-          res.writeHead(404, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: false, message: '사용자를 찾을 수 없습니다.' }));
-          return;
+          // 서버 재시작 등으로 메모리/파일에 유저가 누락된 경우 즉시 복원 등록
+          if (uid && !isDummyUid(uid)) {
+            const starterCards = ['card_0000', 'card_0022', 'card_0065', 'card_0078', 'card_0156'];
+            const gift = starterCards[Math.floor(Math.random() * starterCards.length)];
+            const initialOwned = {};
+            initialOwned[gift] = 1;
+            const metadata = getActiveMetadata();
+            user = {
+              uid: uid,
+              nickname: '모험가',
+              main_character: gift,
+              points: 1000,
+              last_attendance_date: getTodayKST(),
+              last_sync_timestamp: Date.now(),
+              last_active_timestamp: Date.now(),
+              is_initial_gift_received: true,
+              created_at: Date.now(),
+              owned_cards: initialOwned,
+              updated_at: new Date().toISOString()
+            };
+            user.total_sp = recalculateUserSP(user, metadata);
+            users.push(user);
+          } else {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, message: '사용자를 찾을 수 없습니다.' }));
+            return;
+          }
         }
 
         const now = Date.now();
@@ -833,20 +869,33 @@ const server = http.createServer((req, res) => {
         } else {
           // 신규 유저 등록
           const starterCards = ['card_0000', 'card_0022', 'card_0065', 'card_0078', 'card_0156'];
-          const gift = starterCards[Math.floor(Math.random() * starterCards.length)];
+          let gift = starterCards[Math.floor(Math.random() * starterCards.length)];
           const initialOwned = {};
           initialOwned[gift] = 1;
+
+          if (userData.main_character && starterCards.includes(userData.main_character)) {
+            gift = userData.main_character;
+            delete initialOwned[Object.keys(initialOwned)[0]];
+            initialOwned[gift] = 1;
+          } else if (userData.owned_cards && typeof userData.owned_cards === 'object') {
+            const keys = Object.keys(userData.owned_cards);
+            if (keys.length > 0 && keys.every(k => /^card_\d{4}$/.test(k))) {
+              delete initialOwned[Object.keys(initialOwned)[0]];
+              Object.assign(initialOwned, userData.owned_cards);
+              gift = (userData.main_character && initialOwned[userData.main_character]) ? userData.main_character : keys[0];
+            }
+          }
 
           const newUser = {
             uid: userData.uid,
             nickname: (userData.nickname || '모험가').slice(0, 16),
             main_character: gift,
-            points: 1000,
-            last_attendance_date: getTodayKST(),
+            points: typeof userData.points === 'number' && userData.points >= 0 ? userData.points : 1000,
+            last_attendance_date: userData.last_attendance_date || getTodayKST(),
             last_sync_timestamp: Date.now(),
             last_active_timestamp: Date.now(),
             is_initial_gift_received: true,
-            created_at: Date.now(),
+            created_at: userData.created_at || Date.now(),
             owned_cards: initialOwned,
             updated_at: new Date().toISOString()
           };

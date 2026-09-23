@@ -11,7 +11,17 @@ class ApiService {
   }
 
   isLocalServer() {
-    return window.location.protocol === 'http:' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const proto = window.location.protocol;
+    const host = window.location.hostname;
+    if (proto !== 'http:' && proto !== 'https:') return false;
+    if (host.endsWith('github.io')) return false;
+    return host === 'localhost' ||
+           host === '127.0.0.1' ||
+           host === '[::1]' ||
+           host.startsWith('192.168.') ||
+           host.startsWith('10.') ||
+           host.startsWith('172.') ||
+           window.location.port !== '';
   }
 
   setGasUrl(url) {
@@ -170,24 +180,31 @@ class ApiService {
     const now = Date.now();
     const thresholdMs = 3 * 60 * 1000;
 
+    let totalUsersFromRemote = 0;
+
     // 1. Google Apps Script 우선 시도
     if (this.gasUrl) {
       try {
         const resp = await fetch(`${this.gasUrl}?action=getOnlineUsers`);
         if (resp.ok) {
           const data = await resp.json();
-          if (data.success && Array.isArray(data.online_users)) {
-            data.online_users.forEach(u => {
-              if (u && u.uid && !isDummyUid(u.uid)) {
-                userMap.set(u.uid, {
-                  uid: u.uid,
-                  nickname: u.nickname || '특촬용사',
-                  main_character: u.main_character || 'card_0000',
-                  total_sp: Number(u.total_sp) || 0,
-                  last_active_timestamp: Number(u.last_active_timestamp) || now
-                });
-              }
-            });
+          if (data && data.success) {
+            if (typeof data.total_users === 'number') {
+              totalUsersFromRemote = Math.max(totalUsersFromRemote, data.total_users);
+            }
+            if (Array.isArray(data.online_users)) {
+              data.online_users.forEach(u => {
+                if (u && u.uid && !isDummyUid(u.uid)) {
+                  userMap.set(u.uid, {
+                    uid: u.uid,
+                    nickname: u.nickname || '특촬용사',
+                    main_character: u.main_character || 'card_0000',
+                    total_sp: Number(u.total_sp) || 0,
+                    last_active_timestamp: Number(u.last_active_timestamp) || now
+                  });
+                }
+              });
+            }
           }
         }
       } catch (e) {}
@@ -199,24 +216,30 @@ class ApiService {
         const resp = await fetch('/api/online-users');
         if (resp.ok) {
           const data = await resp.json();
-          if (data.success && Array.isArray(data.online_users)) {
-            data.online_users.forEach(u => {
-              if (u && u.uid && !isDummyUid(u.uid)) {
-                userMap.set(u.uid, {
-                  uid: u.uid,
-                  nickname: u.nickname || '모험가',
-                  main_character: u.main_character || 'card_0000',
-                  total_sp: Number(u.total_sp) || 0,
-                  last_active_timestamp: Number(u.last_active_timestamp) || now
-                });
-              }
-            });
+          if (data && data.success) {
+            if (typeof data.total_users === 'number') {
+              totalUsersFromRemote = Math.max(totalUsersFromRemote, data.total_users);
+            }
+            if (Array.isArray(data.online_users)) {
+              data.online_users.forEach(u => {
+                if (u && u.uid && !isDummyUid(u.uid)) {
+                  userMap.set(u.uid, {
+                    uid: u.uid,
+                    nickname: u.nickname || '모험가',
+                    main_character: u.main_character || 'card_0000',
+                    total_sp: Number(u.total_sp) || 0,
+                    last_active_timestamp: Number(u.last_active_timestamp) || now
+                  });
+                }
+              });
+            }
           }
         }
       } catch (e) {}
     }
 
     // 3. 로컬스토리지 내 최근 활동 유저 확인
+    let localStoredUsersCount = 0;
     try {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
@@ -224,6 +247,7 @@ class ApiService {
           try {
             const u = JSON.parse(localStorage.getItem(key));
             if (u && u.uid && !isDummyUid(u.uid)) {
+              localStoredUsersCount++;
               const lastActive = u.last_active_timestamp || u.last_sync_timestamp || (u.updated_at ? new Date(u.updated_at).getTime() : 0);
               if (now - lastActive <= thresholdMs) {
                 userMap.set(u.uid, {
@@ -240,8 +264,25 @@ class ApiService {
       }
     } catch (e) {}
 
-    // 4. 현재 접속 중인 본인 유저 정보는 항상 1순위 온라인으로 보장
-    const curUser = window.userModel ? window.userModel.getUser() : null;
+    // 4. 현재 접속 중인 본인 유저 정보는 항상 온라인으로 1순위 보장
+    let curUser = window.userModel ? window.userModel.getUser() : null;
+    if (!curUser) {
+      try {
+        const savedSession = localStorage.getItem('toku_auth_session');
+        if (savedSession) {
+          const authData = JSON.parse(savedSession);
+          if (authData && authData.uid) {
+            const cachedUser = localStorage.getItem(`toku_user_${authData.uid}`);
+            if (cachedUser) {
+              curUser = JSON.parse(cachedUser);
+            } else {
+              curUser = { uid: authData.uid, nickname: authData.name || '모험가', main_character: 'card_0000', total_sp: 0 };
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
     if (curUser && curUser.uid && !isDummyUid(curUser.uid)) {
       userMap.set(curUser.uid, {
         uid: curUser.uid,
@@ -254,11 +295,18 @@ class ApiService {
     }
 
     const onlineList = Array.from(userMap.values());
-    onlineList.sort((a, b) => (b.total_sp || 0) - (a.total_sp || 0));
+    onlineList.sort((a, b) => {
+      if (a.is_me && !b.is_me) return -1;
+      if (!a.is_me && b.is_me) return 1;
+      return (b.total_sp || 0) - (a.total_sp || 0);
+    });
+
+    const totalUsersCount = Math.max(totalUsersFromRemote, localStoredUsersCount, userMap.size, 1);
 
     return {
       success: true,
       count: onlineList.length,
+      total_users: totalUsersCount,
       online_users: onlineList,
       updated_at: new Date().toISOString()
     };
